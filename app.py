@@ -48,8 +48,9 @@ def login():
     type = request.form.get('type')
 
     hashed_password = generate_password_hash(password, method='sha256')
-    #if (utenti_dao.get_user_by_email(email) != None)
-    #    redirect(url_for("login.html"), error=USER_ALREADY_EXISTS_ERROR)
+    if utenti_dao.get_user_by_email(email) == None:
+        flash("EMAIL_NOT_FOUND_ERROR")
+        redirect(url_for("login.html"))
     
     # Validation
     if not email or not password:

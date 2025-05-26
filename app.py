@@ -1,6 +1,5 @@
 # import module
-from flask import Flask, render_template, request, redirect, url_for, flash
-from datetime import date, datetime
+from flask import Flask, render_template, request, redirect, url_for
 
 from flask_login import (
     LoginManager,

@@ -1,18 +1,12 @@
 # import module
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, redirect, request, url_for
 
-from flask_login import (
-    LoginManager,
-    login_user,
-    login_required,
-    logout_user,
-    current_user,
-)
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from models import User
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import posts_dao, commenti_dao, utenti_dao
-
-from models import User
+import utenti_dao, spettacoli_dao, biglietti_dao
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -21,38 +15,90 @@ POST_IMG_WIDTH = 300
 
 # initialize the application
 app = Flask(__name__)
-
-app.config["SECRET_KEY"] = "Secret key del social network"
-
+app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+# user object getter function
+@login_manager.user_loader
+def load_user(user_id):
+    db_user = utenti_dao.get_user_by_id(user_id)
+
+    if db_user is None:
+        return None 
+    user = User(
+        id=db_user["id"],
+        email=db_user["email"],
+        password=db_user["password"],
+        tipo=db_user["tipo"],
+        id_biglietto=db_user["id_biglietto"]
+    )
+    return user
 
 # route for homepage
 @app.route("/")
 def home():
-    render_template("home.html")
+    return render_template("home.html")
 
 # route for login
-@app.login("/login")
+@app.route("/login", methods=['POST'])
 def login():
-    render_template("login.html")
+    email = request.form.get('email')
+    password = request.form.get('password')
+    type = request.form.get('type')
+
+    hashed_password = generate_password_hash(password, method='sha256')
+    #if (utenti_dao.get_user_by_email(email) != None)
+    #    redirect(url_for("login.html"), error=USER_ALREADY_EXISTS_ERROR)
+    
+    # Validation
+    if not email or not password:
+        app.logger.warning("Form submitted with missing fields.")
+    elif "@" not in email:
+        app.logger.warning("Form submitted with invalid email: %s", email)
+    else:
+        app.logger.info("User subscribed successfully: %s", email)
+
+    return redirect(url_for("home.html"))
+
+# route for logout
+@app.route("/logout")
+@login_required
+def logout():
+	logout_user()
+	return redirect(url_for('home'))
 
 # route for sign up
-@app.route("/signup")
+@app.route("/signup", methods=['POST'])
 def signup():
-    render_template("signup.html")
+    #per registrarsi come organizzatore serve una password tipo FESTIVAL, da mettere nel README
+    return render_template("signup.html")
 
 # route for profile
+@login_required
 @app.route("/profile")
 def profile():
-    render_template("profile.html")
+    return render_template("profile.html")
+
+# route for buying ticket
+@login_required
+@app.route("/ticket")
+def ticket():
+    #limite di 200 persone, non salvarlo nel database, ma fai un COUNT(event_id)
+    return render_template("ticket.html")
 
 # route for event
 @app.route("/event")
 def event():
-    render_template("event.html")
+    return render_template("event.html")
 
 # route for creating an event
+@login_required
 @app.route("/create-event")
 def create_event():
-    render_template("create_event.html")
+    #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
+    # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile
+    return render_template("create_event.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)

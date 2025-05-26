@@ -89,39 +89,44 @@ def logout():
 # route to handle sign up data
 @app.route("/signup", methods=['POST'])
 def signup():
-    #per registrarsi come organizzatore serve una password tipo FESTIVAL, da mettere nel README
     email = request.form.get('email')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     type = request.form.get('type')
     staff_password = request.form.get('staff_password')
+    hashed_passw = generate_password_hash(password1)
 
-    if not email or not password or staff_password:
+    if not email or not password1 or not password2:
         flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
+        return redirect(url_for("login"))
+    if password1 != password2:
+        flash("UNMATCHING_PASSWORDS_ERROR")
         return redirect(url_for("login"))
     elif "@" not in email:
         flash("INVALID_EMAIL_ERROR")
         return redirect(url_for("login"))
 
     user_data = utenti_dao.get_user_by_email(email)
-
-    if not user_data:
-        flash("EMAIL_NOT_FOUND_ERROR")
+    if user_data:
+        flash("EMAIL_ALREADY_REGISTERED_ERROR")
         return redirect(url_for("login"))
-    elif not check_password_hash(user_data["password"], password1):
-        flash("WRONG_PASSWORD_ERROR")
-    if type == "staff" and not check_password_hash(static_dao.get_staff_password(), staff_password):
+    
+    staff_hash = static_dao.get_staff_password()
+    if type == "staff" and not check_password_hash(staff_hash[0], staff_password):
         flash("STAFF_PASSWORD_ERROR")
         return redirect(url_for("login"))
 
-    user = User(
-        id=user_data["id"],
-        email=user_data["email"],
-        password=user_data["password"],
-        tipo=user_data["tipo"],
-        id_biglietto=user_data["id_biglietto"]
+    utenti_dao.create_user(email, hashed_passw, type)
+    user = utenti_dao.get_user_by_email(email)
+    param_user = User(
+        id=user["id"],
+        email=user["email"],
+        password=user["password"],
+        tipo=user["tipo"],
+        id_biglietto=user["id_biglietto"]
     )
-    login_user(user)
+
+    login_user(param_user)
     return redirect(url_for("home"))
 
 # route for sign up

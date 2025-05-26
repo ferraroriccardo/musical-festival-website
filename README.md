@@ -1,16 +1,26 @@
 # Musical Festival Website
 Website for managing a music festival, allowing administration of both organizers and attendees.
 
-## URL post deploy
+## URL after deployment
 
-## Password to sign up as staff member
+## Staff Registration Password
+To sign up as a staff member, use the following password:
+
 `FESTIVAL`
 
-## Error messages
-### Login:
-- `EMAIL_NOT_FOUND_ERROR`
-- `WRONG_PASSWORD_ERROR`
-- `MISSING_EMAIL_OR_PASSWORD_ERROR`
-- `STAFF_PASSWORD_ERROR`
-- `UNMATCHING_PASSWORDS_ERROR`
-- `INVALID_EMAIL_ERROR`
+## Error Messages
+### Login & Signup
+- `EMAIL_NOT_FOUND_ERROR`: The provided email does not exist.
+- `WRONG_PASSWORD_ERROR`: The password entered is incorrect.
+- `MISSING_EMAIL_OR_PASSWORD_ERROR`: Email or password is missing.
+- `STAFF_PASSWORD_ERROR`: The staff password is incorrect.
+- `UNMATCHING_PASSWORDS_ERROR`: The passwords entered do not match.
+- `INVALID_EMAIL_ERROR`: The email format is invalid.
+
+## Static Tests
+
+### Sold Out Tickets
+In the settings section, under "Sell Out Tickets", you can mark all remaining tickets as sold out to preview how the ticket cards page changes (greyed-out card with a "SOLD OUT" message).
+
+### Set Staff Password
+In the settings section, under "Set staff password", you can set a new password which must be submitted when signing up as a new staff account.

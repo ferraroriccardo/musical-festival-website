@@ -6,7 +6,7 @@ from models import User
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import utenti_dao, spettacoli_dao, biglietti_dao, static_dao
+import utenti_dao, spettacoli_dao, biglietti_dao
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -22,62 +22,40 @@ login_manager.init_app(app)
 # user object getter function
 @login_manager.user_loader
 def load_user(user_id):
-    db_user = utenti_dao.get_user_by_id(user_id)
-
-    if db_user is None:
-        return None 
-    user = User(
-        id=db_user["id"],
-        email=db_user["email"],
-        password=db_user["password"],
-        tipo=db_user["tipo"],
-        id_biglietto=db_user["id_biglietto"]
-    )
-    return user
+	db_user = utenti_dao.get_user_by_id(user_id)
+	user = User(id=db_user["id"],
+		email=db_user["email"],
+		password=db_user["password"],
+		tipo=db_user["tipo"],
+		id_biglietto=db_user["id_biglietto"],)
+	return user
 
 # route for homepage
 @app.route("/")
 def home():
-    static_dao.set_staff_passw("FESTIVAL")
-    print("set password")
+    flash("prova")
     return render_template("home.html")
 
-# route to handle login data
+# route for login
 @app.route("/login", methods=['POST'])
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
+    type = request.form.get('type')
 
+    hashed_password = generate_password_hash(password, method='sha256')
+    #if (utenti_dao.get_user_by_email(email) != None)
+    #    redirect(url_for("login.html"), error=USER_ALREADY_EXISTS_ERROR)
+    
+    # Validation
     if not email or not password:
-        flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
-        return redirect(url_for("login"))
+        app.logger.warning("Form submitted with missing fields.")
     elif "@" not in email:
-        flash("INVALID_EMAIL_ERROR")
-        return redirect(url_for("login"))
+        app.logger.warning("Form submitted with invalid email: %s", email)
+    else:
+        app.logger.info("User subscribed successfully: %s", email)
 
-    user_data = utenti_dao.get_user_by_email(email)
-
-    if not user_data:
-        flash("EMAIL_NOT_FOUND_ERROR")
-        return redirect(url_for("login"))
-    elif not check_password_hash(user_data["password"], password):
-        flash("WRONG_PASSWORD_ERROR")
-        return redirect(url_for("login"))
-
-    user = User(
-        id=user_data["id"],
-        email=user_data["email"],
-        password=user_data["password"],
-        tipo=user_data["tipo"],
-        id_biglietto=user_data["id_biglietto"]
-    )
-    login_user(user)
     return redirect(url_for("home"))
-
-# route for login page
-@app.route("/login-form", methods=['GET'])
-def login_page():
-    return render_template("login.html")
 
 # route for logout
 @app.route("/logout")
@@ -86,52 +64,10 @@ def logout():
 	logout_user()
 	return redirect(url_for('home'))
 
-# route to handle sign up data
+# route for sign up
 @app.route("/signup", methods=['POST'])
 def signup():
-    email = request.form.get('email')
-    password1 = request.form.get('password1')
-    password2 = request.form.get('password2')
-    type = request.form.get('type')
-    staff_password = request.form.get('staff_password')
-    hashed_passw = generate_password_hash(password1)
-
-    if not email or not password1 or not password2:
-        flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
-        return redirect(url_for("login"))
-    if password1 != password2:
-        flash("UNMATCHING_PASSWORDS_ERROR")
-        return redirect(url_for("login"))
-    elif "@" not in email:
-        flash("INVALID_EMAIL_ERROR")
-        return redirect(url_for("login"))
-
-    user_data = utenti_dao.get_user_by_email(email)
-    if user_data:
-        flash("EMAIL_ALREADY_REGISTERED_ERROR")
-        return redirect(url_for("login"))
-    
-    staff_hash = static_dao.get_staff_password()
-    if type == "staff" and not check_password_hash(staff_hash[0], staff_password):
-        flash("STAFF_PASSWORD_ERROR")
-        return redirect(url_for("login"))
-
-    utenti_dao.create_user(email, hashed_passw, type)
-    user = utenti_dao.get_user_by_email(email)
-    param_user = User(
-        id=user["id"],
-        email=user["email"],
-        password=user["password"],
-        tipo=user["tipo"],
-        id_biglietto=user["id_biglietto"]
-    )
-
-    login_user(param_user)
-    return redirect(url_for("home"))
-
-# route for sign up
-@app.route("/sign-up-form", methods=['GET'])
-def signup_page():
+    #per registrarsi come organizzatore serve una password tipo FESTIVAL, da mettere nel README
     return render_template("signup.html")
 
 # route for profile
@@ -159,6 +95,17 @@ def create_event():
     #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
     # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile
     return render_template("create_event.html")
+
+@app.route("/buy_ticket", methods=["POST"])
+@login_required
+def buy_ticket():
+    ticket_type = request.form.get('type')
+    success, error = biglietti_dao.buy_ticket_for_user(current_user.id, ticket_type)
+    if not success:
+        flash(error)
+        return redirect(url_for('ticket_page'))
+    flash("Biglietto acquistato con successo!")
+    return redirect(url_for("profile"))
 
 if __name__ == "__main__":
     app.run(debug=True)

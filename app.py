@@ -45,22 +45,37 @@ def home():
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
-    type = request.form.get('type')
 
-    hashed_password = generate_password_hash(password, method='sha256')
-    if utenti_dao.get_user_by_email(email) == None:
-        flash("EMAIL_NOT_FOUND_ERROR")
-        redirect(url_for("login.html"))
-    
-    # Validation
     if not email or not password:
-        app.logger.warning("Form submitted with missing fields.")
+        flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
+        return redirect(url_for("login"))
     elif "@" not in email:
-        app.logger.warning("Form submitted with invalid email: %s", email)
-    else:
-        app.logger.info("User subscribed successfully: %s", email)
+        flash("INVALID_EMAIL_ERROR")
+        return redirect(url_for("login"))
 
-    return redirect(url_for("home.html"))
+    user_data = utenti_dao.get_user_by_email(email)
+
+    if not user_data:
+        flash("EMAIL_NOT_FOUND_ERROR")
+        return redirect(url_for("login"))
+    elif not check_password_hash(user_data["password"], password):
+        flash("WRONG_PASSWORD_ERROR")
+        return redirect(url_for("login"))
+
+    user = User(
+        id=user_data["id"],
+        email=user_data["email"],
+        password=user_data["password"],
+        tipo=user_data["tipo"],
+        id_biglietto=user_data["id_biglietto"]
+    )
+    login_user(user)
+    return redirect(url_for("home"))
+
+# route for login page (GET)
+@app.route("/login", methods=['GET'])
+def login_page():
+    return render_template("login.html")
 
 # route for logout
 @app.route("/logout")

@@ -6,7 +6,7 @@ from models import User
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-import utenti_dao, spettacoli_dao, biglietti_dao
+import utenti_dao, spettacoli_dao, biglietti_dao, static_dao
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -38,9 +38,11 @@ def load_user(user_id):
 # route for homepage
 @app.route("/")
 def home():
+    static_dao.set_staff_passw("FESTIVAL")
+    print("set password")
     return render_template("home.html")
 
-# route for login
+# route to handle login data
 @app.route("/login", methods=['POST'])
 def login():
     email = request.form.get('email')
@@ -72,8 +74,8 @@ def login():
     login_user(user)
     return redirect(url_for("home"))
 
-# route for login page (GET)
-@app.route("/login", methods=['GET'])
+# route for login page
+@app.route("/login-form", methods=['GET'])
 def login_page():
     return render_template("login.html")
 
@@ -84,10 +86,47 @@ def logout():
 	logout_user()
 	return redirect(url_for('home'))
 
-# route for sign up
+# route to handle sign up data
 @app.route("/signup", methods=['POST'])
 def signup():
     #per registrarsi come organizzatore serve una password tipo FESTIVAL, da mettere nel README
+    email = request.form.get('email')
+    password1 = request.form.get('password1')
+    password2 = request.form.get('password2')
+    type = request.form.get('type')
+    staff_password = request.form.get('staff_password')
+
+    if not email or not password or staff_password:
+        flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
+        return redirect(url_for("login"))
+    elif "@" not in email:
+        flash("INVALID_EMAIL_ERROR")
+        return redirect(url_for("login"))
+
+    user_data = utenti_dao.get_user_by_email(email)
+
+    if not user_data:
+        flash("EMAIL_NOT_FOUND_ERROR")
+        return redirect(url_for("login"))
+    elif not check_password_hash(user_data["password"], password1):
+        flash("WRONG_PASSWORD_ERROR")
+    if type == "staff" and not check_password_hash(static_dao.get_staff_password(), staff_password):
+        flash("STAFF_PASSWORD_ERROR")
+        return redirect(url_for("login"))
+
+    user = User(
+        id=user_data["id"],
+        email=user_data["email"],
+        password=user_data["password"],
+        tipo=user_data["tipo"],
+        id_biglietto=user_data["id_biglietto"]
+    )
+    login_user(user)
+    return redirect(url_for("home"))
+
+# route for sign up
+@app.route("/sign-up-form", methods=['GET'])
+def signup_page():
     return render_template("signup.html")
 
 # route for profile

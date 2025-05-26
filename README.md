@@ -16,6 +16,8 @@ To sign up as a staff member, use the following password:
 - `STAFF_PASSWORD_ERROR`: The staff password is incorrect.
 - `UNMATCHING_PASSWORDS_ERROR`: The passwords entered do not match.
 - `INVALID_EMAIL_ERROR`: The email format is invalid.
+- `NO_TICKETS_AVAILABLE`: No tickets are available for the selected type.
+- `DATABASE_ERROR`: An error occurred while processing your request. Please try again later.
 
 ## Static Tests
 

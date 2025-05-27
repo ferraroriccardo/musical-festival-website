@@ -1,6 +1,8 @@
 # <span style="color:#2e86c1">Musical Festival Website</span>
 <span style="color:#566573">Website for managing a music festival, allowing administration of both organizers and attendees.</span>
 
+> 🇮🇹 Per la versione italiana, vedi [README_it.md](README_it.md)
+
 ## <span style="color:#27ae60">URL after deployment</span>
 
 ## <span style="color:#af601a">Staff Registration Password</span>

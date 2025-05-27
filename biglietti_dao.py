@@ -22,3 +22,15 @@ def get_remaining_tickets(ticket_type, conn):
     cur = conn.execute(query, (ticket_type, ))
     count = cur.fetchone()[0]
     return 200 - count
+
+def get_ticket_by_user_id(current_user_id):
+    conn = sqlite3.connect("musical_festival.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM BIGLIETTI WHERE user_id = ?"
+    cursor.execute(query, (current_user_id, ))
+    ticket = cursor.fetchone()
+
+    conn.close()
+    return ticket

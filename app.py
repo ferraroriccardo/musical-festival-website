@@ -38,6 +38,7 @@ def load_user(user_id):
 # route for homepage
 @app.route("/")
 def home():
+    #TODO: hadle filters to show differen events
     shows = spettacoli_dao.get_shows()
     return render_template("home.html", p_shows = shows)
 

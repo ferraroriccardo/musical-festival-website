@@ -207,7 +207,6 @@ def create_event():
         return redirect(url_for('event_page'))
 
     conn = settings_dao.get_connection()
-    conn.row_factory = sqlite3.Row
     try:
         with conn:
             success, error = spettacoli_dao.create_event(conn, day, start_hour, duration, artist, description, genre, published, stage)

@@ -27,4 +27,6 @@ def set_staff_passw(plain_text_passw):
     return
 
 def get_connection():
-    return sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical_festival.db")
+    conn.row_factory = sqlite3.Row
+    return conn

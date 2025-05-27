@@ -5,7 +5,7 @@ def get_staff_passw():
     conn = sqlite3.connect("musical_festival.db")
     cursor = conn.cursor()
 
-    query = "SELECT staff_password FROM STATIC"
+    query = "SELECT staff_password FROM SETTINGS;"
     cursor.execute(query)
 
     user = cursor.fetchone()
@@ -16,13 +16,15 @@ def set_staff_passw(plain_text_passw):
     conn = sqlite3.connect("musical_festival.db")
     cursor = conn.cursor()
 
-    # Svuota la tabella STATIC prima di inserire la nuova password
-    cursor.execute("DELETE FROM STATIC")
+    cursor.execute("DELETE FROM SETTINGS")
 
-    query = "INSERT INTO STATIC (staff_password) VALUES (?)"
+    query = "INSERT INTO SETTINGS (staff_password) VALUES (?);"
     hashed_passw = generate_password_hash(plain_text_passw)
     cursor.execute(query, (hashed_passw, ))
 
     conn.commit()
     conn.close()
     return
+
+def get_connection():
+    return sqlite3.connect("musical_festival.db")

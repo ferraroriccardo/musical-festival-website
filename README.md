@@ -1,15 +1,15 @@
-# Musical Festival Website
-Website for managing a music festival, allowing administration of both organizers and attendees.
+# <span style="color:#2e86c1">Musical Festival Website</span>
+<span style="color:#566573">Website for managing a music festival, allowing administration of both organizers and attendees.</span>
 
-## URL after deployment
+## <span style="color:#27ae60">URL after deployment</span>
 
-## Staff Registration Password
+## <span style="color:#af601a">Staff Registration Password</span>
 To sign up as a staff member, use the following password:
 
 `FESTIVAL`
 
-## Error Messages
-### Login & Signup
+## <span style="color:#b03a2e">Error Messages</span>
+### <span style="color:#b03a2e">Login & Signup</span>
 - `EMAIL_NOT_FOUND_ERROR`: The provided email does not exist.
 - `WRONG_PASSWORD_ERROR`: The password entered is incorrect.
 - `MISSING_EMAIL_OR_PASSWORD_ERROR`: Email or password is missing.
@@ -18,11 +18,12 @@ To sign up as a staff member, use the following password:
 - `INVALID_EMAIL_ERROR`: The email format is invalid.
 - `NO_TICKETS_AVAILABLE`: No tickets are available for the selected type.
 - `DATABASE_ERROR`: An error occurred while processing your request. Please try again later.
+- `MISSING_REQUIRED_PARAMETERS`: Required parameters are missing from the request.
 
-## Static Tests
+## <span style="color:#884ea0">Static Tests</span>
 
-### Sold Out Tickets
+### <span style="color:#884ea0">Sold Out Tickets</span>
 In the settings section, under "Sell Out Tickets", you can mark all remaining tickets as sold out to preview how the ticket cards page changes (greyed-out card with a "SOLD OUT" message).
 
-### Set Staff Password
+### <span style="color:#884ea0">Set Staff Password</span>
 In the settings section, under "Set staff password", you can set a new password which must be submitted when signing up as a new staff account.

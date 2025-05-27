@@ -11,16 +11,23 @@ Per registrarsi come membro dello staff, usa la seguente password:
 `FESTIVAL`
 
 ## <span style="color:#b03a2e">Messaggi di Errore</span>
-### <span style="color:#b03a2e">Login & Registrazione</span>
+### <span style="color:#b03a2e">Login</span>
 - `EMAIL_NOT_FOUND_ERROR`: L'email inserita non esiste.
 - `WRONG_PASSWORD_ERROR`: La password inserita non è corretta.
 - `MISSING_EMAIL_OR_PASSWORD_ERROR`: Email o password mancanti.
-- `STAFF_PASSWORD_ERROR`: La password staff non è corretta.
-- `UNMATCHING_PASSWORDS_ERROR`: Le password inserite non coincidono.
 - `INVALID_EMAIL_ERROR`: Il formato dell'email non è valido.
-- `NO_TICKETS_AVAILABLE`: Non ci sono biglietti disponibili per la tipologia selezionata.
-- `DATABASE_ERROR`: Si è verificato un errore durante l'elaborazione della richiesta. Riprova più tardi.
+
+### <span style="color:#b03a2e">Registrazione</span>
+- `UNMATCHING_PASSWORDS_ERROR`: Le password inserite non coincidono.
+- `STAFF_PASSWORD_ERROR`: La password staff non è corretta.
+- `EMAIL_ALREADY_REGISTERED_ERROR`: L'email è già registrata.
 - `MISSING_REQUIRED_PARAMETERS`: Parametri richiesti mancanti nella richiesta.
+
+### <span style="color:#b03a2e">Evento</span>
+- `NO_TICKETS_AVAILABLE`: Non ci sono biglietti disponibili per la tipologia selezionata.
+- `SHOW_SLOT_ALREADY_OCCUPIED`: La fascia oraria selezionata è già occupata da un altro evento pubblicato.
+- `EVENT_CREATED_WITH_SUCCESS`: Evento creato con successo.
+- `DATABASE_ERROR`: Si è verificato un errore durante l'elaborazione della richiesta. Riprova più tardi.
 
 ## <span style="color:#884ea0">Test Statici</span>
 

@@ -11,16 +11,23 @@ To sign up as a staff member, use the following password:
 `FESTIVAL`
 
 ## <span style="color:#b03a2e">Error Messages</span>
-### <span style="color:#b03a2e">Login & Signup</span>
+### <span style="color:#b03a2e">Login</span>
 - `EMAIL_NOT_FOUND_ERROR`: The provided email does not exist.
 - `WRONG_PASSWORD_ERROR`: The password entered is incorrect.
 - `MISSING_EMAIL_OR_PASSWORD_ERROR`: Email or password is missing.
-- `STAFF_PASSWORD_ERROR`: The staff password is incorrect.
-- `UNMATCHING_PASSWORDS_ERROR`: The passwords entered do not match.
 - `INVALID_EMAIL_ERROR`: The email format is invalid.
-- `NO_TICKETS_AVAILABLE`: No tickets are available for the selected type.
-- `DATABASE_ERROR`: An error occurred while processing your request. Please try again later.
+
+### <span style="color:#b03a2e">Signup</span>
+- `UNMATCHING_PASSWORDS_ERROR`: The passwords entered do not match.
+- `STAFF_PASSWORD_ERROR`: The staff password is incorrect.
+- `EMAIL_ALREADY_REGISTERED_ERROR`: The email is already registered.
 - `MISSING_REQUIRED_PARAMETERS`: Required parameters are missing from the request.
+
+### <span style="color:#b03a2e">Event</span>
+- `NO_TICKETS_AVAILABLE`: No tickets are available for the selected type.
+- `SHOW_SLOT_ALREADY_OCCUPIED`: The selected event slot is already occupied by another published event.
+- `EVENT_CREATED_WITH_SUCCESS`: The event was created successfully.
+- `DATABASE_ERROR`: An error occurred while processing your request. Please try again later.
 
 ## <span style="color:#884ea0">Static Tests</span>
 

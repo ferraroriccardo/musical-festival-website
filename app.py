@@ -103,23 +103,23 @@ def signup():
 
     if not email or not password1 or not password2:
         flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
-        return redirect(url_for("signup"))
+        return redirect(url_for("signup_page"))
     if password1 != password2:
         flash("UNMATCHING_PASSWORDS_ERROR")
-        return redirect(url_for("signup"))
+        return redirect(url_for("signup_page"))
     elif "@" not in email:
         flash("INVALID_EMAIL_ERROR")
-        return redirect(url_for("signup"))
+        return redirect(url_for("signup_page"))
 
     user_data = utenti_dao.get_user_by_email(email)
     if user_data:
         flash("EMAIL_ALREADY_REGISTERED_ERROR")
-        return redirect(url_for("signup"))
+        return redirect(url_for("signup_page"))
     
     staff_hash = settings_dao.get_staff_password()
     if type == "staff" and not check_password_hash(staff_hash[0], staff_password):
         flash("STAFF_PASSWORD_ERROR")
-        return redirect(url_for("signup"))
+        return redirect(url_for("signup_page"))
 
     utenti_dao.create_user(email, hashed_passw, type)
     user = utenti_dao.get_user_by_email(email)
@@ -179,7 +179,7 @@ def buy_ticket():
 # route with form to create an event
 @login_required
 @app.route("/event")
-def event():
+def event_page():
     return render_template("event.html")
 
 # route for creating an event
@@ -188,7 +188,40 @@ def event():
 def create_event():
     #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
     # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile
-    return render_template("create_event.html")
+    day = request.form.get('day')
+    start_hour = request.form.get('start_hour')
+    duration = request.form.get('duration')
+    artist = request.form.get('artist')
+    description = request.form.get('description')
+    genre = request.form.get('genre')
+    published = request.form.get('published')
+    stage = request.form.get('stage')
+    creator_id = current_user.id
+    
+    #TODO: decide how many photos the website needs for each event
+    #foto(s) = request.form.get('photo')    gestisci i(l) file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
+
+    required_fields = [day, start_hour, duration, artist, description, genre, published, stage]
+    if not all(required_fields):
+        flash("MISSING_REQUIRED_PARAMETERS")
+        return redirect(url_for('event_page'))
+
+    conn = settings_dao.get_connection()
+    conn.row_factory = sqlite3.Row
+    try:
+        with conn:
+            success, error = spettacoli_dao.create_event(conn, day, start_hour, duration, artist, description, genre, published, stage)
+            if not success:
+                flash(error)
+                return redirect(url_for('event_page'))
+    except Exception as e:
+        conn.rollback()
+        flash('DATABASE_ERROR')
+        return redirect(url_for('event_page'))
+    finally:
+        conn.close()
+    flash("EVENT_CREATED_WITH_SUCCESS")
+    return redirect(url_for("profile"))
 
 # route for handling settings operations, such as setting up a new staff password, or sell out all remaining tickets
 @login_required

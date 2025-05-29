@@ -26,6 +26,7 @@ To sign up as a staff member, use the following password:
 ### <span style="color:#b03a2e">Event</span>
 - `NO_TICKETS_AVAILABLE`: No tickets are available for the selected type.
 - `SHOW_SLOT_ALREADY_OCCUPIED`: The selected event slot is already occupied by another published event.
+- `ARTIST_ALREADY_PERFORMING`: The selected artist is already performing in another event at this time.
 - `EVENT_CREATED_WITH_SUCCESS`: The event was created successfully.
 - `DATABASE_ERROR`: An error occurred while processing your request. Please try again later.
 

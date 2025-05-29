@@ -38,7 +38,7 @@ def load_user(user_id):
 # route for homepage
 @app.route("/")
 def home():
-    #TODO: hadle filters to show differen events
+    #TODO: maybe set only (5) artist per day to be shown in home
     shows = spettacoli_dao.get_shows()
     return render_template("home.html", p_shows = shows)
 
@@ -90,7 +90,7 @@ def logout():
 # route for sign up
 @app.route("/sign-up-form", methods=['GET'])
 def signup_page():
-    return render_template("signup.html")
+    return render_template("signup.html", p_type = ("staff", "basic"))
 
 # route to handle sign up data
 @app.route("/signup", methods=['POST'])
@@ -152,7 +152,7 @@ def ticket_page():
     ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
     if ticket:
         return render_template("ticket.html", p_ticket = ticket)
-    return render_template("ticket.html")
+    return render_template("ticket.html", p_ticket_types = ("one_day", "two_days", "three_days"), p_n_days = "")
 
 # route to buy a ticket
 @login_required
@@ -185,7 +185,7 @@ def buy_ticket():
 @login_required
 @app.route("/event")
 def event_page():
-    return render_template("event.html")
+    return render_template("create_event.html")
 
 # route for creating an event
 @login_required
@@ -200,13 +200,13 @@ def create_event():
     description = request.form.get('description')
     genre = request.form.get('genre')
     published = request.form.get('published')
-    stage = request.form.get('stage')
+    stage_name = request.form.get('stage_name')
     creator_id = current_user.id
     
-    #TODO: decide how many photos the website needs for each event
+    #TODO: decide how many photos the website needs for each event (probabilmente ne basta una)
     #foto(s) = request.form.get('photo')    gestisci i(l) file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
 
-    required_fields = [day, start_hour, duration, artist, description, genre, published, stage]
+    required_fields = [day, start_hour, duration, artist, description, genre, published, stage_name]
     if not all(required_fields):
         flash("MISSING_REQUIRED_PARAMETERS")
         return redirect(url_for('event_page'))
@@ -214,7 +214,7 @@ def create_event():
     conn = settings_dao.get_connection()
     try:
         with conn:
-            success, error = spettacoli_dao.create_event(conn, day, start_hour, duration, artist, description, genre, published, stage)
+            success, error = spettacoli_dao.create_event(conn, day, start_hour, duration, artist, description, genre, published, stage_name)
             if not success:
                 flash(error)
                 return redirect(url_for('event_page'))

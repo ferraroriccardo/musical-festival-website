@@ -1,0 +1,5 @@
+1. la home che ho disegnato è accettabile? così non rispetta la richiesta di visualizzare
+    gli eventi ordinati, ma lo farei in una pagina apposta
+
+2. è fondamentale usare il jinja extends? qua lo userei solo per la navbar e in più dovrei
+    cambiare il colore dell'icona della pagina aperta, quindi non andrebbe bene

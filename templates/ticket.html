@@ -1,0 +1,45 @@
+<form method="POST" action="{{ url_for('buy_ticket') }}">
+  <label for="type">Tipo di biglietto:</label>
+  <select id="type" name="type" onchange="showDurationOptions()">
+    <option value="one_day">1 giorno</option>
+    <option value="two_days">2 giorni</option>
+    <option value="three_days">3 giorni</option>
+  </select>
+
+  <div id="one_day_options" style="display:none;">
+    <!-- Eventuali input specifici per 1 giorno -->
+    <label for="start_day_1">Giorno:</label>
+    <select name="start_day" id="start_day_1">
+      <option value="venerdi">Venerdì</option>
+      <option value="sabato">Sabato</option>
+      <option value="domenica">Domenica</option>
+    </select>
+  </div>
+
+  <div id="two_days_options" style="display:none;">
+    <label for="start_day_2">Giorno di inizio:</label>
+    <select name="start_day" id="start_day_2">
+      <option value="venerdi">Venerdì</option>
+      <option value="sabato">Sabato</option>
+    </select>
+  </div>
+
+  <div id="three_days_options" style="display:none;">
+    <!-- Per 3 giorni, di solito non serve scegliere il giorno di inizio -->
+    <input type="hidden" name="start_day" value="venerdi">
+    <span>Valido per tutti i giorni</span>
+  </div>
+
+  <button type="submit">Acquista</button>
+</form>
+
+<script>
+function showDurationOptions() {
+  var type = document.getElementById('type').value;
+  document.getElementById('one_day_options').style.display = (type === 'one_day') ? 'block' : 'none';
+  document.getElementById('two_days_options').style.display = (type === 'two_days') ? 'block' : 'none';
+  document.getElementById('three_days_options').style.display = (type === 'three_days') ? 'block' : 'none';
+}
+// Chiamata iniziale per impostare lo stato corretto
+document.addEventListener('DOMContentLoaded', showDurationOptions);
+</script>

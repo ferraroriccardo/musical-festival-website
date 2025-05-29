@@ -1,0 +1,4 @@
+1. modifica delle bozze nella pagina di creazione evento (ogni creator può modificare solo le sue)
+2. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
+    poi ci metti le foto, la playlist spotify
+ 

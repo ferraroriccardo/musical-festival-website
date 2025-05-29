@@ -56,19 +56,19 @@ def login():
     # Validation
     if not email or not password:
         flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
-        return redirect(url_for("login"))
+        return redirect(url_for("login_page"))
     elif "@" not in email:
         flash("INVALID_EMAIL_ERROR")
-        return redirect(url_for("login"))
+        return redirect(url_for("login_page"))
 
     user_data = utenti_dao.get_user_by_email(email)
 
     if not user_data:
         flash("EMAIL_NOT_FOUND_ERROR")
-        return redirect(url_for("login"))
+        return redirect(url_for("login_page"))
     elif not check_password_hash(user_data["password"], password):
         flash("WRONG_PASSWORD_ERROR")
-        return redirect(url_for("login"))
+        return redirect(url_for("login_page"))
 
     user = User(
         id=user_data["id"],
@@ -189,7 +189,7 @@ def event_page():
 
 # route for creating an event
 @login_required
-@app.route("/create-event")
+@app.route("/create-event", methods = ['POST'])
 def create_event():
     #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
     # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile

@@ -1,4 +1,11 @@
 1. modifica delle bozze nella pagina di creazione evento (ogni creator può modificare solo le sue)
 2. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
     poi ci metti le foto, la playlist spotify
- 
+3. filtri oer gli eventi:
+    - giorno
+    - palco
+    - genere
+
+3. riempire il database di utenti già registrati (5 totale, 3 partecipanti, 2 staff)
+3. riempire il database di eventi (almeno 5 per giorno, almeno 1 bozza non pubblicata)
+3. riempire il database di biglietti (almeno 1 per tipo)

@@ -1,13 +1,20 @@
-.blackbackground{
-    background-color: rgb(13, 13, 23) !important;
+.black-han-sans-regular {
+    font-family: "Black Han Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.navbar {
+    background-color: #202732;
+    color: #ffffebd1;
+}
+
+.black-color {
+    color: rgb(13, 13, 23);
 }
 
 .margin {
     margin: 2rem;
-}
-
-.padding {
-    padding: 2rem;
 }
 
 img.full-width-bg {
@@ -18,30 +25,20 @@ img.full-width-bg {
     object-fit: cover;
 }
 
-
-.black-color{
-    color: rgb(13, 13, 23);
-}
-
-.day_article{
-    height:30rem;
-    background-color: rgb(13, 13, 23);
-}
-
-footer{
+footer {
     height: 7rem;
     background-color: rgb(25, 25, 31);
 }
 
-footer p{
+footer p {
     color: rgb(156, 152, 152);
     font-size: small;
     margin-left: 8rem;
     padding-top: 0.8rem;
 }
 
-.banner-black, .banner-blue {
-    background-color: rgb(13, 13, 23);
+.banner-black,
+.banner-blue {
     width: 100%;
     min-width: 0;
     max-width: 100%;
@@ -51,39 +48,24 @@ footer p{
     overflow: hidden;
 }
 
+.banner-black {
+    background: linear-gradient(60deg, #1c2128 0%, #202732 100%);
+}
+
 .banner-blue {
-    background-color: #336499;
+    background: linear-gradient(60deg, #5694d5 0%, #2f517d 100%);
 }
-.btn-primary, .btn-custom-purple {
-    transition: background-color 0.4s cubic-bezier(0.4,0,0.2,1), color 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1);
-}
-.btn-primary:hover, .btn-primary:focus {
-    background-color: #172f6a;
-    color: #111;
-    transform: translateY(-0.5rem);
-}
-.btn-custom-purple {
-    background-color: #bc7cc9;
-    color: #111;
-    border: none;
-}
-.btn-custom-purple:hover, .btn-custom-purple:focus {
-    background-color: #883790;
-    color: #111;
-    transform: translateY(-0.5rem);
-}
-.btn-discover-black {
+
+.btn-custom-black {
     position: absolute;
     top: 60%;
     left: 20%;
     z-index: 2;
-    background-color: #000 !important;
-    color: #fff !important;
-    border-radius: 50rem !important;
-    z-index: 10;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s, color 0.2s, box-shadow 0.2s;
     font-size: 1.5rem;
     padding: 1rem 3rem;
     min-width: 220px;
@@ -91,24 +73,29 @@ footer p{
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1.1;
-    padding-top: 1rem;
-}
-.btn-discover-black:hover, .btn-discover-black:focus {
-    background-color: #222 !important;
-    color: #fff !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    text-decoration: none;
 }
 
-.banner-black, .banner-blue {
-    height: 30rem;
+.btn-custom-yellow {
+    background-color: rgb(209, 233, 74);
 }
 
-.banner-section-row-20 { height: 20%; }
-.banner-section-row-10 { height: 10%; }
-.banner-section-row-5 { height: 5%; }
+.btn-custom-black,
+.btn-custom-yellow {
+    /* transizione di colore graduale */
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-.headliner-title { font-size: 2.5rem; font-weight: bold; }
-.headliner-subtitle { font-size: 1.25rem; }
-.headliner-band { font-size: 1rem; }
+.btn-custom-yellow:hover,
+.btn-custom-yellow:focus {
+    background-color: rgb(209, 233, 74);
+    color: #111;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transform: translateY(-0.3rem);
+}
+
+.btn-custom-black:hover,
+.btn-custom-black:focus {
+    background-color: #222;
+    color: #ffffffeb;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}

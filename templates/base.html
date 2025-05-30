@@ -11,15 +11,17 @@
 </head>
 
 <body>
-    <div class="blackbackground">
-        <nav class="container-fluid">
+    <div>
+        <nav class="container-fluid  blackbackground">
             <div class="row align-items-center">
-                <h1 class="col-8 bluebackground margin">
+                <h1 class="col-8 margin">
                     <a href="{{ url_for('home') }}" class="text-decoration-none padding">OVERLOAD</a>
                 </h1>
 
                 <div class="col-3 d-flex justify-content-between">
-                    <a class="flex-fill text-center" href="{{ url_for('home') }}">Create event</a>
+                    {% if current_user.is_authenticated and current_user.tipo == "staff" %}
+                        <a class="flex-fill text-center" href="{{ url_for('home') }}">Create event</a>
+                    {% endif %}
                     <a class="flex-fill text-center" href="{{ url_for('home') }}">Tickets</a>
                     <a class="flex-fill text-center" href="{{ url_for('home') }}">My account</a>
                 </div>
@@ -28,13 +30,13 @@
     </nav>
 
     {% block content %}
-    
+
     {% endblock %}
 
-    <footer class="blackbackground">
+    <footer>
         <nav class="container-fluid">
             <div class="row align-items-center padding">
-                <p class="col-8  grey_text">Overload festival © - All rights reserved</p>
+                <p class="col-8">Overload festival © - All rights reserved</p>
 
                 <div class="col-2 d-flex justify-content-between">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(156, 152, 152)"

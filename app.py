@@ -42,6 +42,21 @@ def home():
     shows = spettacoli_dao.get_shows()
     return render_template("home.html", p_shows = shows)
 
+# route for full program list (base, senza filtri)
+@app.route("/program")
+def program():
+    shows = spettacoli_dao.get_shows()
+    return render_template("program.html", p_shows=shows)
+
+# route per programma filtrato (con parametri GET)
+@app.route("/program/filter")
+def program_filtered():
+    giorno = request.args.get('giorno')
+    palco = request.args.get('palco')
+    genere = request.args.get('genere')
+    shows = spettacoli_dao.get_shows_filtered(giorno, palco, genere)
+    return render_template("program.html", p_shows=shows)
+
 # route for login page
 @app.route("/login-form", methods=['GET'])
 def login_page():

@@ -6,9 +6,31 @@ def get_shows():
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    query = "SELECT artista FROM SPETTACOLI;"
+    query = "SELECT * FROM SPETTACOLI;"
     cursor.execute(query)
 
+    shows = cursor.fetchall()
+    conn.close()
+    return shows
+
+def get_shows_filtered(giorno, palco, genere):
+    conn = sqlite3.connect('musical_festival.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    query = "SELECT artista FROM SPETTACOLI WHERE 1=1"
+    params = []
+    if giorno:
+        query += " AND giorno = ?"
+        params.append(giorno)
+    if palco:
+        query += " AND palco = ?"
+        params.append(palco)
+    if genere:
+        query += " AND genere = ?"
+        params.append(genere)
+
+    cursor.execute(query, params)
     shows = cursor.fetchall()
     conn.close()
     return shows
@@ -55,4 +77,4 @@ def is_already_performing(artist):
     if shows:
         return True
     return False
-    
+

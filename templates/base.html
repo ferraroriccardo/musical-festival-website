@@ -18,14 +18,15 @@
 
 <body>
     <nav class="navbar container-fluid">
-        <div class="row align-items-center w-100 m-0">
-            <h1 class="col-8 margin">
+        <!-- w-100 imposta la dimensione pari all'elemento padre (div grande come nav) -->
+        <div class="row align-items-center justify-content-center w-100">
+            <h1 class="col-8 top-padding">
                 <a href="{{ url_for('home') }}" class="text-decoration-none black-han-sans-regular">OVERLOAD</a>
             </h1>
-            <div class="col-3 d-flex justify-content-between">
-                {% if current_user.is_authenticated and current_user.tipo == "staff" %}
+            <div class="col-3 d-flex">
+                <!-- {% if current_user.is_authenticated and current_user.tipo == "staff" %} -->
+                <!-- {% endif %} -->
                 <a class="flex-fill text-center" href="{{ url_for('home') }}">Create event</a>
-                {% endif %}
                 <a class="flex-fill text-center" href="{{ url_for('home') }}">Tickets</a>
                 <a class="flex-fill text-center" href="{{ url_for('home') }}">My account</a>
             </div>
@@ -37,10 +38,10 @@
     {% endblock %}
 
     <footer class="container-fluid">
-            <div class="row align-items-center padding">
+            <div class="row align-items-center footer-div-height">
                 <p class="col-8">Overload festival © - All rights reserved</p>
 
-                <div class="col-2 d-flex justify-content-between">
+                <div class="col-2 d-flex align-items-center justify-content-between">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(156, 152, 152)"
                         class="bi bi-facebook" viewBox="0 0 16 16">
                         <path

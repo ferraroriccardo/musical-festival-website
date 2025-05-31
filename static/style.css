@@ -1,20 +1,19 @@
 .black-han-sans-regular {
     font-family: "Black Han Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
 }
 
 .navbar {
     background-color: #202732;
     color: #ffffebd1;
+    height: 6rem;
 }
 
 .black-color {
     color: rgb(13, 13, 23);
 }
 
-.margin {
-    margin: 2rem;
+.top-padding {
+    margin-top: 1rem;
 }
 
 img.full-width-bg {
@@ -35,6 +34,10 @@ footer p {
     font-size: small;
     margin-left: 8rem;
     padding-top: 0.8rem;
+}
+
+footer div {
+    height: 7rem;
 }
 
 .banner-black,

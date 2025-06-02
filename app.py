@@ -3,6 +3,8 @@ from flask import Flask, flash, render_template, redirect, request, url_for
 
 from flask_login import LoginManager, login_required, current_user
 
+from login_manager_setup import login_manager, setup_login_manager
+
 import spettacoli_dao, biglietti_dao, settings_dao
 
 # Image module to preprocess the images uploaded by the users
@@ -12,10 +14,8 @@ POST_IMG_WIDTH = 300
 
 # initialize the application
 app = Flask(__name__)
+setup_login_manager(app)
 app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login" #redirect user to login() function when trying to acces a login_required page (so we won't have the 401 Unauthorized page)
 
 # route for homepage
 @app.route("/")
@@ -136,6 +136,10 @@ def create_event():
 @login_required
 def settings():
     return render_template("settings.html")
+
+import auth  # import the module for authorization
+
+app.register_blueprint(auth.auth_bp)  # handles every route in auth_bp
 
 if __name__ == "__main__":
     app.run(debug=True)

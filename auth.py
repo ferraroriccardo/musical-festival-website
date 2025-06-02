@@ -8,25 +8,6 @@ from models import User
 
 auth_bp = Blueprint("auth", __name__)  # handles separation of this module from app.py
 
-# user loader
-from app import login_manager
-
-# user object getter function
-@login_manager.user_loader
-def load_user(user_id):
-    db_user = utenti_dao.get_user_by_id(user_id)
-
-    if db_user is None:
-        return None 
-    user = User(
-        id=db_user["id"],
-        email=db_user["email"],
-        password=db_user["password"],
-        tipo=db_user["tipo"],
-        id_biglietto=db_user["id_biglietto"]
-    )
-    return user
-
 # security function to avoid open redirects
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)

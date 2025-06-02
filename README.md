@@ -37,3 +37,13 @@ In the settings section, under "Sell Out Tickets", you can mark all remaining ti
 
 ### <span style="color:#884ea0">Set Staff Password</span>
 In the settings section, under "Set staff password", you can set a new password which must be submitted when signing up as a new staff account.
+
+## <span style="color:#2471a3">Test User Credentials</span>
+
+| Email                    | Password      | User Type |
+|--------------------------|--------------|-----------|
+| marco.rossi@gmail.com    | marcopassw   | basic     |
+| davide.verdi@gmail.com   | davidepassw  | basic     |
+| marghe.montru@gmail.com  | marghepassw  | basic     |
+| riccardo.ferraro@gmail.com | riccardopassw | staff   |
+| samu.poli@gmail.com      | samupassw    | staff     |

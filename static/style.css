@@ -8,6 +8,12 @@
     height: 6rem;
 }
 
+nav.navbar {
+    background: rgba(255,255,255,0.95);
+    /* leggero sfondo bianco trasparente per leggibilità */
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+}
+
 .navbar a, .navbar h1 {
     color: #ffffff;
 }
@@ -117,4 +123,11 @@ footer div {
     background-color: #222;
     color: #ffffffeb;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Assicura che il contenuto non sia nascosto dietro la navbar */
+@media (min-width: 768px) {
+    main, .container, .content {
+        margin-top: 90px;
+    }
 }

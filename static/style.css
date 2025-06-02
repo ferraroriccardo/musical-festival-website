@@ -3,9 +3,17 @@
 }
 
 .navbar {
-    background-color: #202732;
+    background-color: #134b71;
     color: #ffffebd1;
     height: 6rem;
+}
+
+.navbar a, .navbar h1 {
+    color: #ffffff;
+}
+
+.navbar a:hover, .navbar a:focus {
+    color: #dbeafe;
 }
 
 .black-color {
@@ -14,6 +22,14 @@
 
 .top-padding {
     margin-top: 1rem;
+}
+
+.main-content {
+    min-height: calc(100vh - 6rem - 7rem);
+}
+
+.main-content-extended {
+    min-height: calc(120vh - 6rem - 7rem);
 }
 
 img.full-width-bg {

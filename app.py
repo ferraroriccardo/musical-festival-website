@@ -20,7 +20,6 @@ app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
 # route for homepage
 @app.route("/")
 def home():
-    #TODO: maybe set only (5) artist per day to be shown in home
     shows = spettacoli_dao.get_shows()
     return render_template("home.html", p_shows = shows)
 

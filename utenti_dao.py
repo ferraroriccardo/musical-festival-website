@@ -28,7 +28,7 @@ def create_user(email, password, type):
     conn = sqlite3.connect("musical_festival.db")
     cursor = conn.cursor()
 
-    query = "INSERT INTO UTENTI (email, password, type) VALUES (?, ?, ?);"
+    query = "INSERT INTO UTENTI (email, password, tipo) VALUES (?, ?, ?);"
     cursor.execute(query, (email, password, type))
     conn.commit()
     

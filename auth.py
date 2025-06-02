@@ -24,23 +24,23 @@ def login_page():
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
-    
+    next_page = request.form.get('next') or request.args.get('next')
     # Validation
     if not email or not password:
         flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
-        return redirect(url_for("login_page"))
+        return redirect(url_for("auth.login_page", next=next_page))
     elif "@" not in email:
         flash("INVALID_EMAIL_ERROR")
-        return redirect(url_for("login_page"))
+        return redirect(url_for("auth.login_page", next=next_page))
 
     user_data = utenti_dao.get_user_by_email(email)
 
     if not user_data:
         flash("EMAIL_NOT_FOUND_ERROR")
-        return redirect(url_for("login_page"))
+        return redirect(url_for("auth.login_page", next=next_page))
     elif not check_password_hash(user_data["password"], password):
         flash("WRONG_PASSWORD_ERROR")
-        return redirect(url_for("login_page"))
+        return redirect(url_for("auth.login_page", next=next_page))
 
     user = User(
         id=user_data["id"],
@@ -50,7 +50,6 @@ def login():
         id_biglietto=user_data["id_biglietto"]
     )
     login_user(user)
-    next_page = request.args.get("next")
 
     if next_page and is_safe_url(next_page):
         return redirect(next_page)
@@ -67,8 +66,8 @@ def logout():
 # route for sign up
 @auth_bp.route("/sign-up-form", methods=['GET'])
 def signup_page():
-    next_page = request.args.get("next") # gets the next page to render after the login. Can be None if we click directly to sign up
-    return render_template("signup.html", p_type=("staff", "basic"), next=next_page)
+    next_page = request.args.get("next") or request.args.get("next_page")
+    return render_template("signup.html", p_type=("Basic", "Staff"), next=next_page)
 
 # route to handle sign up data
 @auth_bp.route("/signup", methods=['POST'])
@@ -78,28 +77,28 @@ def signup():
     password2 = request.form.get('password2')
     type = request.form.get('type')
     staff_password = request.form.get('staff_password')
-    hashed_passw = generate_password_hash(password1)
 
     if not email or not password1 or not password2:
         flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
-        return redirect(url_for("signup_page"))
+        return redirect(url_for("auth.signup_page"))
     if password1 != password2:
         flash("UNMATCHING_PASSWORDS_ERROR")
-        return redirect(url_for("signup_page"))
+        return redirect(url_for("auth.signup_page"))
     elif "@" not in email:
         flash("INVALID_EMAIL_ERROR")
-        return redirect(url_for("signup_page"))
+        return redirect(url_for("auth.signup_page"))
 
     user_data = utenti_dao.get_user_by_email(email)
     if user_data:
         flash("EMAIL_ALREADY_REGISTERED_ERROR")
-        return redirect(url_for("signup_page"))
+        return redirect(url_for("auth.signup_page"))
     
-    staff_hash = settings_dao.get_staff_password()
+    staff_hash = settings_dao.get_staff_passw()
     if type == "staff" and not check_password_hash(staff_hash[0], staff_password):
         flash("STAFF_PASSWORD_ERROR")
-        return redirect(url_for("signup_page"))
+        return redirect(url_for("auth.signup_page"))
 
+    hashed_passw = generate_password_hash(password1, method='pbkdf2:sha256')
     utenti_dao.create_user(email, hashed_passw, type)
     user = utenti_dao.get_user_by_email(email)
     param_user = User(

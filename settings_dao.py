@@ -2,7 +2,7 @@ import sqlite3
 from werkzeug.security import generate_password_hash
 
 def get_staff_passw():
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/db/musical_festival.db")
     cursor = conn.cursor()
 
     query = "SELECT staff_password FROM SETTINGS;"
@@ -13,7 +13,7 @@ def get_staff_passw():
     return user
 
 def set_staff_passw(plain_text_passw):
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/db/musical_festival.db")
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM SETTINGS")
@@ -27,6 +27,6 @@ def set_staff_passw(plain_text_passw):
     return
 
 def get_connection():
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/db/musical_festival.db")
     conn.row_factory = sqlite3.Row
     return conn

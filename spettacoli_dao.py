@@ -2,7 +2,7 @@ import sqlite3
 import palchi_dao
 
 def get_shows():
-    conn = sqlite3.connect('musical_festival.db')
+    conn = sqlite3.connect('musical-festival-website/db/musical_festival.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -14,7 +14,7 @@ def get_shows():
     return shows
 
 def get_shows_filtered(giorno, palco, genere):
-    conn = sqlite3.connect('musical_festival.db')
+    conn = sqlite3.connect('musical-festival-website/db/musical_festival.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -82,7 +82,7 @@ def get_overlapping_published_shows(day, hour_slot, duration, conn):
     return shows
 
 def is_already_performing(artist):
-    conn = sqlite3.connect('musical_festival.db')
+    conn = sqlite3.connect('musical-festival-website/db/musical_festival.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 

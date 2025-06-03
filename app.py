@@ -139,6 +139,3 @@ def settings():
 import auth  # import the module for authorization
 
 app.register_blueprint(auth.auth_bp)  # handles every route in auth_bp
-
-if __name__ == "__main__":
-    app.run(debug=True)

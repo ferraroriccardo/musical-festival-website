@@ -1,0 +1,127 @@
+.black-han-sans-regular {
+    font-family: "Black Han Sans", sans-serif;
+}
+
+.transparent-white-bg {
+    background: rgba(255, 255, 255, 0.70);
+}
+
+nav a, nav h1{
+    color: #963939;
+}
+nav a:hover,
+nav a:focus {
+    color: #43699c;
+}
+
+.top-margin {
+    margin-top: 1rem;
+}
+
+.top-high-margin{
+    margin-top: 6rem;
+}
+
+.main-content {
+    min-height: calc(100vh - 6rem - 7rem);
+}
+
+.main-content-extended {
+    min-height: calc(120vh - 6rem - 7rem);
+}
+
+.full-height{
+    height: fit-content;
+    min-height: 100vh;
+}
+
+.double-full-height{
+    min-height: 94rem;
+    height: 94rem;
+}
+
+img.full-width-bg {
+    width: 100vw;
+    height: auto;
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+footer {
+    height: 7rem;
+    background-color: rgb(25, 25, 31);
+}
+
+footer p {
+    color: rgb(156, 152, 152);
+    font-size: small;
+    margin-left: 8rem;
+    padding-top: 0.8rem;
+}
+
+footer div {
+    height: 7rem;
+}
+
+.banner-black,
+.banner-blue {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.banner-black {
+    background: linear-gradient(60deg, #1c2128 0%, #202732 100%);
+}
+
+.banner-blue {
+    background: linear-gradient(60deg, #5694d5 0%, #C76A79 100%);
+}
+
+.btn-custom-black {
+    position: absolute;
+    top: 84%;
+    left: 43%;
+    z-index: 2;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s, color 0.2s, box-shadow 0.2s;
+    font-size: 1.5rem;
+    padding: 1rem 3rem;
+    min-width: 220px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-custom-yellow {
+    background-color: rgb(209, 233, 74);
+}
+
+.btn-custom-black,
+.btn-custom-yellow {
+    /* transizione di colore graduale */
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-custom-yellow:hover,
+.btn-custom-yellow:focus {
+    background-color: rgb(209, 233, 74);
+    color: #111;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transform: translateY(-0.3rem);
+}
+
+.btn-custom-black:hover,
+.btn-custom-black:focus {
+    background-color: #222;
+    color: #ffffffeb;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}

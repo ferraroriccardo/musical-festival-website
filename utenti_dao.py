@@ -1,7 +1,7 @@
 import sqlite3
 
 def get_user_by_id(user_id):
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/musical_festival.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -13,7 +13,7 @@ def get_user_by_id(user_id):
     return user
 
 def get_user_by_email(email):
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/musical_festival.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -25,10 +25,10 @@ def get_user_by_email(email):
     return user
 
 def create_user(email, password, type):
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/musical_festival.db")
     cursor = conn.cursor()
 
-    query = "INSERT INTO UTENTI (email, password, type) VALUES (?, ?, ?);"
+    query = "INSERT INTO UTENTI (email, password, tipo) VALUES (?, ?, ?);"
     cursor.execute(query, (email, password, type))
     conn.commit()
     

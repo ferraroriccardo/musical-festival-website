@@ -1,46 +1,144 @@
-<!-- https://getbootstrap.com/docs/5.3/examples/pricing/ -->
-<form method="POST" action="{{ url_for('buy_ticket') }}">
-  <label for="type">Tipo di biglietto:</label>
-  <select id="type" name="type" onchange="showDurationOptions()">
-    <option value="one_day">1 giorno</option>
-    <option value="two_days">2 giorni</option>
-    <option value="three_days">3 giorni</option>
-  </select>
+{% extends "base.html" %}
 
-  <div id="one_day_options" style="display:none;">
-    <!-- Eventuali input specifici per 1 giorno -->
-    <label for="start_day_1">Giorno:</label>
-    <select name="start_day" id="start_day_1">
-      <option value="venerdi">Venerdì</option>
-      <option value="sabato">Sabato</option>
-      <option value="domenica">Domenica</option>
-    </select>
+{% block content %}
+<div class="container justify-content-center align-items-center banner-blue full-height">
+  <div class="row w-100 justify-content-center">
+    <div class="col col-lg-8 my-5">
+      <div class="card shadow rounded-4 p-4 transparent-white-bg top-high-margin">
+        <form action="/login" method="POST">
+          <h1 class="mb-4 text-center">PRICING</h1>
+          <p class="text-center">Pick your pass and get loud with us!</p>
+          <div class="row align-items-stretch">
+            <div class="col d-flex">
+              <section class="card mb-4 rounded-4 shadow flex-fill d-flex flex-column">
+                <div class="card-header fw-bold text-uppercase">ONE SHOT</div>
+                <div class="card-body position-relative p-0">
+                  <img src="{{ url_for('static', filename='ticket2a.jpg') }}" alt="One Shot Ticket"
+                    class="img-fluid w-100" style="height: 220px; object-fit: cover;">
+                  <span class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white text-shadow"
+                    style="text-shadow: 2px 2px 8px #000;">60€</span>
+                </div>
+                <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+                  <span>1 day of pure energy — pick your favorite!</span>
+                  <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button">
+                      Rock for a Day
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="col d-flex">
+              <section class="card mb-4 rounded-4 shadow flex-fill d-flex flex-column">
+                <div class="card-header fw-bold text-uppercase">DOUBLE TROUBLE</div>
+                <div class="card-body position-relative p-0">
+                  <img src="{{ url_for('static', filename='ticket1a.jpg') }}" alt="Double Trouble Ticket"
+                    class="img-fluid w-100" style="height: 220px; object-fit: cover;">
+                  <span class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white text-shadow"
+                    style="text-shadow: 2px 2px 8px #000;">100€</span>
+                </div>
+                <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+                  <span>2 days back-to-back - keep the vibe going!</span>
+                  <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button">
+                      Double the fun
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div class="col d-flex">
+              <section class="card mb-4 rounded-4 shadow border-primary border-3 position-relative bg-light flex-fill d-flex flex-column">
+                <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
+                  Best Experience
+                </span>
+                <div class="card-header fw-bold text-uppercase text-primary">FULL BLAST</div>
+                <div class="card-body position-relative p-0">
+                  <img src="{{ url_for('static', filename='ticket3a.jpg') }}" alt="Full Blast Ticket"
+                    class="img-fluid w-100" style="height: 220px; object-fit: cover;">
+                  <span class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white text-shadow"
+                    style="text-shadow: 2px 2px 8px #000;">150€</span>
+                </div>
+                <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+                  <span>All 3 days — no breaks, just music!</span>
+                  <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button">
+                      Go All In
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row w-100 justify-content-center">
+    <div class="col col-lg-5">
+      <div class="card shadow rounded-4 p-4 transparent-white-bg" id="buy-ticket-form-card">
+        <h1 class="text-center"></h1>
+        <form method="POST" action="{{ url_for('buy_ticket') }}" class="text-center">
+          <label for="type">Tipo di biglietto:</label>
+          <select id="type" name="type" onchange="showDurationOptions()">
+            <option value="one_day">1 giorno</option>
+            <option value="two_days">2 giorni</option>
+            <option value="three_days">3 giorni</option>
+          </select>
+
+          <div id="one_day_options" style="display:none;">
+            <!-- Eventuali input specifici per 1 giorno -->
+            <label for="start_day_1">Giorno:</label>
+            <select name="start_day" id="start_day_1">
+              <option value="venerdi">Venerdì</option>
+              <option value="sabato">Sabato</option>
+              <option value="domenica">Domenica</option>
+            </select>
+          </div>
+
+          <div id="two_days_options" style="display:none;">
+            <label for="start_day_2">Giorno di inizio:</label>
+            <select name="start_day" id="start_day_2">
+              <option value="venerdi">Venerdì</option>
+              <option value="sabato">Sabato</option>
+            </select>
+          </div>
+
+          <div id="three_days_options" style="display:none;">
+            <!-- Per 3 giorni, di solito non serve scegliere il giorno di inizio -->
+            <input type="hidden" name="start_day" value="venerdi">
+            <span>Valido per tutti i giorni</span>
+          </div>
+
+          <button type="submit">Acquista</button>
+        </form>
+
+        <script>
+          function showDurationOptions() {
+            var type = document.getElementById('type').value;
+            document.getElementById('one_day_options').style.display = (type === 'one_day') ? 'block' : 'none';
+            document.getElementById('two_days_options').style.display = (type === 'two_days') ? 'block' : 'none';
+            document.getElementById('three_days_options').style.display = (type === 'three_days') ? 'block' : 'none';
+          }
+          // Chiamata iniziale per impostare lo stato corretto
+          document.addEventListener('DOMContentLoaded', showDurationOptions);
+        </script>
+        </article>
+      </div>
+    </div>
   </div>
 
-  <div id="two_days_options" style="display:none;">
-    <label for="start_day_2">Giorno di inizio:</label>
-    <select name="start_day" id="start_day_2">
-      <option value="venerdi">Venerdì</option>
-      <option value="sabato">Sabato</option>
-    </select>
-  </div>
-
-  <div id="three_days_options" style="display:none;">
-    <!-- Per 3 giorni, di solito non serve scegliere il giorno di inizio -->
-    <input type="hidden" name="start_day" value="venerdi">
-    <span>Valido per tutti i giorni</span>
-  </div>
-
-  <button type="submit">Acquista</button>
-</form>
-
-<script>
-function showDurationOptions() {
-  var type = document.getElementById('type').value;
-  document.getElementById('one_day_options').style.display = (type === 'one_day') ? 'block' : 'none';
-  document.getElementById('two_days_options').style.display = (type === 'two_days') ? 'block' : 'none';
-  document.getElementById('three_days_options').style.display = (type === 'three_days') ? 'block' : 'none';
-}
-// Chiamata iniziale per impostare lo stato corretto
-document.addEventListener('DOMContentLoaded', showDurationOptions);
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.scroll-to-form').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const formCard = document.getElementById('buy-ticket-form-card');
+      if(formCard) {
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+});
 </script>
+
+  {% endblock %}

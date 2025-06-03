@@ -3,10 +3,10 @@
 }
 
 .transparent-white-bg {
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.70);
 }
 
-nav a, navbar h1{
+nav a, nav h1{
     color: #963939;
 }
 nav a:hover,
@@ -18,6 +18,10 @@ nav a:focus {
     margin-top: 1rem;
 }
 
+.top-high-margin{
+    margin-top: 6rem;
+}
+
 .main-content {
     min-height: calc(100vh - 6rem - 7rem);
 }
@@ -27,8 +31,13 @@ nav a:focus {
 }
 
 .full-height{
+    height: fit-content;
     min-height: 100vh;
-    height: 100vh;
+}
+
+.double-full-height{
+    min-height: 94rem;
+    height: 94rem;
 }
 
 img.full-width-bg {
@@ -60,10 +69,9 @@ footer div {
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    height: 30rem;
+    min-height: 100vh;
     margin: 0 auto;
     padding: 0;
-    overflow: hidden;
 }
 
 .banner-black {

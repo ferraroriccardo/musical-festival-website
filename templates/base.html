@@ -20,20 +20,22 @@
     <nav class="container mt-4 rounded-5 shadow transparent-white-bg position-absolute top-0 start-50 translate-middle-x"
         style="z-index: 10;">
         <!-- w-100 imposta la dimensione pari all'elemento padre (div grande come nav) -->
-        <div class="row align-items-center justify-content-center w-100 my-1">
-            <h1 class="col-8 mb-0">
+        <div class="row align-items-center justify-content-center my-1">
+            <h1 class="col-6 mb-0">
                 <a href="{{ url_for('home') }}" class="text-decoration-none black-han-sans-regular">OVERLOAD</a>
             </h1>
-            <div class="col-3 d-flex">
-                <!-- {% if current_user.is_authenticated and current_user.tipo == "staff" %} -->
-                <!-- {% endif %} -->
+            <div class="col-5 d-flex justify-content-end">
+                {% if current_user.is_authenticated and current_user.tipo == "Staff" %}
                 <a class="flex-fill text-center text-decoration-none" href="{{ url_for('event_page') }}">Create
                     event</a>
-                <a class="flex-fill text-center text-decoration-none" href="{{ url_for('ticket_page') }}">Tickets</a>
-                <a class="flex-fill text-center text-decoration-none" href="{{ url_for('profile') }}">My account</a>
-                {% if current_user.is_authenticated %}
-                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('auth.logout') }}">Logout</a>
                 {% endif %}
+                <div class="d-flex ms-auto gap-5">
+                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('ticket_page') }}">Tickets</a>
+                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('profile') }}">My account</a>
+                    {% if current_user.is_authenticated %}
+                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('auth.logout') }}">Logout</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>

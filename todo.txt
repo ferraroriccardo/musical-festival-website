@@ -1,17 +1,13 @@
-aggiungere i parametri per i form con menu a tendina
-
 1. modifica delle bozze nella pagina di creazione evento (ogni creator può modificare solo le sue)
 2. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
     poi ci metti le foto, la playlist spotify
-3. filtri oer gli eventi:
+3. filtri per gli eventi:
     - giorno
     - palco
     - genere
 3b. lo staff deve vedere la percentuale di vendite dei biglietti
-4. riempire il database di utenti già registrati (5 totale, 3 partecipanti, 2 staff)
 5. riempire il database di eventi (almeno 5 per giorno, almeno 1 bozza non pubblicata)
 6. riempire il database di biglietti (almeno 1 per tipo)
-6b. mettere il logout nel profilo (magari con un menu che si apre cliccando sul profilo)
 7. mettere la location nella home
 8. aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
 9. controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato

@@ -48,6 +48,15 @@ img.full-width-bg {
     object-fit: cover;
 }
 
+.card-image {
+    height: 220px;
+    object-fit: cover;
+}
+
+.black-shadow {
+    text-shadow: 2px 2px 8px #000;
+}
+
 footer {
     height: 7rem;
     background-color: rgb(25, 25, 31);

@@ -1,11 +1,130 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <a href="{{ url_for('home') }}">Home</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<article style="position:relative;">
+    <img src="{{ url_for('static', filename='home-overload-background1b.jpg') }}" alt="" class="full-width-bg">
+    <!-- href con # per portare all'article con id corrispondente  -->
+    <a href="#discover-section" class="btn btn-custom-black px-4 py-2">DISCOVER US</a>
+</article>
+
+<article id="discover-section" class="banner-black d-flex align-items-center">
+    <div class="container h-100">
+        <div class="row h-100">
+            <main class="col-6 d-flex flex-column justify-content-center align-items-center h-100">
+                <!-- mb-4 sta per margin bottom -->
+                <h2 class="text-white mb-4">OVERLOAD DAY 1</h2>
+                <a href="{{ url_for('program_filtered', giorno=0) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL PROGRAM</a>
+            </main>
+            <aside class="col-6 d-flex align-items-center justify-content-center">
+                {% if p_shows and p_shows|length > 0 %}
+                <div id="showsCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for show in p_shows %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img src="{{ url_for('static', filename=show['img_path']) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{ show['artist'] }}</h5>
+                                <p>{{ show['description'] }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#showsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#showsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                {% else %}
+                <div class="text-center w-100">
+                    <span class="text-white-50">No shows available</span>
+                </div>
+                {% endif %}
+            </aside>
+        </div>
+    </div>
+</article>
+
+<article class="banner-blue d-flex align-items-center">
+    <div class="container h-100">
+        <div class="row h-100">
+            <aside class="col-6 d-flex align-items-center justify-content-center">
+                {% if p_shows and p_shows|length > 0 %}
+                <div id="showsCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for show in p_shows %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img src="{{ url_for('static', filename=show['img_path']) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{ show['artist'] }}</h5>
+                                <p>{{ show['description'] }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#showsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#showsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                {% else %}
+                <div class="text-center w-100">
+                    <span class="text-white-50">No shows available</span>
+                </div>
+                {% endif %}
+            </aside>
+            <main class="col-6 d-flex flex-column justify-content-center align-items-center h-100">
+                <h2 class="text-black mb-4">OVERLOAD DAY 2</h2>
+                <a href="{{ url_for('program_filtered', giorno=0) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2 text-black">FULL PROGRAM</a>
+            </main>
+        </div>
+    </div>
+</article>
+
+<article class="banner-black d-flex align-items-center">
+    <div class="container h-100">
+        <div class="row h-100">
+            <main class="col-6 d-flex flex-column justify-content-center align-items-center h-100">
+                <h2 class="text-white mb-4">OVERLOAD DAY 3</h2>
+                <a href="{{ url_for('program_filtered', giorno=0) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL PROGRAM</a>
+            </main>
+            <aside class="col-6 d-flex align-items-center justify-content-center">
+                {% if p_shows and p_shows|length > 0 %}
+                <div id="showsCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for show in p_shows %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img src="{{ url_for('static', filename=show['img_path']) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{ show['artist'] }}</h5>
+                                <p>{{ show['description'] }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#showsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#showsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                {% else %}
+                <div class="text-center w-100">
+                    <span class="text-white-50">No shows available</span>
+                </div>
+                {% endif %}
+            </aside>
+        </div>
+    </div>
+</article>
+{% endblock %}

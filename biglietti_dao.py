@@ -1,5 +1,7 @@
 import sqlite3
 
+from flask_login import current_user
+
 def buy_ticket_for_user(user_id, ticket_type, start_day, conn):
     try:
         remaining = get_remaining_tickets(ticket_type, conn)
@@ -24,12 +26,12 @@ def get_remaining_tickets(ticket_type, conn):
     return 200 - count
 
 def get_ticket_by_user_id(current_user_id):
-    conn = sqlite3.connect("musical_festival.db")
+    conn = sqlite3.connect("musical-festival-website/db/musical_festival.db")
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    query = "SELECT * FROM BIGLIETTI WHERE user_id = ?"
-    cursor.execute(query, (current_user_id, ))
+    query = "SELECT * FROM BIGLIETTI WHERE id_utente = ?"
+    cursor.execute(query, (current_user.id, ))
     ticket = cursor.fetchone()
 
     conn.close()

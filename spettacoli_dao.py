@@ -2,7 +2,7 @@ import sqlite3
 import palchi_dao
 
 def get_shows():
-    conn = sqlite3.connect('musical-festival-website/db/musical_festival.db')
+    conn = sqlite3.connect('musical-festival-website/musical_festival.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -14,7 +14,7 @@ def get_shows():
     return shows
 
 def get_shows_filtered(giorno, palco, genere):
-    conn = sqlite3.connect('musical-festival-website/db/musical_festival.db')
+    conn = sqlite3.connect('musical-festival-website/musical_festival.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
@@ -47,8 +47,8 @@ def create_event(conn, day, start_hour, duration, artist, description, genre, pu
         
         stage_id = palchi_dao.get_palco_by_name(stage_name)
         
-        insert_query = "INSERT INTO SPETTACOLI (day, hour_slot, artist, description, genre, published, stage_id) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        conn.execute(insert_query, (day, hour_slot, artist, description, genre, published, stage_id))
+        insert_query = "INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, genere, pubblicato, id_creatore, id_palco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+        conn.execute(insert_query, (day, start_hour, duration, artist, description, genre, published, stage_id))
         return True, None
     
     except Exception as e:
@@ -82,7 +82,7 @@ def get_overlapping_published_shows(day, hour_slot, duration, conn):
     return shows
 
 def is_already_performing(artist):
-    conn = sqlite3.connect('musical-festival-website/db/musical_festival.db')
+    conn = sqlite3.connect('musical-festival-website/musical_festival.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 

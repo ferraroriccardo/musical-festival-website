@@ -2,38 +2,44 @@ import sqlite3
 import palchi_dao
 
 def get_shows():
-    conn = sqlite3.connect('musical_festival.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect('musical_festival.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
 
-    query = "SELECT * FROM SPETTACOLI;"
-    cursor.execute(query)
+        query = "SELECT * FROM SPETTACOLI;"
+        cursor.execute(query)
 
-    shows = cursor.fetchall()
-    conn.close()
-    return shows
+        shows = cursor.fetchall()
+        conn.close()
+        return shows
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_SHOWS"
 
 def get_shows_filtered(giorno, palco, genere):
-    conn = sqlite3.connect('musical_festival.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect('musical_festival.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
 
-    query = "SELECT artista FROM SPETTACOLI WHERE 1=1"
-    params = []
-    if giorno:
-        query += " AND giorno = ?"
-        params.append(giorno)
-    if palco:
-        query += " AND palco = ?"
-        params.append(palco)
-    if genere:
-        query += " AND genere = ?"
-        params.append(genere)
+        query = "SELECT artista FROM SPETTACOLI WHERE 1=1"
+        params = []
+        if giorno:
+            query += " AND giorno = ?"
+            params.append(giorno)
+        if palco:
+            query += " AND palco = ?"
+            params.append(palco)
+        if genere:
+            query += " AND genere = ?"
+            params.append(genere)
 
-    cursor.execute(query, params)
-    shows = cursor.fetchall()
-    conn.close()
-    return shows
+        cursor.execute(query, params)
+        shows = cursor.fetchall()
+        conn.close()
+        return shows
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_SHOWS_FILTERED"
 
 def create_event(conn, day, start_hour, duration, artist, description, genre, published, stage_name):
     try:

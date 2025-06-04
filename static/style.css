@@ -100,6 +100,18 @@ footer div {
     background-color: rgb(209, 233, 74);
 }
 
+.btn-custom-gradient {
+    background: linear-gradient(60deg, #5694d5 0%, #C76A79 100%);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-gradient:hover {
+    transform: scale(1.05);
+    color: #1d1818;
+}
+
 .btn-custom-black,
 .btn-custom-yellow {
     /* transizione di colore graduale */
@@ -119,4 +131,38 @@ footer div {
     background-color: #222;
     color: #ffffffeb;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.hover-big {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-big:hover, .hover-big:focus {
+    transform: scale(1.04);
+    z-index: 2;
+}
+
+.border-gradient::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    z-index: -1;
+    background: linear-gradient(60deg, #5694d5, #C76A79, #5694d5);
+    background-size: 300% 300%;
+    border-radius: inherit;
+    animation: gradient-rotate 4s linear infinite;
+}
+
+@keyframes gradient-rotate {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }

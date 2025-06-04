@@ -1,144 +1,164 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container justify-content-center align-items-center banner-blue full-height">
-  <div class="row w-100 justify-content-center">
-    <div class="col col-lg-8 my-5">
-      <div class="card shadow rounded-4 p-4 transparent-white-bg top-high-margin">
-        <form action="/login" method="POST">
-          <h1 class="mb-4 text-center">PRICING</h1>
-          <p class="text-center">Pick your pass and get loud with us!</p>
-          <div class="row align-items-stretch">
-            <div class="col d-flex">
-              <section class="card mb-4 rounded-4 shadow flex-fill d-flex flex-column">
-                <div class="card-header fw-bold text-uppercase">ONE SHOT</div>
-                <div class="card-body position-relative p-0">
-                  <img src="{{ url_for('static', filename='ticket2a.jpg') }}" alt="One Shot Ticket"
-                    class="img-fluid w-100" style="height: 220px; object-fit: cover;">
-                  <span class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white text-shadow"
-                    style="text-shadow: 2px 2px 8px #000;">60€</span>
-                </div>
-                <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-                  <span>1 day of pure energy — pick your favorite!</span>
-                  <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button">
-                      Rock for a Day
-                    </button>
-                  </div>
-                </div>
-              </section>
+
+<div class="d-flex justify-content-center align-items-center banner-blue full-height">
+  <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg">
+    <form action="/login" method="POST">
+      <h1 class="mb-4 text-center">PRICING</h1>
+      <p class="text-center">Pick your pass and get loud with us!</p>
+      <div class="container d-flex justify-content-evenly" id="ticket-cards-row">
+        <div class="row">
+          <!-- card #1 -->
+          <section class="black-background col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
+            <div class="card-header fw-bold text-white text-center">ONE SHOT</div>
+            <div class="card-body position-relative p-0">
+              <img src="{{ url_for('static', filename='ticket2a.jpg') }}" alt="One Shot Ticket"
+                class="img-fluid w-100 card-image">
+              <span
+                class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">60€</span>
             </div>
-            <div class="col d-flex">
-              <section class="card mb-4 rounded-4 shadow flex-fill d-flex flex-column">
-                <div class="card-header fw-bold text-uppercase">DOUBLE TROUBLE</div>
-                <div class="card-body position-relative p-0">
-                  <img src="{{ url_for('static', filename='ticket1a.jpg') }}" alt="Double Trouble Ticket"
-                    class="img-fluid w-100" style="height: 220px; object-fit: cover;">
-                  <span class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white text-shadow"
-                    style="text-shadow: 2px 2px 8px #000;">100€</span>
-                </div>
-                <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-                  <span>2 days back-to-back - keep the vibe going!</span>
-                  <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button">
-                      Double the fun
-                    </button>
-                  </div>
-                </div>
-              </section>
+            <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+              <span>1 day of pure energy — pick your favorite!</span>
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+                  data-ticket="one_day">
+                  Rock for a Day
+                </button>
+              </div>
             </div>
-            <div class="col d-flex">
-              <section class="card mb-4 rounded-4 shadow border-primary border-3 position-relative bg-light flex-fill d-flex flex-column">
-                <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
-                  Best Experience
-                </span>
-                <div class="card-header fw-bold text-uppercase text-primary">FULL BLAST</div>
-                <div class="card-body position-relative p-0">
-                  <img src="{{ url_for('static', filename='ticket3a.jpg') }}" alt="Full Blast Ticket"
-                    class="img-fluid w-100" style="height: 220px; object-fit: cover;">
-                  <span class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white text-shadow"
-                    style="text-shadow: 2px 2px 8px #000;">150€</span>
-                </div>
-                <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-                  <span>All 3 days — no breaks, just music!</span>
-                  <div class="d-grid gap-2 mt-3">
-                    <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button">
-                      Go All In
-                    </button>
-                  </div>
-                </div>
-              </section>
+          </section>
+
+          <!-- card #2 -->
+          <section class="black-background col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
+            <div class="card-header fw-bold text-white text-center">DOUBLE TROUBLE</div>
+            <div class="card-body position-relative p-0">
+              <img src="{{ url_for('static', filename='ticket1a.jpg') }}" alt="Double Trouble Ticket"
+                class="img-fluid w-100 card-image">
+              <span
+                class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">100€</span>
             </div>
-          </div>
-        </form>
+            <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+              <span>2 days back-to-back - keep the vibe going!</span>
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+                  data-ticket="two_days">
+                  Double the fun
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!--  card #3 -->
+          <section class="black-background col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
+            id="ticket-full">
+            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
+              Best Experience
+            </span>
+            <div class="card-header fw-bold text-white text-center text-primary">FULL BLAST</div>
+            <div class="card-body position-relative p-0">
+              <img src="{{ url_for('static', filename='ticket3a.jpg') }}" alt="Full Blast Ticket"
+                class="img-fluid w-100 card-image">
+              <span
+                class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">150€</span>
+            </div>
+            <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+              <span>All 3 days — no breaks, just music!</span>
+              <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+                  data-ticket="three_days">
+                  Go All In
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row w-100 justify-content-center">
-    <div class="col col-lg-5">
-      <div class="card shadow rounded-4 p-4 transparent-white-bg" id="buy-ticket-form-card">
-        <h1 class="text-center"></h1>
-        <form method="POST" action="{{ url_for('buy_ticket') }}" class="text-center">
-          <label for="type">Tipo di biglietto:</label>
-          <select id="type" name="type" onchange="showDurationOptions()">
-            <option value="one_day">1 giorno</option>
-            <option value="two_days">2 giorni</option>
-            <option value="three_days">3 giorni</option>
-          </select>
+      <form method="POST" action="{{ url_for('buy_ticket') }}" class="text-center" id="buy-ticket-form">
+        <div id="dynamic-ticket-inputs">
+        </div>
+      </form>
+    </form>
+  </main>
+</div>
 
-          <div id="one_day_options" style="display:none;">
-            <!-- Eventuali input specifici per 1 giorno -->
-            <label for="start_day_1">Giorno:</label>
-            <select name="start_day" id="start_day_1">
-              <option value="venerdi">Venerdì</option>
-              <option value="sabato">Sabato</option>
-              <option value="domenica">Domenica</option>
-            </select>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const ticketCards = {
+      one_day: document.getElementById('ticket-one-day'),
+      two_days: document.getElementById('ticket-double'),
+      three_days: document.getElementById('ticket-full')
+    };
+
+    const dynamicInputs = document.getElementById('dynamic-ticket-inputs');
+
+    document.querySelectorAll('.scroll-to-form').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        // Highlight selected card
+        Object.values(ticketCards).forEach(card => card.classList.remove('border-success', 'border-4', 'border-primary'));
+        if (btn.dataset.ticket === 'one_day') {
+          ticketCards.one_day.classList.add('border-gradient', 'border-4');
+        } else if (btn.dataset.ticket === 'two_days') {
+          ticketCards.two_days.classList.add('border-gradient', 'border-4');
+        } else if (btn.dataset.ticket === 'three_days') {
+          ticketCards.three_days.classList.add('border-gradient', 'border-4');
+        }
+        // Scroll down the window
+        const formCard = document.getElementById('buy-ticket-form');
+        if (formCard) {
+          setTimeout(() => formCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+        // Show dynamic input
+        const dynamicInputs = document.getElementById('dynamic-ticket-inputs');
+        let hiddenInput = `<input type='hidden' name='ticket_type' value='${btn.dataset.ticket}'>`;
+        if (btn.dataset.ticket === 'one_day') {
+          dynamicInputs.innerHTML = `
+          ${hiddenInput}
+          <div class="d-flex justify-content-evenly align-items-end my-4">
+            <div class="me-5">    
+              <label for="p_day" class="form-label">Select your day</label> 
+              <select class="form-select shadow" id="p_day" name="p_day">
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+              </select>
+            </div>
+            <button class="btn btn-custom-gradient shadow btn-lg rounded-pill fw-bold" type="submit">
+              Purchase now
+            </button>
+          </div>
+        `;
+        } else if (btn.dataset.ticket === 'two_days') {
+          dynamicInputs.innerHTML = `
+          ${hiddenInput}
+          <div class="d-flex justify-content-evenly align-items-end my-4">
+            <div class="me-5">    
+              <label for="p_day" class="form-label">Select starting day</label> 
+              <select class="form-select shadow" id="p_day" name="p_day">
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              </select>
+            </div>
+            <button class="btn btn-custom-gradient shadow btn-lg rounded-pill fw-bold" type="submit">
+              Purchase now
+            </button>
+          </div>
+        `;
+        } else if (btn.dataset.ticket === 'three_days') {
+          dynamicInputs.innerHTML = `
+          ${hiddenInput}
+          <div class="d-flex justify-content-center my-4">
+            <button class="btn btn-lg rounded-pill fw-bold btn-custom-gradient border-gradient" type="submit">
+            Purchase now
+            </button>
           </div>
 
-          <div id="two_days_options" style="display:none;">
-            <label for="start_day_2">Giorno di inizio:</label>
-            <select name="start_day" id="start_day_2">
-              <option value="venerdi">Venerdì</option>
-              <option value="sabato">Sabato</option>
-            </select>
-          </div>
-
-          <div id="three_days_options" style="display:none;">
-            <!-- Per 3 giorni, di solito non serve scegliere il giorno di inizio -->
-            <input type="hidden" name="start_day" value="venerdi">
-            <span>Valido per tutti i giorni</span>
-          </div>
-
-          <button type="submit">Acquista</button>
-        </form>
-
-        <script>
-          function showDurationOptions() {
-            var type = document.getElementById('type').value;
-            document.getElementById('one_day_options').style.display = (type === 'one_day') ? 'block' : 'none';
-            document.getElementById('two_days_options').style.display = (type === 'two_days') ? 'block' : 'none';
-            document.getElementById('three_days_options').style.display = (type === 'three_days') ? 'block' : 'none';
-          }
-          // Chiamata iniziale per impostare lo stato corretto
-          document.addEventListener('DOMContentLoaded', showDurationOptions);
-        </script>
-        </article>
-      </div>
-    </div>
-  </div>
-
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.scroll-to-form').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      const formCard = document.getElementById('buy-ticket-form-card');
-      if(formCard) {
-        formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+        `;
+        }
+      });
     });
   });
-});
 </script>
-
-  {% endblock %}
+{% endblock %}

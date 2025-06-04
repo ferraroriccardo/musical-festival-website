@@ -1,0 +1,178 @@
+[1mdiff --git a/__pycache__/biglietti_dao.cpython-313.pyc b/__pycache__/biglietti_dao.cpython-313.pyc[m
+[1mindex 57ff2fa..0ed5f0c 100644[m
+Binary files a/__pycache__/biglietti_dao.cpython-313.pyc and b/__pycache__/biglietti_dao.cpython-313.pyc differ
+[1mdiff --git a/__pycache__/palchi_dao.cpython-313.pyc b/__pycache__/palchi_dao.cpython-313.pyc[m
+[1mindex a598ee6..3280d90 100644[m
+Binary files a/__pycache__/palchi_dao.cpython-313.pyc and b/__pycache__/palchi_dao.cpython-313.pyc differ
+[1mdiff --git a/__pycache__/settings_dao.cpython-313.pyc b/__pycache__/settings_dao.cpython-313.pyc[m
+[1mindex 2c07a42..1c9d4a2 100644[m
+Binary files a/__pycache__/settings_dao.cpython-313.pyc and b/__pycache__/settings_dao.cpython-313.pyc differ
+[1mdiff --git a/__pycache__/spettacoli_dao.cpython-313.pyc b/__pycache__/spettacoli_dao.cpython-313.pyc[m
+[1mindex 24ca339..a3f7bdb 100644[m
+Binary files a/__pycache__/spettacoli_dao.cpython-313.pyc and b/__pycache__/spettacoli_dao.cpython-313.pyc differ
+[1mdiff --git a/__pycache__/utenti_dao.cpython-313.pyc b/__pycache__/utenti_dao.cpython-313.pyc[m
+[1mindex 0ee8da1..a07dc56 100644[m
+Binary files a/__pycache__/utenti_dao.cpython-313.pyc and b/__pycache__/utenti_dao.cpython-313.pyc differ
+[1mdiff --git a/app.py b/app.py[m
+[1mindex e899227..984b894 100644[m
+[1m--- a/app.py[m
+[1m+++ b/app.py[m
+[36m@@ -138,7 +138,4 @@[m [mdef settings():[m
+ [m
+ import auth  # import the module for authorization[m
+ [m
+[31m-app.register_blueprint(auth.auth_bp)  # handles every route in auth_bp[m
+[31m-[m
+[31m-if __name__ == "__main__":[m
+[31m-    app.run(debug=True)[m
+\ No newline at end of file[m
+[32m+[m[32mapp.register_blueprint(auth.auth_bp)  # handles every route in auth_bp[m
+\ No newline at end of file[m
+[1mdiff --git a/biglietti_dao.py b/biglietti_dao.py[m
+[1mindex 677c75a..40b9695 100644[m
+[1m--- a/biglietti_dao.py[m
+[1m+++ b/biglietti_dao.py[m
+[36m@@ -28,15 +28,13 @@[m [mdef get_remaining_tickets(ticket_type, conn):[m
+         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"[m
+ [m
+ def get_ticket_by_user_id(current_user_id):[m
+[32m+[m[32m    conn = sqlite3.connect("/musical-festival-website/musical_festival.db")[m
+[32m+[m[32m    conn.row_factory = sqlite3.Row[m
+[32m+[m[32m    cursor = conn.cursor()[m
+     try:[m
+[31m-        conn = sqlite3.connect("musical_festival.db")[m
+[31m-        conn.row_factory = sqlite3.Row[m
+[31m-        cursor = conn.cursor()[m
+[31m-[m
+         query = "SELECT * FROM BIGLIETTI WHERE id_utente = ?"[m
+[31m-        cursor.execute(query, (current_user.id, ))[m
+[32m+[m[32m        cursor.execute(query, (current_user_id, ))[m
+         ticket = cursor.fetchone()[m
+[31m-[m
+         conn.close()[m
+         return ticket[m
+     except Exception as e:[m
+[1mdiff --git a/palchi_dao.py b/palchi_dao.py[m
+[1mindex 9b6db06..2f9bbc0 100644[m
+[1m--- a/palchi_dao.py[m
+[1m+++ b/palchi_dao.py[m
+[36m@@ -1,6 +1,9 @@[m
+ import sqlite3[m
+ [m
+ def get_palco_by_name(stage_name):[m
+[32m+[m[32m    conn = sqlite3.connect('musical-festival-website/musical_festival.db')[m
+[32m+[m[32m    conn.row_factory = sqlite3.Row[m
+[32m+[m[32m    cursor = conn.cursor()[m
+     try:[m
+         conn = sqlite3.connect('musical_festival.db')[m
+         conn.row_factory = sqlite3.Row[m
+[1mdiff --git a/settings_dao.py b/settings_dao.py[m
+[1mindex effc4e9..bcf0551 100644[m
+[1m--- a/settings_dao.py[m
+[1m+++ b/settings_dao.py[m
+[36m@@ -3,7 +3,7 @@[m [mfrom werkzeug.security import generate_password_hash[m
+ [m
+ def get_staff_passw():[m
+     try:[m
+[31m-        conn = sqlite3.connect("musical_festival.db")[m
+[32m+[m[32m        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")[m
+         cursor = conn.cursor()[m
+ [m
+         query = "SELECT staff_password FROM SETTINGS;"[m
+[36m@@ -17,7 +17,7 @@[m [mdef get_staff_passw():[m
+ [m
+ def set_staff_passw(plain_text_passw):[m
+     try:[m
+[31m-        conn = sqlite3.connect("musical_festival.db")[m
+[32m+[m[32m        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")[m
+         cursor = conn.cursor()[m
+ [m
+         cursor.execute("DELETE FROM SETTINGS")[m
+[36m@@ -34,7 +34,7 @@[m [mdef set_staff_passw(plain_text_passw):[m
+ [m
+ def get_connection():[m
+     try:[m
+[31m-        conn = sqlite3.connect("musical_festival.db")[m
+[32m+[m[32m        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")[m
+         conn.row_factory = sqlite3.Row[m
+         return conn[m
+     except Exception as e:[m
+[1mdiff --git a/spettacoli_dao.py b/spettacoli_dao.py[m
+[1mindex 44393e5..7975552 100644[m
+[1m--- a/spettacoli_dao.py[m
+[1m+++ b/spettacoli_dao.py[m
+[36m@@ -3,7 +3,7 @@[m [mimport palchi_dao[m
+ [m
+ def get_shows():[m
+     try:[m
+[31m-        conn = sqlite3.connect('musical_festival.db')[m
+[32m+[m[32m        conn = sqlite3.connect('/musical-festival-website/musical_festival.db')[m
+         conn.row_factory = sqlite3.Row[m
+         cursor = conn.cursor()[m
+ [m
+[36m@@ -18,7 +18,7 @@[m [mdef get_shows():[m
+ [m
+ def get_shows_filtered(giorno, palco, genere):[m
+     try:[m
+[31m-        conn = sqlite3.connect('musical_festival.db')[m
+[32m+[m[32m        conn = sqlite3.connect('/musical-festival-website/musical_festival.db')[m
+         conn.row_factory = sqlite3.Row[m
+         cursor = conn.cursor()[m
+ [m
+[36m@@ -53,8 +53,8 @@[m [mdef create_event(conn, day, start_hour, duration, artist, description, genre, pu[m
+         [m
+         stage_id = palchi_dao.get_palco_by_name(stage_name)[m
+         [m
+[31m-        insert_query = "INSERT INTO SPETTACOLI (day, hour_slot, artist, description, genre, published, stage_id) VALUES (?, ?, ?, ?, ?, ?, ?);"[m
+[31m-        conn.execute(insert_query, (day, hour_slot, artist, description, genre, published, stage_id))[m
+[32m+[m[32m        insert_query = "INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, genere, pubblicato, id_creatore, id_palco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"[m
+[32m+[m[32m        conn.execute(insert_query, (day, start_hour, duration, artist, description, genre, published, stage_id))[m
+         return True, None[m
+     [m
+     except Exception as e:[m
+[36m@@ -88,16 +88,19 @@[m [mdef get_overlapping_published_shows(day, hour_slot, duration, conn):[m
+     return shows[m
+ [m
+ def is_already_performing(artist):[m
+[31m-    conn = sqlite3.connect('musical_festival.db')[m
+[31m-    conn.row_factory = sqlite3.Row[m
+[31m-    cursor = conn.cursor()[m
+[32m+[m[32m    try:[m
+[32m+[m[32m        conn = sqlite3.connect('/musical-festival-website/musical_festival.db')[m
+[32m+[m[32m        conn.row_factory = sqlite3.Row[m
+[32m+[m[32m        cursor = conn.cursor()[m
+ [m
+[31m-    query = "SELECT artista FROM SPETTACOLI WHERE artista = ?;"[m
+[31m-    cursor.execute(query, (artist, ))[m
+[32m+[m[32m        query = "SELECT artista FROM SPETTACOLI WHERE artista = ?;"[m
+[32m+[m[32m        cursor.execute(query, (artist, ))[m
+ [m
+[31m-    shows = cursor.fetchone()[m
+[31m-    conn.close()[m
+[31m-    if shows:[m
+[31m-        return True[m
+[31m-    return False[m
+[32m+[m[32m        shows = cursor.fetchone()[m
+[32m+[m[32m        conn.close()[m
+[32m+[m[32m        if shows:[m
+[32m+[m[32m            return True[m
+[32m+[m[32m        return False[m
+[32m+[m[32m    except Exception as e:[m
+[32m+[m[32m        return False, "DATABASE_ERROR_IS_ALREADY_PERFORMING"[m
+ [m
+[1mdiff --git a/utenti_dao.py b/utenti_dao.py[m
+[1mindex e1c9249..b173063 100644[m
+[1m--- a/utenti_dao.py[m
+[1m+++ b/utenti_dao.py[m
+[36m@@ -2,7 +2,7 @@[m [mimport sqlite3[m
+ [m
+ def get_user_by_id(user_id):[m
+     try:[m
+[31m-        conn = sqlite3.connect("musical_festival.db")[m
+[32m+[m[32m        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")[m
+         conn.row_factory = sqlite3.Row[m
+         cursor = conn.cursor()[m
+ [m
+[36m@@ -17,7 +17,7 @@[m [mdef get_user_by_id(user_id):[m
+ [m
+ def get_user_by_email(em

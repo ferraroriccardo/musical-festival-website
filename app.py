@@ -9,6 +9,8 @@ import spettacoli_dao, biglietti_dao, settings_dao
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
+
+import utenti_dao
 PROFILE_IMG_HEIGHT = 130
 POST_IMG_WIDTH = 300
 

@@ -10,9 +10,14 @@
     background-color: rgb(5, 4, 4);
 }
 
+.red-text{
+    color: #963939;
+}
+
 nav a, nav h1{
     color: #963939;
 }
+
 nav a:hover,
 nav a:focus {
     color: #43699c;
@@ -140,6 +145,7 @@ footer div {
 .hover-big {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .hover-big:hover, .hover-big:focus {
     transform: scale(1.04);
     z-index: 2;

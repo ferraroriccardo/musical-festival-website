@@ -61,7 +61,7 @@ def ticket_page():
 @app.route("/buy_ticket", methods=["POST"])
 @login_required
 def buy_ticket():
-    ticket_type = request.form.get('type')
+    ticket_type = request.form.get('ticket_type')
     start_day = request.form.get('start_day')
 
     if not ticket_type or not start_day:

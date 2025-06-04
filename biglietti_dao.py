@@ -1,6 +1,9 @@
 import sqlite3
-
+import os
 from flask_login import current_user
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
 
 def buy_ticket_for_user(user_id, ticket_type, start_day, conn):
     try:
@@ -28,7 +31,7 @@ def get_remaining_tickets(ticket_type, conn):
         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
 
 def get_ticket_by_user_id(current_user_id):
-    conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+    conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     try:

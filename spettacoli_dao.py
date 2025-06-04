@@ -1,9 +1,13 @@
 import sqlite3
+import os
 import palchi_dao
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
 
 def get_shows():
     try:
-        conn = sqlite3.connect('/musical-festival-website/musical_festival.db')
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -18,7 +22,7 @@ def get_shows():
 
 def get_shows_filtered(giorno, palco, genere):
     try:
-        conn = sqlite3.connect('/musical-festival-website/musical_festival.db')
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -89,7 +93,7 @@ def get_overlapping_published_shows(day, hour_slot, duration, conn):
 
 def is_already_performing(artist):
     try:
-        conn = sqlite3.connect('/musical-festival-website/musical_festival.db')
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 

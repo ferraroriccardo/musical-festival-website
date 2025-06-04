@@ -1,8 +1,12 @@
 import sqlite3
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
 
 def get_user_by_id(user_id):
     try:
-        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -17,7 +21,7 @@ def get_user_by_id(user_id):
 
 def get_user_by_email(email):
     try:
-        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -32,7 +36,7 @@ def get_user_by_email(email):
 
 def create_user(email, password, type):
     try:
-        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         query = "INSERT INTO UTENTI (email, password, tipo) VALUES (?, ?, ?);"

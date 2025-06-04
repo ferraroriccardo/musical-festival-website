@@ -17,6 +17,7 @@
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                         </div>
+                        <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
                         <div class="d-flex justify-content-between align-items-center">
                             <button type="submit" class="btn btn-primary mb-2">Submit</button>
                             <div>

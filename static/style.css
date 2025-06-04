@@ -23,11 +23,6 @@ nav a:focus {
     min-height: 100vh;
 }
 
-.double-full-height{
-    min-height: 94rem;
-    height: 94rem;
-}
-
 img.full-width-bg {
     width: 100vw;
     height: auto;

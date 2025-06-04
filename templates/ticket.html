@@ -1,17 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-10">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+{% for error in p_errors%}
+<p>{{ e }}</p>
+{% endfor%}
 <div class="d-flex justify-content-center align-items-center banner-blue full-height">
   <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg">
-    <form action="/login" method="POST">
+    <form action="/buy_ticket" method="POST">
       <h1 class="mb-4 text-center">PRICING</h1>
       <p class="text-center">Pick your pass and get loud with us!</p>
       <div class="container d-flex justify-content-evenly" id="ticket-cards-row">
         <div class="row">
           <!-- card #1 -->
-          <section class="black-background col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
-            <div class="card-header fw-bold text-white text-center">ONE SHOT</div>
+          <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
+            <div class="card-header fw-bold text-center">ONE SHOT</div>
             <div class="card-body position-relative p-0">
               <img src="{{ url_for('static', filename='ticket2a.jpg') }}" alt="One Shot Ticket"
                 class="img-fluid w-100 card-image">
@@ -30,8 +44,8 @@
           </section>
 
           <!-- card #2 -->
-          <section class="black-background col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
-            <div class="card-header fw-bold text-white text-center">DOUBLE TROUBLE</div>
+          <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
+            <div class="card-header fw-bold text-center">DOUBLE TROUBLE</div>
             <div class="card-body position-relative p-0">
               <img src="{{ url_for('static', filename='ticket1a.jpg') }}" alt="Double Trouble Ticket"
                 class="img-fluid w-100 card-image">
@@ -50,12 +64,12 @@
           </section>
 
           <!--  card #3 -->
-          <section class="black-background col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
+          <section class="col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
             id="ticket-full">
             <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
               Best Experience
             </span>
-            <div class="card-header fw-bold text-white text-center text-primary">FULL BLAST</div>
+            <div class="card-header fw-bold text-center text-primary">FULL BLAST</div>
             <div class="card-body position-relative p-0">
               <img src="{{ url_for('static', filename='ticket3a.jpg') }}" alt="Full Blast Ticket"
                 class="img-fluid w-100 card-image">
@@ -119,7 +133,7 @@
           <div class="d-flex justify-content-evenly align-items-end my-4">
             <div class="me-5">    
               <label for="p_day" class="form-label">Select your day</label> 
-              <select class="form-select shadow" id="p_day" name="p_day">
+              <select class="form-select shadow" id="p_day" name="start_day">
               <option value="friday">Friday</option>
               <option value="saturday">Saturday</option>
               <option value="sunday">Sunday</option>

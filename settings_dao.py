@@ -2,31 +2,40 @@ import sqlite3
 from werkzeug.security import generate_password_hash
 
 def get_staff_passw():
-    conn = sqlite3.connect("musical-festival-website/musical_festival.db")
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+        cursor = conn.cursor()
 
-    query = "SELECT staff_password FROM SETTINGS;"
-    cursor.execute(query)
+        query = "SELECT staff_password FROM SETTINGS;"
+        cursor.execute(query)
 
-    user = cursor.fetchone()
-    conn.close()
-    return user
+        user = cursor.fetchone()
+        conn.close()
+        return user
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_STAFF_PASSW"
 
 def set_staff_passw(plain_text_passw):
-    conn = sqlite3.connect("musical-festival-website/musical_festival.db")
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+        cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM SETTINGS")
+        cursor.execute("DELETE FROM SETTINGS")
 
-    query = "INSERT INTO SETTINGS (staff_password) VALUES (?);"
-    hashed_passw = generate_password_hash(plain_text_passw)
-    cursor.execute(query, (hashed_passw, ))
+        query = "INSERT INTO SETTINGS (staff_password) VALUES (?);"
+        hashed_passw = generate_password_hash(plain_text_passw)
+        cursor.execute(query, (hashed_passw, ))
 
-    conn.commit()
-    conn.close()
-    return
+        conn.commit()
+        conn.close()
+        return
+    except Exception as e:
+        return False, "DATABASE_ERROR_SET_STAFF_PASSW"
 
 def get_connection():
-    conn = sqlite3.connect("musical-festival-website/musical_festival.db")
-    conn.row_factory = sqlite3.Row
-    return conn
+    try:
+        conn = sqlite3.connect("/musical-festival-website/musical_festival.db")
+        conn.row_factory = sqlite3.Row
+        return conn
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_CONNECTION"

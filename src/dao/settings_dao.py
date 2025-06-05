@@ -3,8 +3,10 @@ import os
 from werkzeug.security import generate_password_hash
 from datetime import datetime, timedelta
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
+
 
 def get_staff_passw():
     try:

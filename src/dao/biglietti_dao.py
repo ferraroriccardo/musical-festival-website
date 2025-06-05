@@ -1,5 +1,5 @@
 import sqlite3
-from settings_dao import DB_PATH
+from .settings_dao import DB_PATH
 
 def buy_ticket_for_user(user_id, ticket_type, start_day):
     try:

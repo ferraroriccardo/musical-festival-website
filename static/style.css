@@ -14,8 +14,24 @@
     color: #963939;
 }
 
+nav {
+    z-index: 10;
+}
+
 nav a, nav h1{
     color: #963939;
+}
+
+.nav-link-wrapper {
+    border-radius: 2rem;
+    padding: 0.2rem 0.8rem;
+    transition: background 0.2s;
+}
+.active-nav-link {
+    background: #b03a2e;
+}
+.active-nav-link a {
+    color: #fff !important;
 }
 
 nav a:hover,
@@ -25,6 +41,10 @@ nav a:focus {
 
 .top-high-margin{
     margin-top: 6rem;
+}
+
+.max-width{
+    max-width:180px;
 }
 
 .full-height{
@@ -89,7 +109,7 @@ footer div {
 .btn-custom-black {
     position: absolute;
     top: 84%;
-    left: 43%;
+    left: 44%;
     z-index: 2;
     background-color: #000;
     color: #fff;

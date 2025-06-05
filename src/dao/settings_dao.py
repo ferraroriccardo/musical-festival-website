@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from werkzeug.security import generate_password_hash
+from datetime import datetime, timedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
@@ -15,7 +16,6 @@ def get_staff_passw():
         cursor.execute(query)
 
         user = cursor.fetchone()
-        conn.close()
         return user
     except Exception as e:
         return False, "DATABASE_ERROR_GET_STAFF_PASSW"
@@ -36,7 +36,6 @@ def set_staff_passw(plain_text_passw):
         cursor.execute(query, (hashed_passw, ))
 
         conn.commit()
-        conn.close()
         return
     except Exception as e:
         return False, "DATABASE_ERROR_SET_STAFF_PASSW"
@@ -53,3 +52,7 @@ def get_connection():
         return False, "DATABASE_ERROR_GET_CONNECTION"
     finally:
         conn.close()
+
+def time_to_minutes(time_str):
+    h, m = map(int, time_str.split(':'))
+    return h * 60 + m

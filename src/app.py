@@ -1,21 +1,21 @@
-# import module
+import os
 from flask import Flask, flash, render_template, redirect, request, url_for
-
 from flask_login import LoginManager, login_required, current_user
+from login_manager_setup import setup_login_manager
 
-from login_manager_setup import login_manager, setup_login_manager
+from dao import palchi_dao, spettacoli_dao, biglietti_dao
 
-import spettacoli_dao, biglietti_dao, settings_dao
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
-
-import utenti_dao
 PROFILE_IMG_HEIGHT = 130
 POST_IMG_WIDTH = 300
 
 # initialize the application
-app = Flask(__name__)
+app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 setup_login_manager(app)
 app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
 
@@ -86,10 +86,16 @@ def buy_ticket():
 @app.route("/event")
 @login_required
 def event_page():
-    return render_template("create_event.html")
+    # check for logs by console
+    if current_user.tipo == "Basic":
+        return redirect(url_for("home"))
+    
+    drafts = spettacoli_dao.get_drafts(current_user.id)
+    stages = palchi_dao.get_stages()
+    return render_template("create_event.html", p_drafts = drafts, p_stages = stages)
 
 # route for creating an event
-@app.route("/create-event", methods = ['POST'])
+@app.route("/create_event", methods = ['POST'])
 @login_required
 def create_event():
     #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
@@ -101,32 +107,34 @@ def create_event():
     description = request.form.get('description')
     genre = request.form.get('genre')
     published = request.form.get('published')
-    stage_name = request.form.get('stage_name')
-    creator_id = current_user.id
+    stage_name = request.form.get('stage')
     
     #TODO: decide how many photos the website needs for each event (probabilmente ne basta una)
     #foto(s) = request.form.get('photo')    gestisci i(l) file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
 
-    required_fields = [day, start_hour, duration, artist, description, genre, published, stage_name]
-    if not all(required_fields):
-        flash("MISSING_REQUIRED_PARAMETERS")
+    required_fields = {
+        "day": day,
+        "start_hour": start_hour,
+        "duration": duration,
+        "artist": artist,
+        "description": description,
+        "genre": genre,
+        "published": published,
+        "stage_name": stage_name
+    }
+
+    missing_fields = [name for name, value in required_fields.items() if not value]
+
+    if missing_fields:
+        flash(f"Missing required fields: {', '.join(missing_fields)}")
         return redirect(url_for('event_page'))
 
-    conn = settings_dao.get_connection()
-    try:
-        with conn:
-            success, error = spettacoli_dao.create_event(conn, day, start_hour, duration, artist, description, genre, published, stage_name)
-            if not success:
-                flash(error)
-                return redirect(url_for('event_page'))
-    except Exception as e:
-        conn.rollback()
-        flash('DATABASE_ERROR')
+    success, error = spettacoli_dao.create_event(day, start_hour, duration, artist, description, genre, published, current_user.id, stage_name)
+    if not success:
+        flash(error)
         return redirect(url_for('event_page'))
-    finally:
-        conn.close()
     flash("EVENT_CREATED_WITH_SUCCESS")
-    return redirect(url_for("profile"))
+    return redirect(url_for("home"))
 
 # route for handling settings operations, such as setting up a new staff password, or sell out all remaining tickets
 @app.route("/settings")
@@ -134,6 +142,6 @@ def create_event():
 def settings():
     return render_template("settings.html")
 
-import auth  # import the module for authorization
+import auth
 
 app.register_blueprint(auth.auth_bp)  # handles every route in auth_bp

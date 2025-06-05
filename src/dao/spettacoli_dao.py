@@ -1,7 +1,6 @@
 import sqlite3
 from . import palchi_dao
-from settings_dao import DB_PATH, time_to_minutes
-from app import DB_PATH
+from .settings_dao import DB_PATH, time_to_minutes
 
 def get_shows():
     try:

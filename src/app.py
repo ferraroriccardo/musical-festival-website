@@ -5,8 +5,9 @@ from login_manager_setup import setup_login_manager
 
 from dao import palchi_dao, spettacoli_dao, biglietti_dao
 
-BASE_DIR = "/musical-festival-website/"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+print(TEMPLATES_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 # Image module to preprocess the images uploaded by the users

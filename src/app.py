@@ -6,6 +6,7 @@ from login_manager_setup import setup_login_manager
 from dao import palchi_dao, spettacoli_dao, biglietti_dao
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 print(TEMPLATES_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, "static")

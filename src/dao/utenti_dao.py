@@ -1,4 +1,6 @@
 import sqlite3
+
+from flask import flash
 from .settings_dao import DB_PATH
 
 def get_user_by_id(user_id):
@@ -23,6 +25,12 @@ def get_user_by_email(email):
         conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
+
+        query = "SELECT * FROM UTENTI;"
+        cursor.execute(query)
+        all = cursor.fetchall()
+        for p in all:
+            flash(p)
 
         query = "SELECT * FROM UTENTI WHERE email = ?;"
         cursor.execute(query, (email, ))

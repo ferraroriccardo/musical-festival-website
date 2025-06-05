@@ -1,9 +1,18 @@
 import sqlite3
+from settings_dao import DB_PATH
 
-from flask_login import current_user
-
-def buy_ticket_for_user(user_id, ticket_type, start_day, conn):
+def buy_ticket_for_user(user_id, ticket_type, start_day):
     try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        already_bought = has_ticket(user_id, conn)
+        if isinstance(already_bought, tuple) and already_bought[0] is False:
+            return already_bought  # Propaga errore DB
+        if already_bought:
+            return False, "HAS_TICKET"
+
         remaining = get_remaining_tickets(ticket_type, conn)
         if remaining == 0:
             return False, "NO_TICKETS_AVAILABLE"
@@ -14,9 +23,24 @@ def buy_ticket_for_user(user_id, ticket_type, start_day, conn):
         
         update_query = "UPDATE UTENTI SET id_biglietto = ? WHERE id = ?;"
         conn.execute(update_query, (ticket_id, user_id))
+        conn.commit()
         return True, None
     except Exception as e:
+        conn.rollback()
         return False, "DATABASE_ERROR_BUY_TICKET_FOR_USER"
+    finally:
+        cursor.close()
+        conn.close()
+
+def has_ticket(user_id, conn):
+    try:
+        cursor = conn.cursor()
+        query = "SELECT * FROM BIGLIETTI WHERE id_utente = ?;"
+        cur = conn.execute(query, (user_id, ))
+        ticket = cur.fetchone()
+        return bool(ticket)
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
 
 def get_remaining_tickets(ticket_type, conn):
     try:
@@ -27,17 +51,19 @@ def get_remaining_tickets(ticket_type, conn):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
 
-def get_ticket_by_user_id(current_user_id):
+def get_ticket_by_user_id(user_id):
     try:
-        conn = sqlite3.connect("musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
         query = "SELECT * FROM BIGLIETTI WHERE id_utente = ?"
-        cursor.execute(query, (current_user.id, ))
+        cursor.execute(query, (user_id, ))
         ticket = cursor.fetchone()
 
-        conn.close()
         return ticket
     except Exception as e:
         return False, "DATABASE_ERROR_GET_TICKET_BY_USER_ID"
+    finally:
+        cursor.close()
+        conn.close()

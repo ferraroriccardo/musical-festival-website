@@ -1,9 +1,11 @@
 import sqlite3
 from werkzeug.security import generate_password_hash
 
+DB_PATH = "musical_festival.db"
+
 def get_staff_passw():
     try:
-        conn = sqlite3.connect("musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         query = "SELECT staff_password FROM SETTINGS;"
@@ -14,10 +16,14 @@ def get_staff_passw():
         return user
     except Exception as e:
         return False, "DATABASE_ERROR_GET_STAFF_PASSW"
+    finally:
+        cursor.close()
+        conn.close()
+
 
 def set_staff_passw(plain_text_passw):
     try:
-        conn = sqlite3.connect("musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
         cursor.execute("DELETE FROM SETTINGS")
@@ -31,11 +37,16 @@ def set_staff_passw(plain_text_passw):
         return
     except Exception as e:
         return False, "DATABASE_ERROR_SET_STAFF_PASSW"
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_connection():
     try:
-        conn = sqlite3.connect("musical_festival.db")
+        conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         return conn
     except Exception as e:
         return False, "DATABASE_ERROR_GET_CONNECTION"
+    finally:
+        conn.close()

@@ -11,7 +11,7 @@ def get_user_by_id(user_id):
         cursor.execute(query, (user_id, ))
 
         user = cursor.fetchone()
-        return user
+        return dict(user)
     except Exception as e:
         return False, "DATABASE_ERROR_GET_USER_BY_ID"
     finally:
@@ -28,7 +28,7 @@ def get_user_by_email(email):
         cursor.execute(query, (email, ))
 
         user = cursor.fetchone()
-        return user
+        return dict(user)
     except Exception as e:
         return None
     finally:

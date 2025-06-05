@@ -17,8 +17,7 @@
 </head>
 
 <body class="bg-image">
-    <nav class="container mt-4 rounded-5 shadow transparent-white-bg position-absolute top-0 start-50 translate-middle-x"
-        style="z-index: 10;">
+    <nav class="container mt-4 rounded-5 shadow transparent-white-bg position-absolute top-0 start-50 translate-middle-x">
         <!-- w-100 imposta la dimensione pari all'elemento padre (div grande come nav) -->
         <div class="row align-items-center justify-content-center my-1">
             <h1 class="col-6 mb-0">
@@ -26,14 +25,22 @@
             </h1>
             <div class="col-5 d-flex justify-content-end">
                 {% if current_user.is_authenticated and current_user.tipo == "Staff" %}
-                <a class="flex-fill text-center text-decoration-none" href="{{ url_for('event_page') }}">Create
+                <div class="nav-link-wrapper {% if request.endpoint == 'event_page' %}active-nav-link{% endif %}">
+                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('event_page') }}">Create
                     event</a>
+                </div>
                 {% endif %}
                 <div class="d-flex ms-auto gap-5">
-                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('ticket_page') }}">Tickets</a>
-                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('profile') }}">My account</a>
+                    <div class="nav-link-wrapper {% if request.endpoint == 'ticket_page' %}active-nav-link{% endif %}">
+                        <a class="flex-fill text-center text-decoration-none" href="{{ url_for('ticket_page') }}">Tickets</a>
+                    </div>
+                    <div class="nav-link-wrapper {% if request.endpoint == 'profile' %}active-nav-link{% endif %}">
+                        <a class="flex-fill text-center text-decoration-none" href="{{ url_for('profile') }}">My account</a>
+                    </div>
                     {% if current_user.is_authenticated %}
-                    <a class="flex-fill text-center text-decoration-none" href="{{ url_for('auth.logout') }}">Logout</a>
+                    <div class="nav-link-wrapper {% if request.endpoint == 'auth.logout' %}active-nav-link{% endif %}">
+                        <a class="flex-fill text-center text-decoration-none" href="{{ url_for('auth.logout') }}">Logout</a>
+                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -68,7 +75,6 @@
             </div>
         </div>
     </footer>
-
 </body>
 
 </html>

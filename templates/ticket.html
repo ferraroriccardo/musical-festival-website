@@ -5,7 +5,13 @@
   <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg">
     <form action="/buy_ticket" method="POST">
       <h1 class="mb-4 text-center">PRICING</h1>
+      {% if p_ticket %}
+      <p class="text-center text-muted">
+        You've already got your ticket — but feel free to take another look around!
+      </p>
+      {% else %}
       <p class="text-center">Pick your pass and get loud with us!</p>
+      {% endif %}
       <div class="container d-flex justify-content-evenly" id="ticket-cards-row">
         <div class="row">
           <!-- card #1 -->
@@ -19,12 +25,14 @@
             </div>
             <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
               <span>1 day of pure energy — pick your favorite!</span>
+              {% if not p_ticket %}
               <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
                   data-ticket="one_day">
                   Rock for a Day
                 </button>
               </div>
+              {% endif %}
             </div>
           </section>
 
@@ -39,12 +47,14 @@
             </div>
             <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
               <span>2 days back-to-back - keep the vibe going!</span>
+              {% if not p_ticket %}
               <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
                   data-ticket="two_days">
                   Double the fun
                 </button>
               </div>
+              {% endif %}
             </div>
           </section>
 
@@ -63,12 +73,14 @@
             </div>
             <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
               <span>All 3 days — no breaks, just music!</span>
+              {% if not p_ticket %}
               <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
                   data-ticket="three_days">
                   Go All In
                 </button>
               </div>
+              {% endif %}
             </div>
           </section>
         </div>
@@ -117,11 +129,11 @@
           ${hiddenInput}
           <div class="d-flex justify-content-evenly align-items-end my-4">
             <div class="me-5">    
-              <label for="p_day" class="form-label">Select your day</label> 
-              <select class="form-select shadow" id="p_day" name="start_day">
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
-              <option value="sunday">Sunday</option>
+              <label for="start_day" class="form-label">Select your day</label> 
+              <select class="form-select shadow" id="start_day" name="start_day">
+              <option value="friday 20th">Friday 20th</option>
+              <option value="saturday 21st">Saturday 21st</option>
+              <option value="sunday 22nd">Sunday 22nd</option>
               </select>
             </div>
             <button class="btn btn-custom-gradient border-gradient shadow btn-lg rounded-pill fw-bold" type="submit">
@@ -134,10 +146,10 @@
           ${hiddenInput}
           <div class="d-flex justify-content-evenly align-items-end my-4">
             <div class="me-5">    
-              <label for="p_day" class="form-label">Select starting day</label> 
-              <select class="form-select shadow" id="p_day" name="p_day">
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
+              <label for="start_day" class="form-label">Select starting day</label> 
+              <select class="form-select shadow" id="start_day" name="start_day">
+              <option value="friday 20th">Friday 20th</option>
+              <option value="saturday 21st">Saturday 21st</option>
               </select>
             </div>
             <button class="btn btn-custom-gradient border-gradient shadow btn-lg rounded-pill fw-bold" type="submit">
@@ -149,7 +161,7 @@
           dynamicInputs.innerHTML = `
           ${hiddenInput}
           <div class="d-flex justify-content-center my-4">
-            <button class="btn btn-lg rounded-pill fw-bold btn-custom-gradient border-gradient" type="submit">
+            <button class="btn btn-custom-gradient border-gradient shadow btn-lg rounded-pill fw-bold" type="submit">
             Purchase now
             </button>
           </div>

@@ -1,0 +1,3 @@
+# Ignora i file di cache Python
+__pycache__/
+*.py[cod]

@@ -1,19 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<article class="d-flex align-items-center banner-blue full-height">
-    <div class="card text-center mx-auto" style="max-width: 32rem; position: relative; z-index: 2; box-shadow: 0 4px 32px rgba(0,0,0,0.18);">
-        <div class="card-header">
-            Tickets
-        </div>
+
+{% if p_ticket %}
+
+<article class="d-flex justify-content-center align-items-center banner-blue full-height">
+    <section class="card text-center col-8 shadow rounded-4 p-5 transparent-white-bg">
         <div class="card-body">
-            <h5 class="card-title">Still no ticket</h5>
-            <p class="card-text">You already didn't buy any ticket for this year's festival</p>
-            <a href="#" class="btn btn-primary">Discover our prices</a>
+            <h1 class="mb-4 green-text fw-bold">🎫 Ticket Confirmed!</h1>
+            <p class="mb-4 fs-5">Hi <b>{{ current_user.email.split('@')[0] }}</b>, you're all set for the soundwave!<br>
+                Your pass is ready - just show it at the gate.</p>
         </div>
-        <div class="card-footer text-muted">
-            2 days ago
-        </div>
-    </div>
+    </section>
 </article>
+
+{% else %}
+
+<article class="d-flex justify-content-center align-items-center banner-blue full-height">
+    <section class="card text-center col-8 shadow rounded-4 p-5 transparent-white-bg">
+        <div class="card-body">
+            <h1 class="mb-4 red-text fw-bold">🔥 No Ticket Yet?</h1>
+            <p class="mb-4 fs-5">Hi <b>{{ current_user.email.split('@')[0] }}</b>, you're just one step away from
+                joining the soundwave. <br>Pick your pass and turn up the volume!</p>
+            <a href="{{ url_for('ticket_page') }}"
+                class="btn btn-lg rounded-pill fw-bold btn-custom-gradient border-gradient" type="submit">
+                Purchase now
+            </a>
+        </div>
+    </section>
+</article>
+
+{% endif %}
 {% endblock %}

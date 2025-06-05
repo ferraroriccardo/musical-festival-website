@@ -3,7 +3,8 @@ from flask_login import login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from urllib.parse import urlparse, urljoin
 
-import utenti_dao, settings_dao
+import dao.utenti_dao as utenti_dao
+import dao.settings_dao as settings_dao
 from models import User
 
 auth_bp = Blueprint("auth", __name__)  # handles separation of this module from app.py

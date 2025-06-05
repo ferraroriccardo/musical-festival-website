@@ -12,3 +12,6 @@
 8. aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
 9. controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato
 10. cambiare l'icona di my account in un cerchio con l'iniziale della mail
+11. nel profilo devo vedere le info sul mio biglietto
+12. togliere i valori hardcoded negli html e creare tabelle (giorni, palchi)
+13. correggere la vista per lo staff. Nel profilo mettere magari le bozze o le stats dei biglietti

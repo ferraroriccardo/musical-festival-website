@@ -30,7 +30,7 @@ def get_user_by_email(email):
         user = cursor.fetchone()
         return user
     except Exception as e:
-        return False, "DATABASE_ERROR_GET_USER_BY_EMAIL"
+        return None
     finally:
         cursor.close()
         conn.close()

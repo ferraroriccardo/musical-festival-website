@@ -1,5 +1,5 @@
 import sqlite3
-from settings_dao import DB_PATH
+from .settings_dao import DB_PATH
 
 def get_user_by_id(user_id):
     try:

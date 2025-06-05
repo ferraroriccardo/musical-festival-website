@@ -1,6 +1,6 @@
 import sqlite3
-import palchi_dao
-from settings_dao import DB_PATH
+from . import palchi_dao
+from .settings_dao import DB_PATH
 
 def get_shows():
     try:
@@ -59,8 +59,8 @@ def create_event(conn, day, start_hour, duration, artist, description, genre, pu
         
         stage_id = palchi_dao.get_palco_by_name(stage_name)
         
-        insert_query = "INSERT INTO SPETTACOLI (day, hour_slot, artist, description, genre, published, stage_id) VALUES (?, ?, ?, ?, ?, ?, ?);"
-        conn.execute(insert_query, (day, hour_slot, artist, description, genre, published, stage_id))
+        insert_query = "INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, genere, pubblicato, id_palco) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+        conn.execute(insert_query, (day, start_hour, duration, artist, description, genre, published, stage_id))
         return True, None
     
     except Exception as e:

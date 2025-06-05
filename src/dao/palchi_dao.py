@@ -1,5 +1,5 @@
 import sqlite3
-from settings_dao import DB_PATH
+from .settings_dao import DB_PATH
 
 def get_palco_by_name(stage_name):
     try:

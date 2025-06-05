@@ -1,6 +1,6 @@
 from flask_login import LoginManager
 from models import User
-import utenti_dao
+import dao.utenti_dao as utenti_dao
 
 login_manager = LoginManager()
 

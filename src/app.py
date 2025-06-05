@@ -1,21 +1,22 @@
-# import module
+import os
 from flask import Flask, flash, render_template, redirect, request, url_for
-
 from flask_login import LoginManager, login_required, current_user
+from login_manager_setup import setup_login_manager
 
-from login_manager_setup import login_manager, setup_login_manager
+from dao import spettacoli_dao, biglietti_dao, settings_dao
+import dao.utenti_dao as utenti_dao
 
-import spettacoli_dao, biglietti_dao, settings_dao
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
-
-import utenti_dao
 PROFILE_IMG_HEIGHT = 130
 POST_IMG_WIDTH = 300
 
 # initialize the application
-app = Flask(__name__)
+app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 setup_login_manager(app)
 app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
 
@@ -134,7 +135,7 @@ def create_event():
 def settings():
     return render_template("settings.html")
 
-import auth  # import the module for authorization
+import auth
 
 app.register_blueprint(auth.auth_bp)  # handles every route in auth_bp
 

@@ -1,9 +1,7 @@
 import sqlite3
 import os
 import palchi_dao
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
+from settings_dao import DB_PATH
 
 def get_shows():
     try:
@@ -15,10 +13,12 @@ def get_shows():
         cursor.execute(query)
 
         shows = cursor.fetchall()
-        conn.close()
         return shows
     except Exception as e:
         return False, "DATABASE_ERROR_GET_SHOWS"
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_shows_filtered(giorno, palco, genere):
     try:
@@ -44,6 +44,9 @@ def get_shows_filtered(giorno, palco, genere):
         return shows
     except Exception as e:
         return False, "DATABASE_ERROR_GET_SHOWS_FILTERED"
+    finally:
+        cursor.close()
+        conn.close()
 
 def create_event(conn, day, start_hour, duration, artist, description, genre, published, stage_name):
     try:
@@ -63,7 +66,7 @@ def create_event(conn, day, start_hour, duration, artist, description, genre, pu
     
     except Exception as e:
         conn.rollback()
-        return False, "DATABASE_ERROR"
+        return False, "DATABASE_ERROR_CREATE_EVENT"
 
 def get_overlapping_published_shows(day, hour_slot, duration, conn):
     # Returns all published shows that overlap with the given interval (start hour, duration),
@@ -106,5 +109,10 @@ def is_already_performing(artist):
             return True
         return False
     except Exception as e:
+        conn.rollback()
         return False, "DATABASE_ERROR_IS_ALREADY_PERFORMING"
+    finally:
+        cursor.close()
+        conn.close()
+
 

@@ -23,8 +23,11 @@ Per registrarsi come membro dello staff, usa la seguente password:
 - `EMAIL_ALREADY_REGISTERED_ERROR`: L'email è già registrata.
 - `MISSING_REQUIRED_PARAMETERS`: Parametri richiesti mancanti nella richiesta.
 
-### <span style="color:#b03a2e">Evento</span>
+### <span style="color:#b03a2e">Biglietti</span>
 - `NO_TICKETS_AVAILABLE`: Non ci sono biglietti disponibili per la tipologia selezionata.
+- `HAS_TICKET`: L'utente ha già acquistato un biglietto.
+
+### <span style="color:#b03a2e">Evento</span>
 - `SHOW_SLOT_ALREADY_OCCUPIED`: La fascia oraria selezionata è già occupata da un altro evento pubblicato.
 - `ARTIST_ALREADY_PERFORMING`: Ogni artista non può esibirsi due volte nel festival.
 - `EVENT_CREATED_WITH_SUCCESS`: Evento creato con successo.

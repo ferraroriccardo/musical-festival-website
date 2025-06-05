@@ -1,8 +1,5 @@
 import sqlite3
-import os
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
+from settings_dao import DB_PATH
 
 def get_user_by_id(user_id):
     try:
@@ -14,10 +11,12 @@ def get_user_by_id(user_id):
         cursor.execute(query, (user_id, ))
 
         user = cursor.fetchone()
-        conn.close()
         return user
     except Exception as e:
         return False, "DATABASE_ERROR_GET_USER_BY_ID"
+    finally:
+        cursor.close()
+        conn.close()
 
 def get_user_by_email(email):
     try:
@@ -29,10 +28,12 @@ def get_user_by_email(email):
         cursor.execute(query, (email, ))
 
         user = cursor.fetchone()
-        conn.close()
         return user
     except Exception as e:
         return False, "DATABASE_ERROR_GET_USER_BY_EMAIL"
+    finally:
+        cursor.close()
+        conn.close()
 
 def create_user(email, password, type):
     try:
@@ -43,7 +44,9 @@ def create_user(email, password, type):
         cursor.execute(query, (email, password, type))
         conn.commit()
         
-        conn.close()
         return True
     except Exception as e:
         return False, "DATABASE_ERROR_CREATE_USER"
+    finally:
+        cursor.close()
+        conn.close()

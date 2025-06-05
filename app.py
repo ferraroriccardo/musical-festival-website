@@ -9,6 +9,8 @@ import spettacoli_dao, biglietti_dao, settings_dao
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
+
+import utenti_dao
 PROFILE_IMG_HEIGHT = 130
 POST_IMG_WIDTH = 300
 
@@ -62,27 +64,23 @@ def ticket_page():
 @login_required
 def buy_ticket():
     ticket_type = request.form.get('ticket_type')
-    start_day = request.form.get('start_day')
+    
+    if ticket_type == "three_days":
+        start_day = "friday 20th"
+    else:
+        start_day = request.form.get('start_day')
 
     if not ticket_type or not start_day:
         flash("MISSING_REQUIRED_PARAMETERS")
         return redirect(url_for('ticket_page'))
 
-    conn = settings_dao.get_connection()
-    try:
-        with conn:
-            success, error = biglietti_dao.buy_ticket_for_user(current_user.id, ticket_type, start_day, conn)
-            if not success:
-                flash(error)
-                return redirect(url_for('ticket_page'))
-    except Exception as e:
-        conn.rollback()
-        flash('DATABASE_ERROR')
+    success, error = biglietti_dao.buy_ticket_for_user(current_user.id, ticket_type, start_day)
+    
+    if not success:
+        flash(error)
         return redirect(url_for('ticket_page'))
-    finally:
-        conn.close()
-    flash("Biglietto acquistato con successo!")
-    return redirect(url_for("profile"))
+    else:
+        return redirect(url_for("profile"))
 
 # route with form to create an event
 @app.route("/event")

@@ -28,7 +28,7 @@ def get_user_by_email(email):
         cursor.execute(query, (email, ))
 
         user = cursor.fetchone()
-        return dict(user)
+        return user
     except Exception as e:
         return None
     finally:
@@ -38,13 +38,19 @@ def get_user_by_email(email):
 def create_user(email, password, type):
     try:
         conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
         query = "INSERT INTO UTENTI (email, password, tipo) VALUES (?, ?, ?);"
         cursor.execute(query, (email, password, type))
         conn.commit()
+
+        query = "SELECT * FROM UTENTI WHERE email = ?;"
+        cursor.execute(query, (email, ))
+
+        user = cursor.fetchone()
+        return user
         
-        return True
     except Exception as e:
         return False, "DATABASE_ERROR_CREATE_USER"
     finally:

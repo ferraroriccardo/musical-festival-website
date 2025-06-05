@@ -100,8 +100,8 @@ def signup():
         return redirect(url_for("auth.signup_page"))
 
     hashed_passw = generate_password_hash(password1, method='pbkdf2:sha256')
-    utenti_dao.create_user(email, hashed_passw, type)
-    user = utenti_dao.get_user_by_email(email)
+    user = utenti_dao.create_user(email, hashed_passw, type)
+
     flash(user)
     param_user = User(
         id=user["id"],

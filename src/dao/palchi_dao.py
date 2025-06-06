@@ -28,7 +28,7 @@ def get_stages():
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        query = "SELECT nome FROM PALCHI;"
+        query = "SELECT * FROM PALCHI;"
 
         cursor.execute(query)
         stages = cursor.fetchall()

@@ -1,7 +1,9 @@
 import os
-from flask import Flask, flash, render_template, redirect, request, url_for
+from flask import Flask, flash, render_template, redirect, request, url_for, send_from_directory
 from flask_login import LoginManager, login_required, current_user
 from login_manager_setup import setup_login_manager
+from werkzeug.utils import secure_filename
+import time
 
 from dao import palchi_dao, spettacoli_dao, biglietti_dao
 
@@ -93,7 +95,15 @@ def event_page():
     
     drafts = spettacoli_dao.get_drafts(current_user.id)
     stages = palchi_dao.get_stages()
-    return render_template("create_event.html", p_drafts = drafts, p_stages = stages)
+
+    # Converti i risultati in liste di dizionari (se non sono errori)
+    if isinstance(drafts, list):
+        drafts = [dict(row) for row in drafts]
+    if isinstance(stages, list):
+        stages = [dict(row) for row in stages]
+
+    return render_template("create_event.html", p_drafts=drafts, p_stages=stages)
+
 
 # route for creating an event
 @app.route("/create_event", methods = ['POST'])
@@ -107,35 +117,49 @@ def create_event():
     artist = request.form.get('artist')
     description = request.form.get('description')
     genre = request.form.get('genre')
-    published = request.form.get('published')
+    action = request.form.get('action')
+    published = 1 if action == 'publish' else 0
     stage_name = request.form.get('stage')
-    
-    #TODO: decide how many photos the website needs for each event (probabilmente ne basta una)
-    #foto(s) = request.form.get('photo')    gestisci i(l) file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
+    img = request.files.get('image')
 
     required_fields = {
-        "day": day,
-        "start_hour": start_hour,
-        "duration": duration,
-        "artist": artist,
-        "description": description,
-        "genre": genre,
-        "published": published,
-        "stage_name": stage_name
-    }
+    "day": day,
+    "start_hour": start_hour,
+    "duration": duration,
+    "artist": artist,
+    "description": description,
+    "genre": genre,
+    "stage_name": stage_name,
+    "img": img
+}
 
     missing_fields = [name for name, value in required_fields.items() if not value]
+
+    # controlla l'immagine separatamente (se vuoi)
+    if not img:
+        missing_fields.append('image')
 
     if missing_fields:
         flash(f"Missing required fields: {', '.join(missing_fields)}")
         return redirect(url_for('event_page'))
 
-    success, error = spettacoli_dao.create_event(day, start_hour, duration, artist, description, genre, published, current_user.id, stage_name)
+    #gestisci il file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
+    original_filename = secure_filename(img.filename)
+    new_filename = f"{int(time.time())}_{original_filename}"
+    upload_path = os.path.join('uploads', new_filename)
+    img.save(upload_path)
+
+    success, error = spettacoli_dao.create_event(day, start_hour, duration, artist, description,upload_path, genre, published, current_user.id, stage_name)
     if not success:
         flash(error)
         return redirect(url_for('event_page'))
     flash("EVENT_CREATED_WITH_SUCCESS")
     return redirect(url_for("home"))
+
+# route to setup uploads/ directory
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 # route for handling settings operations, such as setting up a new staff password, or sell out all remaining tickets
 @app.route("/settings")
@@ -145,4 +169,10 @@ def settings():
 
 import auth
 
-app.register_blueprint(auth.auth_bp)  # handles every route in auth_bp
+# handles every route in auth_bp
+app.register_blueprint(auth.auth_bp)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+#<img src="{{ url_for('uploaded_file', filename=new_filename) }}" alt="Uploaded Image">

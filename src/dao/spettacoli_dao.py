@@ -47,7 +47,7 @@ def get_shows_filtered(giorno, palco, genere):
         cursor.close()
         conn.close()
 
-def create_event(day, start_hour, duration, artist, description, genre, published, id_creator, stage_name):
+def create_event(day, start_hour, duration, artist, description, genre, published, creator_id, stage_name):
     try:
         conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
@@ -66,10 +66,13 @@ def create_event(day, start_hour, duration, artist, description, genre, publishe
             return False, "STAGE_NOT_FOUND"
 
         insert_query = """
-            INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, genere, pubblicato, id_palco)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, genere, pubblicato, id_creatore, id_palco)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
         """
-        cursor.execute(insert_query, (day, start_hour, duration, artist, description, genre, published, stage_id))
+        print(f"Valori passati a execute: {(day, start_hour, duration, artist, description, genre, published, creator_id, stage_id)}")
+        print(f"Numero valori: {len((day, start_hour, duration, artist, description, genre, published, creator_id, stage_id))}")
+
+        cursor.execute(insert_query, (day, start_hour, duration, artist, description, genre, published, creator_id, stage_id))
         conn.commit()
 
         return True, None
@@ -134,7 +137,7 @@ def get_drafts(user_id):
         cursor = conn.cursor()
 
         query = "SELECT * FROM SPETTACOLI WHERE id_creatore = ? AND pubblicato = ?;"
-        cursor.execute(query, (user_id, False, ))
+        cursor.execute(query, (user_id, 0))
 
         shows = cursor.fetchall()
         return shows

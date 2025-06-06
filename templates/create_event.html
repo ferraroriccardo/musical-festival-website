@@ -28,7 +28,7 @@
                 <select class="form-select" id="draft_selector" name="draft_id">
                     <option value="">-- Seleziona una bozza artista --</option>
                     {% for draft in p_drafts %}
-                    <option value="{{ draft['id'] }}">{{ draft['artist'] }}</option>
+                    <option value="{{ draft['id'] }}">{{ draft['artista'] }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -94,24 +94,46 @@
         </form>
     </section>
 </div>
-
+<script id="drafts-data" type="application/json">
+    {{ p_drafts | tojson }}
+</script>
+<script id="stages-data" type="application/json">
+    {{ p_stages | tojson }}
+</script>
 <script>
-    function beforeSubmit(e) {
-        const form = document.getElementById('eventForm');
+    const drafts = JSON.parse(document.getElementById('drafts-data').textContent);
+    const stages = JSON.parse(document.getElementById('stages-data').textContent);
 
-        // Trova quale bottone ha innescato il submit
-        const submitter = e.submitter;
-        if (!submitter) {
-            alert('Errore interno: impossibile determinare l\'azione.');
-            e.preventDefault();
-            return false;
+    function getStageNameById(id) {
+        const stage = stages.find(s => s.id === id);
+        return stage ? stage.nome : '';
+    }
+
+    document.getElementById('draft_selector')?.addEventListener('change', function () {
+        const selectedId = this.value;
+        if (!selectedId) {
+            // reset campi
+            document.getElementById('day').value = '';
+            document.getElementById('start_hour').value = '';
+            document.getElementById('duration').value = '';
+            document.getElementById('artist').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('genre').value = '';
+            document.getElementById('stage').value = '';
+            return;
         }
 
-        // Imposta published in base al bottone premuto
-        const isPublish = submitter.value === 'publish';
-        document.getElementById('published').value = isPublish ? 1 : 0;
-
-        return true;
-    }
+        const draft = drafts.find(d => d.id == selectedId);
+        if (draft) {
+            document.getElementById('day').value = draft.giorno || '';
+            document.getElementById('start_hour').value = draft.ora_inizio || '';
+            document.getElementById('duration').value = draft.durata || '';
+            document.getElementById('artist').value = draft.artista || '';
+            document.getElementById('description').value = draft.descrizione || '';
+            document.getElementById('genre').value = draft.genere || '';
+            document.getElementById('stage').value = getStageNameById(draft.id_palco);
+        }
+    });
 </script>
+
 {% endblock %}

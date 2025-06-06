@@ -92,7 +92,15 @@ def event_page():
     
     drafts = spettacoli_dao.get_drafts(current_user.id)
     stages = palchi_dao.get_stages()
-    return render_template("create_event.html", p_drafts = drafts, p_stages = stages)
+
+    # Converti i risultati in liste di dizionari (se non sono errori)
+    if isinstance(drafts, list):
+        drafts = [dict(row) for row in drafts]
+    if isinstance(stages, list):
+        stages = [dict(row) for row in stages]
+
+    return render_template("create_event.html", p_drafts=drafts, p_stages=stages)
+
 
 # route for creating an event
 @app.route("/create_event", methods = ['POST'])

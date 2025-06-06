@@ -20,7 +20,8 @@
     <section class="card col-8 shadow rounded-4 p-5 transparent-white-bg">
         <!-- return beforeSubmit(event) sostituisce onclick="setPublished(false)" perché la il sumbit
         era troppo veloce, quindi non si faceva in tempo a modificare la variable published  -->
-        <form action="/create_event" method="POST" id="eventForm" onsubmit="return beforeSubmit(event)">
+        <form action="/create_event" method="POST" enctype="multipart/form-data" id="eventForm"
+            onsubmit="return beforeSubmit(event)">
             <h1 class="mb-4 text-center">CREATE EVENT</h1>
             {% if p_drafts and p_drafts|length > 0 %}
             <div class="mb-4">
@@ -35,7 +36,6 @@
             {% endif %}
             <div class="row mb-3">
                 <div class="col-6">
-                    <input type="hidden" name="published" id="published" value="">
                     <label for="day" class="form-label">Day</label>
                     <select class="form-select" id="day" name="day" required>
                         <option value="">Select day</option>

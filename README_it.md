@@ -32,6 +32,7 @@ Per registrarsi come membro dello staff, usa la seguente password:
 - `ARTIST_ALREADY_PERFORMING`: Ogni artista non può esibirsi due volte nel festival.
 - `EVENT_CREATED_WITH_SUCCESS`: Evento creato con successo.
 - `DATABASE_ERROR`: Si è verificato un errore durante l'elaborazione della richiesta. Riprova più tardi.
+FILE_TYPE_NOT_ALLOWED_ERROR
 
 ## <span style="color:#884ea0">Test Statici</span>
 

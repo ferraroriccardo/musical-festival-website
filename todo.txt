@@ -1,4 +1,5 @@
 1. modifica delle bozze nella pagina di creazione evento (ogni creator può modificare solo le sue)
+    la bozza può anche avere campi vuoti
 2. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
     poi ci metti le foto, la playlist spotify
 3. filtri per gli eventi:
@@ -15,3 +16,4 @@
 11. nel profilo devo vedere le info sul mio biglietto
 12. togliere i valori hardcoded negli html e creare tabelle (giorni, palchi)
 13. correggere la vista per lo staff. Nel profilo mettere magari le bozze o le stats dei biglietti
+14. Inserire band: Emathome, Quadri Rotti, LOM, Only Us

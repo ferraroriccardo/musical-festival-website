@@ -11,7 +11,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 UPLOAD_DIR = os.path.join(os.getcwd(), "uploads")
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -114,54 +113,50 @@ def create_event():
     #TODO: quando parto da una bozza e pubblico l'evento devo modificare la bozza e settarla come pubblicata + salvare la foto in bozza
     #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
     # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile
+    draft_id = request.form.get('draft_id')
     day = request.form.get('day')
     start_hour = request.form.get('start_hour')
     duration = request.form.get('duration')
     artist = request.form.get('artist')
-    description = request.form.get('description')
-    genre = request.form.get('genre')
-    action = request.form.get('action')  # draft o publish
+    description = request.form.get('description') or None
+    genre = request.form.get('genre') or None
     stage_name = request.form.get('stage')
     img = request.files.get('image')
-    draft_id = request.form.get('draft_id')
-
+    action = request.form.get('action')  # draft o publish
     published = 1 if action == 'publish' else 0
-
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
-    def allowed_file(filename):
-        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-    
-    if not allowed_file(img.filename):
-        flash(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
-        return redirect(url_for('event_page'))
 
     required_fields = {
         "day": day,
         "start_hour": start_hour,
         "duration": duration,
         "artist": artist,
-        "description": description,
-        "genre": genre,
         "stage_name": stage_name,
-        "img": img
     }
 
+    if published:
+        required_fields["description"] = description
+        required_fields["genre"] = genre
+        required_fields["img"] = img
+
     missing_fields = [name for name, value in required_fields.items() if not value]
-
-    # controlla l'immagine separatamente (se vuoi)
-    if not img:
-        missing_fields.append('image')
-
     if missing_fields:
         flash(f"Missing required fields: {', '.join(missing_fields)}")
         return redirect(url_for('event_page'))
 
-    #gestisci il file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
-    original_filename = secure_filename(img.filename)
-    new_filename = f"{int(time.time())}_{original_filename}"
-    upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
-    img.save(upload_path)
-    db_img_path = f"uploads/{new_filename}"
+    db_img_path = None
+    if img:
+        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
+        is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+        if not is_allowed_file:
+            flash(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
+            return redirect(url_for('event_page'))
+    
+        original_filename = secure_filename(img.filename)
+        new_filename = f"{int(time.time())}_{original_filename}"
+        upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
+        img.save(upload_path)
+        db_img_path = f"uploads/{new_filename}"
 
     if draft_id:
         success, error = spettacoli_dao.update_draft(

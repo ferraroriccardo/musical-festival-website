@@ -10,6 +10,7 @@ from dao import palchi_dao, spettacoli_dao, biglietti_dao
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
+UPLOAD_DIR = os.path.join(os.getcwd(), "uploads")
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -20,6 +21,7 @@ POST_IMG_WIDTH = 300
 app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 setup_login_manager(app)
 app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
+app.config["UPLOAD_FOLDER"] = UPLOAD_DIR
 
 # route for homepage
 @app.route("/")
@@ -91,7 +93,7 @@ def event_page():
     # check for logs by console
     if current_user.tipo == "Basic":
         return redirect(url_for("home"))
-    
+
     drafts = spettacoli_dao.get_drafts(current_user.id)
     stages = palchi_dao.get_stages()
 
@@ -108,6 +110,7 @@ def event_page():
 @app.route("/create_event", methods = ['POST'])
 @login_required
 def create_event():
+    #TODO: quando parto da una bozza e pubblico l'evento devo modificare la bozza e settarla come pubblicata + salvare la foto in bozza
     #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
     # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile
     day = request.form.get('day')
@@ -116,21 +119,23 @@ def create_event():
     artist = request.form.get('artist')
     description = request.form.get('description')
     genre = request.form.get('genre')
-    action = request.form.get('action')
-    published = 1 if action == 'publish' else 0
+    action = request.form.get('action')  # draft o publish
     stage_name = request.form.get('stage')
     img = request.files.get('image')
+    draft_id = request.form.get('draft_id')
+
+    published = 1 if action == 'publish' else 0
 
     required_fields = {
-    "day": day,
-    "start_hour": start_hour,
-    "duration": duration,
-    "artist": artist,
-    "description": description,
-    "genre": genre,
-    "stage_name": stage_name,
-    "img": img
-}
+        "day": day,
+        "start_hour": start_hour,
+        "duration": duration,
+        "artist": artist,
+        "description": description,
+        "genre": genre,
+        "stage_name": stage_name,
+        "img": img
+    }
 
     missing_fields = [name for name, value in required_fields.items() if not value]
 
@@ -145,10 +150,20 @@ def create_event():
     #gestisci il file, con il nome da formattare tramite timestamp e ripulito da caratteri dannosi
     original_filename = secure_filename(img.filename)
     new_filename = f"{int(time.time())}_{original_filename}"
-    upload_path = os.path.join('uploads', new_filename)
+    upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
     img.save(upload_path)
+    db_img_path = f"uploads/{new_filename}"
 
-    success, error = spettacoli_dao.create_event(day, start_hour, duration, artist, description,upload_path, genre, published, current_user.id, stage_name)
+    if draft_id:
+        success, error = spettacoli_dao.update_draft(
+            draft_id, day, start_hour, duration, artist, description, db_img_path,
+            genre, published, current_user.id, stage_name
+        )
+    else:
+        success, error = spettacoli_dao.create_event(
+            day, start_hour, duration, artist, description, db_img_path,
+            genre, published, current_user.id, stage_name
+        )
     if not success:
         flash(error)
         return redirect(url_for('event_page'))

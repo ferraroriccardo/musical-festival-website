@@ -3,7 +3,7 @@ from .settings_dao import DB_PATH
 
 def get_palco_by_name(stage_name):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -24,7 +24,7 @@ def get_palco_by_name(stage_name):
 
 def get_stages():
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 

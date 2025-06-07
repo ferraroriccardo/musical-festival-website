@@ -94,12 +94,6 @@
         </form>
     </section>
 </div>
-<script id="drafts-data" type="application/json">
-    {{ p_drafts | tojson }}
-</script>
-<script id="stages-data" type="application/json">
-    {{ p_stages | tojson }}
-</script>
 <script>
     const drafts = JSON.parse(document.getElementById('drafts-data').textContent);
     const stages = JSON.parse(document.getElementById('stages-data').textContent);
@@ -111,8 +105,9 @@
 
     document.getElementById('draft_selector')?.addEventListener('change', function () {
         const selectedId = this.value;
-        if (!selectedId) {
-            // reset campi
+        const draft = drafts.find(d => d.id == selectedId);
+
+        if (!draft) {
             document.getElementById('day').value = '';
             document.getElementById('start_hour').value = '';
             document.getElementById('duration').value = '';
@@ -123,16 +118,13 @@
             return;
         }
 
-        const draft = drafts.find(d => d.id == selectedId);
-        if (draft) {
-            document.getElementById('day').value = draft.giorno || '';
-            document.getElementById('start_hour').value = draft.ora_inizio || '';
-            document.getElementById('duration').value = draft.durata || '';
-            document.getElementById('artist').value = draft.artista || '';
-            document.getElementById('description').value = draft.descrizione || '';
-            document.getElementById('genre').value = draft.genere || '';
-            document.getElementById('stage').value = getStageNameById(draft.id_palco);
-        }
+        document.getElementById('day').value = draft.giorno;
+        document.getElementById('start_hour').value = draft.ora_inizio;
+        document.getElementById('duration').value = draft.durata;
+        document.getElementById('artist').value = draft.artista;
+        document.getElementById('description').value = draft.descrizione;
+        document.getElementById('genre').value = draft.genere;
+        document.getElementById('stage').value = getStageNameById(draft.id_palco);
     });
 </script>
 

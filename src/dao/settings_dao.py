@@ -10,7 +10,7 @@ DB_PATH = os.path.join(BASE_DIR, 'musical_festival.db')
 
 def get_staff_passw():
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         cursor = conn.cursor()
 
         query = "SELECT staff_password FROM SETTINGS;"
@@ -27,7 +27,7 @@ def get_staff_passw():
 
 def set_staff_passw(plain_text_passw):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         cursor = conn.cursor()
 
         cursor.execute("DELETE FROM SETTINGS")
@@ -46,7 +46,7 @@ def set_staff_passw(plain_text_passw):
 
 def get_connection():
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         return conn
     except Exception as e:

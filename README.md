@@ -32,6 +32,7 @@ To register as a staff member, use the following password:
 - `ARTIST_ALREADY_PERFORMING`: Each artist can only perform once at the festival.
 - `EVENT_CREATED_WITH_SUCCESS`: Event created successfully.
 - `DATABASE_ERROR`: An error occurred while processing the request. Please try again later.
+FILE_TYPE_NOT_ALLOWED_ERROR
 
 ## <span style="color:#884ea0">Static Tests</span>
 

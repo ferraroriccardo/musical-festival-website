@@ -3,7 +3,7 @@ from .settings_dao import DB_PATH
 
 def buy_ticket_for_user(user_id, ticket_type, start_day):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -56,7 +56,7 @@ def get_ticket_by_user_id(user_id):
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 

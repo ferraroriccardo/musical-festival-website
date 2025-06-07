@@ -1,5 +1,5 @@
-1. modifica delle bozze nella pagina di creazione evento (ogni creator può modificare solo le sue)
-    la bozza può anche avere campi vuoti
+1. la bozza può anche avere campi vuoti
+
 2. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
     poi ci metti le foto, la playlist spotify
 3. filtri per gli eventi:

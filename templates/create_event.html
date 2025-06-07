@@ -63,13 +63,12 @@
             <div class="row mb-3">
                 <div class="col-6 d-flex flex-column h-100">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control h-100" id="description" name="description" rows="5"
-                        required></textarea>
+                    <textarea class="form-control h-100" id="description" name="description" rows="5"></textarea>
                 </div>
                 <div class="col-6 d-flex flex-column justify-content-between h-100">
                     <div class="mb-3">
                         <label for="genre" class="form-label">Genre</label>
-                        <input type="text" class="form-control" id="genre" name="genre" required>
+                        <input type="text" class="form-control" id="genre" name="genre">
                     </div>
                     <label for="stage" class="form-label">Stage</label>
                     <select class="form-select" id="stage" name="stage" required>
@@ -82,7 +81,7 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Upload image</label>
-                <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                <input class="form-control" type="file" id="image" name="image" accept="image/*">
             </div>
             <div class="d-flex justify-content-evenly align-items-center mt-4 gap-4">
                 <button type="submit" name="action" value="draft"
@@ -94,6 +93,13 @@
         </form>
     </section>
 </div>
+<!-- Parse jinja's drafts and stages parameters into json to enable JS autocompletion -->
+<script id="drafts-data" type="application/json">
+    {{ p_drafts|tojson }}
+</script>
+<script id="stages-data" type="application/json">
+    {{ p_stages|tojson }}
+</script>
 <script>
     const drafts = JSON.parse(document.getElementById('drafts-data').textContent);
     const stages = JSON.parse(document.getElementById('stages-data').textContent);

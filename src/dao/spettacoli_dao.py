@@ -53,16 +53,16 @@ def create_event(day, start_hour, duration, artist, description, img_path, genre
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
+        stage_id = palchi_dao.get_palco_by_name(stage_name)
+        if stage_id is None:
+            return False, "STAGE_NOT_FOUND"
+
         if published == 1 :
-            if exist_overlapping_published_shows(day, start_hour, duration, conn):
+            if exist_overlapping_published_shows(day, start_hour, duration, stage_id, conn):
                 return False, "SHOW_SLOT_ALREADY_OCCUPIED"
             
             if is_already_performing(artist, conn):
                 return False, "ARTIST_ALREADY_PERFORMING"
-
-        stage_id = palchi_dao.get_palco_by_name(stage_name)
-        if stage_id is None:
-            return False, "STAGE_NOT_FOUND"
 
         insert_query = """
             INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, path_immagine, genere, pubblicato, id_creatore, id_palco)
@@ -96,7 +96,7 @@ def update_draft(draft_id, day, start_hour, duration, artist, description, img_p
         cursor = conn.cursor()
 
         if published == 1 :
-            if exist_overlapping_published_shows(day, start_hour, duration, conn):
+            if exist_overlapping_published_shows(day, start_hour, duration, stage_id, conn):
                 return False, "SHOW_SLOT_ALREADY_OCCUPIED"
             
             if is_already_performing(artist, conn):
@@ -131,15 +131,15 @@ def update_draft(draft_id, day, start_hour, duration, artist, description, img_p
             conn.close()
 
 
-def exist_overlapping_published_shows(day, hour_slot, duration, conn):
+def exist_overlapping_published_shows(day, hour_slot, duration, stage, conn):
     cursor = conn.cursor()
     try:
-        query = "SELECT * FROM SPETTACOLI WHERE pubblicato = '1' AND giorno = ?;"
+        query = "SELECT * FROM SPETTACOLI WHERE pubblicato = '1' AND giorno = ? AND id_palco = ?;"
         
         start = time_to_minutes(hour_slot)
         end = start + int(duration)
 
-        cursor.execute(query, (day,))
+        cursor.execute(query, (day, stage))
         shows = []
 
         for row in cursor.fetchall():

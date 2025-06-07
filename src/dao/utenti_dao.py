@@ -5,7 +5,7 @@ from .settings_dao import DB_PATH
 
 def get_user_by_id(user_id):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -22,7 +22,7 @@ def get_user_by_id(user_id):
 
 def get_user_by_email(email):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -39,7 +39,7 @@ def get_user_by_email(email):
 
 def create_user(email, password, type):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PAT, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 

@@ -4,7 +4,7 @@ from .settings_dao import DB_PATH, time_to_minutes
 
 def get_shows():
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -21,7 +21,7 @@ def get_shows():
 
 def get_shows_filtered(giorno, palco, genere):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -49,17 +49,16 @@ def get_shows_filtered(giorno, palco, genere):
 
 def create_event(day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_name):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        overlapping = exist_overlapping_published_shows(day, start_hour, duration, conn)
-        if published == 1 and overlapping:
-            return False, "SHOW_SLOT_ALREADY_OCCUPIED"
-
-        artist_already_performing = is_already_performing(artist, conn)
-        if published and artist_already_performing:
-            return False, "ARTIST_ALREADY_PERFORMING"
+        if published == 1 :
+            if exist_overlapping_published_shows(day, start_hour, duration, conn):
+                return False, "SHOW_SLOT_ALREADY_OCCUPIED"
+            
+            if is_already_performing(artist, conn):
+                return False, "ARTIST_ALREADY_PERFORMING"
 
         stage_id = palchi_dao.get_palco_by_name(stage_name)
         if stage_id is None:
@@ -70,8 +69,8 @@ def create_event(day, start_hour, duration, artist, description, img_path, genre
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """
         
-        print(f"Valori passati a execute: {(day, start_hour, duration, artist, description, genre, published, creator_id, stage_id)}")
-        print(f"Numero valori: {len((day, start_hour, duration, artist, description, genre, published, creator_id, stage_id))}")
+        print(f"Valori passati a execute: {(day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_id)}")
+        print(f"Numero valori: {len((day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_id))}")
 
         cursor.execute(insert_query, (day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_id))
         conn.commit()
@@ -79,7 +78,49 @@ def create_event(day, start_hour, duration, artist, description, img_path, genre
         return True, None
 
     except Exception as e:
-        print("Errore durante la creazione evento:", e)  # stampa l'errore sulla console
+        print("Errore durante la creazione evento:", e)
+        if 'conn' in locals():
+            conn.rollback()
+        return False, "DATABASE_ERROR_CREATE_EVENT"
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
+def update_draft(draft_id, day, start_hour, duration, artist, description, img_path,
+            genre, published, creator_id, stage_name):
+    try:
+        conn = sqlite3.connect(DB_PATH, timeout=10)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        if published == 1 :
+            if exist_overlapping_published_shows(day, start_hour, duration, conn):
+                return False, "SHOW_SLOT_ALREADY_OCCUPIED"
+            
+            if is_already_performing(artist, conn):
+                return False, "ARTIST_ALREADY_PERFORMING"
+
+        stage_id = palchi_dao.get_palco_by_name(stage_name)
+        if stage_id is None:
+            return False, "STAGE_NOT_FOUND"
+
+        update_query = """
+            UPDATE SPETTACOLI
+            SET giorno = ?, ora_inizio = ?, durata = ?, artista = ?, descrizione = ?,
+                path_immagine = ?, genere = ?, pubblicato = ?, id_creatore = ?, id_palco = ?
+            WHERE id = ?;
+        """
+
+        cursor.execute(update_query, (day, start_hour, duration, artist, description, img_path,
+            genre, published, creator_id, stage_id, draft_id))
+        conn.commit()
+
+        return True, None
+
+    except Exception as e:
+        print("Errore durante la creazione evento:", e)
         if 'conn' in locals():
             conn.rollback()
         return False, "DATABASE_ERROR_CREATE_EVENT"
@@ -91,49 +132,45 @@ def create_event(day, start_hour, duration, artist, description, img_path, genre
 
 
 def exist_overlapping_published_shows(day, hour_slot, duration, conn):
+    cursor = conn.cursor()
     try:
-        cursor = conn.cursor()
         query = "SELECT * FROM SPETTACOLI WHERE pubblicato = '1' AND giorno = ?;"
         
         start = time_to_minutes(hour_slot)
         end = start + int(duration)
 
-        # Seleziona tutti gli show pubblicati in quel giorno
-        cursor.execute(query, (day, ))
+        cursor.execute(query, (day,))
         shows = []
 
         for row in cursor.fetchall():
             other_start = time_to_minutes(row['ora_inizio'])
             other_end = other_start + row['durata']
-            
-            # Verifica sovrapposizione (anche parziale)
             if start < other_end and other_start < end:
                 shows.append(row)
 
         return len(shows) > 0
-
     except Exception as e:
         print("Errore overlapping:", e)
-        return False, "DATABASE_ERROR_GET_OVERLAPPING_PUBLISHED_SHOWS"
+        return False
+    finally:
+        cursor.close()
 
 def is_already_performing(artist, conn):
+    cursor = conn.cursor()
     try:
-        cursor = conn.cursor()
-
         query = "SELECT artista FROM SPETTACOLI WHERE artista = ? AND pubblicato = 1;"
-        cursor.execute(query, (artist, ))
-
-        shows = cursor.fetchone()
-        if shows:
-            return True
-        return False
+        cursor.execute(query, (artist,))
+        return cursor.fetchone() is not None
     except Exception as e:
-        conn.rollback()
-        return False, "DATABASE_ERROR_IS_ALREADY_PERFORMING"
+        print("Errore checking performer:", e)
+        return False
+    finally:
+        cursor.close()
+
 
 def get_drafts(user_id):
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 

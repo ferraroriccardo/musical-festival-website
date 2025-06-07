@@ -48,10 +48,11 @@ def program_filtered():
 @app.route("/profile")
 @login_required
 def profile():
-    ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
-    if ticket:
-        return render_template("profile.html", p_ticket = ticket)
-    return render_template("profile.html")
+    if current_user.tipo == "Basic":
+        ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
+        return render_template("profile_basic.html", p_ticket = ticket)
+    else:
+        return render_template("profile_staff.html")
 
 # route to show all types of ticket
 @app.route("/ticket-form")

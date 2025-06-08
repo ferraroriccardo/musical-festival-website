@@ -186,3 +186,20 @@ def get_drafts(user_id):
     finally:
         cursor.close()
         conn.close()
+
+def get_published():
+    try:
+        conn = sqlite3.connect(DB_PATH, timeout=10)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        query = "SELECT * FROM SPETTACOLI WHERE pubblicato = ?;"
+        cursor.execute(query, (1, ))
+
+        shows = cursor.fetchall()
+        return shows
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_PUBLISHED"
+    finally:
+        cursor.close()
+        conn.close()

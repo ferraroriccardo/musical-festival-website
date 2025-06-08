@@ -17,3 +17,4 @@
 12. NON TUTTO È UN DIV
 13. Utilizzo di tag HTML in mani (<b>)
 14. Messaggi palese di errore per sovrapposizione di eventi quando si vuole creare uno
+15. capire bene quando usare param.campo o param["campo"] in jinja, con Row e altro

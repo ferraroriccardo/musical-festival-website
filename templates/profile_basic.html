@@ -22,15 +22,21 @@
                         soundwave! <br>Your pass is ready - just show it at the gate.</p>
 
                     <ul class="list-group list-group-flush mb-3">
-                        <li class="list-group-item"><strong>Ticket Type:</strong> {{ p_ticket["tipo"].replace('_', '
-                            ').title() }}</li>
-                        {% if p_ticket["start_day"] %}
-                        <li class="list-group-item"><strong>Start Day:</strong> {{ p_ticket["giorno_inizio"] }}</li>
-                        {% endif %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6"><strong>Ticket Type:</strong> {{ p_ticket["tipo"].replace('_', '
+                                    ').title() }}</div>
+                                {% if p_ticket["giorno_inizio"] %}
+                                <div class="col-md-6"><strong>Start Day:</strong> {{ p_ticket["giorno_inizio"] }}</div>
+                                {% endif %}
+                            </div>
+                        </li>
                         <li class="list-group-item"><strong>Ticket ID:</strong> {{ p_ticket["id"] }}</li>
                     </ul>
 
+
                     <div class="text-center mt-3">
+                        <!-- font size 6 -->
                         <span class="badge bg-success fs-6">Valid</span>
                     </div>
                 </div>

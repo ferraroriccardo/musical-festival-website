@@ -10,7 +10,7 @@ from dao import palchi_dao, spettacoli_dao, biglietti_dao
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
-UPLOAD_DIR = os.path.join(os.getcwd(), "uploads")
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -35,7 +35,7 @@ def program():
     shows = spettacoli_dao.get_shows()
     return render_template("program.html", p_shows=shows)
 
-# route per programma filtrato (con parametri GET)
+# route per programma filtrato
 @app.route("/program/filter")
 def program_filtered():
     giorno = request.args.get('giorno')
@@ -52,7 +52,10 @@ def profile():
         ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
         return render_template("profile_basic.html", p_ticket = ticket)
     else:
-        return render_template("profile_staff.html")
+        published = spettacoli_dao.get_published()
+        drafts = spettacoli_dao.get_drafts(current_user.id)
+        print(published[0]["path_immagine"])
+        return render_template("profile_staff.html", p_published = published, p_drafts = drafts)
 
 # route to show all types of ticket
 @app.route("/ticket-form")

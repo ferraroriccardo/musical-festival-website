@@ -54,7 +54,6 @@ def profile():
     else:
         published = spettacoli_dao.get_published()
         drafts = spettacoli_dao.get_drafts(current_user.id)
-        print(published[0]["path_immagine"])
         return render_template("profile_staff.html", p_published = published, p_drafts = drafts)
 
 # route to show all types of ticket
@@ -178,10 +177,9 @@ def create_event():
     flash("EVENT_CREATED_WITH_SUCCESS")
     return redirect(url_for("home"))
 
-# route to setup uploads/ directory
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory('uploads', filename)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 # route for handling settings operations, such as setting up a new staff password, or sell out all remaining tickets
 @app.route("/settings")

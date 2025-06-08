@@ -205,3 +205,39 @@ footer div {
         background-position: 0% 50%;
     }
 }
+
+.card-performance {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-performance:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    border-radius: 2rem;
+    padding: 0.4rem 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    width: fit-content;
+    margin: 0 auto 2rem auto;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.view-toggle span {
+    cursor: pointer;
+    color: #963939; /* navbar color */
+    padding: 0.3rem 1rem;
+    border-radius: 2rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+.view-toggle .active-toggle {
+    background: #b03a2e; /* navbar active color */
+    color: #fff;
+}

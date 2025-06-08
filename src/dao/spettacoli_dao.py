@@ -174,7 +174,13 @@ def get_drafts(user_id):
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        query = "SELECT * FROM SPETTACOLI WHERE id_creatore = ? AND pubblicato = ?;"
+        query = """
+            SELECT SPETTACOLI.*, PALCHI.nome AS nome_palco, UTENTI.email AS email_creatore
+            FROM SPETTACOLI
+            JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
+            JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
+            WHERE SPETTACOLI.id_creatore = ? AND SPETTACOLI.pubblicato = ?;
+        """
         cursor.execute(query, (user_id, 0))
 
         shows = cursor.fetchall()
@@ -193,7 +199,13 @@ def get_published():
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        query = "SELECT * FROM SPETTACOLI WHERE pubblicato = ?;"
+        query = """
+            SELECT SPETTACOLI.*, PALCHI.nome AS nome_palco, UTENTI.email AS email_creatore
+            FROM SPETTACOLI
+            JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
+            JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
+            WHERE SPETTACOLI.pubblicato = ?;
+        """        
         cursor.execute(query, (1, ))
 
         shows = cursor.fetchall()

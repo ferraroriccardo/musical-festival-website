@@ -6,12 +6,9 @@
     <section class="card col-10 shadow rounded-4 p-5 transparent-white-bg">
         <div class="card-body">
 
-            <!-- Selettore Published / Drafts -->
-            <div class="mb-4 text-center">
-                <select id="viewSelect" class="form-select w-auto d-inline-block">
-                    <option value="published">Published</option>
-                    <option value="drafts">Drafts</option>
-                </select>
+            <div class="view-toggle">
+                <span id="togglePublished" class="active-toggle">Published</span>
+                <span id="toggleDrafts">Drafts</span>
             </div>
 
             <!-- Container Published -->
@@ -19,30 +16,40 @@
                 <div class="row">
                     {% for perf in p_published %}
                     <div class="col-md-6 mb-4 d-flex">
-                        <div class="card shadow-sm rounded-3 p-3 w-100 h-100">
+                        <div class="card card-performance shadow-sm rounded-3 p-3 w-100 h-100">
                             <div class="d-flex gap-3">
                                 {% if perf.path_immagine %}
-                                    <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
-                                         alt="Performance Image"
-                                         class="img-fluid rounded-3"
-                                         style="width: 120px; height: 120px; object-fit: cover;">
+                                <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
+                                    alt="Performance Image" class="img-fluid rounded-3"
+                                    style="width: 120px; height: 120px; object-fit: cover;">
                                 {% else %}
-                                    <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
-                                         style="width: 120px; height: 120px;">
-                                        Nessuna immagine
-                                    </div>
+                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
+                                    style="width: 120px; height: 120px;">
+                                    Nessuna immagine
+                                </div>
                                 {% endif %}
                                 <div>
-                                    <h5 class="mb-3">Performance ID: {{ perf.id }}</h5>
+                                    <h5 class="mb-3">{{ perf.artista }}</h5>
                                     <ul class="list-unstyled mb-0">
+                                        <li><strong>ID:</strong> {{ perf.id }}</li>
                                         <li><strong>Giorno:</strong> {{ perf.giorno }}</li>
                                         <li><strong>Ora Inizio:</strong> {{ perf.ora_inizio }}</li>
-                                        <li><strong>Artista:</strong> {{ perf.artista }}</li>
                                         <li><strong>Durata:</strong> {{ perf.durata }}</li>
                                         <li><strong>Genere Musicale:</strong> {{ perf.genere }}</li>
                                         <li><strong>Descrizione:</strong> {{ perf.descrizione }}</li>
-                                        <li><strong>ID Creatore:</strong> {{ perf.id_creatore }}</li>
-                                        <li><strong>ID Palco:</strong> {{ perf.id_palco }}</li>
+                                        <li>
+                                            <div class="d-flex justify-content-between">
+                                                <span><strong>Creatore:</strong> {{ perf.email_creatore }}</span>
+                                                <span><strong>ID:</strong> {{ perf.id_creatore }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex justify-content-between">
+                                                <span><strong>Palco:</strong> {{ perf.nome_palco }}</span>
+                                                <span><strong>ID:</strong> {{ perf.id_palco }}</span>
+                                            </div>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
@@ -60,22 +67,26 @@
                         <div class="card shadow-sm rounded-3 p-3 w-100 h-100">
                             <div class="d-flex gap-3">
                                 {% if perf.path_immagine %}
-                                    <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
-                                         alt="Performance Image"
-                                         class="img-fluid rounded-3"
-                                         style="width: 120px; height: 120px; object-fit: cover;">
+                                <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
+                                    alt="Performance Image" class="img-fluid rounded-3"
+                                    style="width: 120px; height: 120px; object-fit: cover;">
                                 {% else %}
-                                    <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
-                                         style="width: 120px; height: 120px;">
-                                        Nessuna immagine
-                                    </div>
+                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
+                                    style="width: 120px; height: 120px;">
+                                    Nessuna immagine
+                                </div>
                                 {% endif %}
                                 <div>
                                     <h5 class="mb-3">Performance ID: {{ perf.id }}</h5>
                                     <ul class="list-unstyled mb-0">
                                         <li><strong>Giorno:</strong> {{ perf.giorno }}</li>
                                         <li><strong>Ora Inizio:</strong> {{ perf.ora_inizio }}</li>
-                                        <li><strong>Artista:</strong> {{ perf.artista }}</li>
+                                        <h5 class="mb-3">
+                                            <a href="{{ url_for('program') }}/{{ perf.id }}"
+                                                class="text-decoration-none text-dark">
+                                                {{ perf.artista }}
+                                            </a>
+                                        </h5>
                                         <li><strong>Durata:</strong> {{ perf.durata }}</li>
                                         <li><strong>Genere Musicale:</strong> {{ perf.genere }}</li>
                                         <li><strong>Descrizione:</strong> {{ perf.descrizione }}</li>
@@ -104,21 +115,30 @@
 <!-- JS toggle senza refresh -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const viewSelect = document.getElementById('viewSelect');
+        const togglePublished = document.getElementById('togglePublished');
+        const toggleDrafts = document.getElementById('toggleDrafts');
         const publishedContainer = document.getElementById('publishedContainer');
         const draftsContainer = document.getElementById('draftsContainer');
 
-        // ✅ Imposta published come default
-        viewSelect.value = 'published';
-        publishedContainer.classList.remove('d-none');
-        draftsContainer.classList.add('d-none');
+        function showPublished() {
+            publishedContainer.classList.remove('d-none');
+            draftsContainer.classList.add('d-none');
+            togglePublished.classList.add('active-toggle');
+            toggleDrafts.classList.remove('active-toggle');
+        }
 
-        // ✅ Switch dinamico
-        viewSelect.addEventListener('change', function () {
-            const isPublished = this.value === 'published';
-            publishedContainer.classList.toggle('d-none', !isPublished);
-            draftsContainer.classList.toggle('d-none', isPublished);
-        });
+        function showDrafts() {
+            publishedContainer.classList.add('d-none');
+            draftsContainer.classList.remove('d-none');
+            togglePublished.classList.remove('active-toggle');
+            toggleDrafts.classList.add('active-toggle');
+        }
+
+        togglePublished.addEventListener('click', showPublished);
+        toggleDrafts.addEventListener('click', showDrafts);
+
+        // Default view
+        showPublished();
     });
 </script>
 

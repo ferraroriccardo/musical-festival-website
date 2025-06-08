@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<article class="d-flex justify-content-center align-items-center banner-blue full-height">
+    <section class="card col-10 shadow rounded-4 p-3 transparent-white-bg">
+        <div class="card-body">
+
+            <div class="view-toggle mb-3">
+                <span id="togglePublished" class="active-toggle">Published</span>
+                <span id="toggleDrafts">Drafts</span>
+            </div>
+
+            <!-- Container Published -->
+            <div id="publishedContainer">
+                <div class="row">
+                    {% for perf in p_published %}
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="card card-performance shadow-sm rounded-3 p-3 h-100">
+                            <div class="d-flex gap-3">
+                                {% if perf.path_immagine %}
+                                <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
+                                     alt="Performance Image"
+                                     class="img-fluid rounded-3"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
+                                {% else %}
+                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
+                                     style="width: 120px; height: 120px;">
+                                    Nessuna immagine
+                                </div>
+                                {% endif %}
+
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">
+                                        <a href="{{ url_for('artist', artist_name=perf.artista|urlencode) }}"
+                                           class="text-decoration-none text-dark">
+                                            {{ perf.artista }}
+                                        </a>
+                                    </h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><b>ID:</b> {{ perf.id }}</li>
+                                        <li><b>Giorno:</b> {{ perf.giorno }}</li>
+                                        <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
+                                        <li><b>Durata:</b> {{ perf.durata }}</li>
+                                        <li><b>Genere Musicale:</b> {{ perf.genere }}</li>
+                                        <li><b>Descrizione:</b> {{ perf.descrizione }}</li>
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>Creatore:</b> {{ perf.email_creatore }}</span>
+                                                <span class="ms-auto"><b>ID:</b> {{ perf.id_creatore }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>Palco:</b> {{ perf.nome_palco }}</span>
+                                                <span class="ms-auto"><b>ID:</b> {{ perf.id_palco }}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Nessuna performance -->
+            {% if not p_published and not p_drafts %}
+            <div class="text-center">
+                <p>No performances to show.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+</article>
+
+{% endblock %}

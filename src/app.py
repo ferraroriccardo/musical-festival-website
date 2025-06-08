@@ -35,6 +35,12 @@ def program():
     shows = spettacoli_dao.get_shows()
     return render_template("program.html", p_shows=shows)
 
+# route to show all details about a single show
+@app.route("/program/<artist_name>")
+def artist(artist_name):
+    artist = spettacoli_dao.get_artist_by_name(artist_name)
+    return render_template("artist.html", p_artist=artist)
+
 # route per programma filtrato
 @app.route("/program/filter")
 def program_filtered():

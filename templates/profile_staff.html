@@ -3,10 +3,10 @@
 {% block content %}
 
 <article class="d-flex justify-content-center align-items-center banner-blue full-height">
-    <section class="card col-10 shadow rounded-4 p-5 transparent-white-bg">
+    <section class="card col-10 shadow rounded-4 p-3 transparent-white-bg">
         <div class="card-body">
 
-            <div class="view-toggle">
+            <div class="view-toggle mb-3">
                 <span id="togglePublished" class="active-toggle">Published</span>
                 <span id="toggleDrafts">Drafts</span>
             </div>
@@ -15,41 +15,47 @@
             <div id="publishedContainer">
                 <div class="row">
                     {% for perf in p_published %}
-                    <div class="col-md-6 mb-4 d-flex">
-                        <div class="card card-performance shadow-sm rounded-3 p-3 w-100 h-100">
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="card card-performance shadow-sm rounded-3 p-3 h-100">
                             <div class="d-flex gap-3">
                                 {% if perf.path_immagine %}
                                 <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
-                                    alt="Performance Image" class="img-fluid rounded-3"
-                                    style="width: 120px; height: 120px; object-fit: cover;">
+                                     alt="Performance Image"
+                                     class="img-fluid rounded-3"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
                                 {% else %}
                                 <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
-                                    style="width: 120px; height: 120px;">
+                                     style="width: 120px; height: 120px;">
                                     Nessuna immagine
                                 </div>
                                 {% endif %}
-                                <div>
-                                    <h5 class="mb-3">{{ perf.artista }}</h5>
-                                    <ul class="list-unstyled mb-0">
-                                        <li><strong>ID:</strong> {{ perf.id }}</li>
-                                        <li><strong>Giorno:</strong> {{ perf.giorno }}</li>
-                                        <li><strong>Ora Inizio:</strong> {{ perf.ora_inizio }}</li>
-                                        <li><strong>Durata:</strong> {{ perf.durata }}</li>
-                                        <li><strong>Genere Musicale:</strong> {{ perf.genere }}</li>
-                                        <li><strong>Descrizione:</strong> {{ perf.descrizione }}</li>
-                                        <li>
-                                            <div class="d-flex justify-content-between">
-                                                <span><strong>Creatore:</strong> {{ perf.email_creatore }}</span>
-                                                <span><strong>ID:</strong> {{ perf.id_creatore }}</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="d-flex justify-content-between">
-                                                <span><strong>Palco:</strong> {{ perf.nome_palco }}</span>
-                                                <span><strong>ID:</strong> {{ perf.id_palco }}</span>
-                                            </div>
-                                        </li>
 
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">
+                                        <a href="{{ url_for('artist', artist_name=perf.artista|urlencode) }}"
+                                           class="text-decoration-none text-dark">
+                                            {{ perf.artista }}
+                                        </a>
+                                    </h5>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><b>ID:</b> {{ perf.id }}</li>
+                                        <li><b>Giorno:</b> {{ perf.giorno }}</li>
+                                        <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
+                                        <li><b>Durata:</b> {{ perf.durata }}</li>
+                                        <li><b>Genere Musicale:</b> {{ perf.genere }}</li>
+                                        <li><b>Descrizione:</b> {{ perf.descrizione }}</li>
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>Creatore:</b> {{ perf.email_creatore }}</span>
+                                                <span class="ms-auto"><b>ID:</b> {{ perf.id_creatore }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>Palco:</b> {{ perf.nome_palco }}</span>
+                                                <span class="ms-auto"><b>ID:</b> {{ perf.id_palco }}</span>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -63,35 +69,49 @@
             <div id="draftsContainer">
                 <div class="row">
                     {% for perf in p_drafts %}
-                    <div class="col-md-6 mb-4 d-flex">
-                        <div class="card shadow-sm rounded-3 p-3 w-100 h-100">
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="card shadow-sm rounded-3 p-3 h-100">
                             <div class="d-flex gap-3">
                                 {% if perf.path_immagine %}
                                 <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
-                                    alt="Performance Image" class="img-fluid rounded-3"
-                                    style="width: 120px; height: 120px; object-fit: cover;">
+                                     alt="Performance Image"
+                                     class="img-fluid rounded-3"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
                                 {% else %}
                                 <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
-                                    style="width: 120px; height: 120px;">
+                                     style="width: 120px; height: 120px;">
                                     Nessuna immagine
                                 </div>
                                 {% endif %}
-                                <div>
+
+                                <div class="flex-grow-1">
                                     <h5 class="mb-3">Performance ID: {{ perf.id }}</h5>
                                     <ul class="list-unstyled mb-0">
-                                        <li><strong>Giorno:</strong> {{ perf.giorno }}</li>
-                                        <li><strong>Ora Inizio:</strong> {{ perf.ora_inizio }}</li>
-                                        <h5 class="mb-3">
-                                            <a href="{{ url_for('program') }}/{{ perf.id }}"
-                                                class="text-decoration-none text-dark">
-                                                {{ perf.artista }}
-                                            </a>
-                                        </h5>
-                                        <li><strong>Durata:</strong> {{ perf.durata }}</li>
-                                        <li><strong>Genere Musicale:</strong> {{ perf.genere }}</li>
-                                        <li><strong>Descrizione:</strong> {{ perf.descrizione }}</li>
-                                        <li><strong>ID Creatore:</strong> {{ perf.id_creatore }}</li>
-                                        <li><strong>ID Palco:</strong> {{ perf.id_palco }}</li>
+                                        <li><b>Giorno:</b> {{ perf.giorno }}</li>
+                                        <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
+                                        <li>
+                                            <h5 class="mb-3">
+                                                <a href="{{ url_for('artist', artist_name=perf.artista|urlencode) }}"
+                                                   class="text-decoration-none text-dark">
+                                                    {{ perf.artista }}
+                                                </a>
+                                            </h5>
+                                        </li>
+                                        <li><b>Durata:</b> {{ perf.durata }}</li>
+                                        <li><b>Genere Musicale:</b> {{ perf.genere }}</li>
+                                        <li><b>Descrizione:</b> {{ perf.descrizione }}</li>
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>ID Creatore:</b></span>
+                                                <span class="ms-auto">{{ perf.id_creatore }}</span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>ID Palco:</b></span>
+                                                <span class="ms-auto">{{ perf.id_palco }}</span>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

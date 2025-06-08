@@ -215,3 +215,20 @@ def get_published():
     finally:
         cursor.close()
         conn.close()
+
+def get_artist_by_name(artist_name):
+    try:
+        conn = sqlite3.connect(DB_PATH, timeout=10)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        query = "SELECT * FROM SPETTACOLI WHERE artista = ?;"
+        cursor.execute(query, (artist_name, ))
+
+        shows = cursor.fetchall()
+        return shows
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_ARTIST_BY_NAME"
+    finally:
+        cursor.close()
+        conn.close()

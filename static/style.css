@@ -6,6 +6,11 @@
     background: rgba(255, 255, 255, 0.70);
 }
 
+.top-padding{
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+}
+
 .black-background{
     background-color: rgb(5, 4, 4);
 }
@@ -50,6 +55,10 @@ nav a:focus {
 .full-height{
     height: fit-content;
     min-height: 100vh;
+}
+
+.object-fit-cover {
+    object-fit: cover;
 }
 
 img.full-width-bg {

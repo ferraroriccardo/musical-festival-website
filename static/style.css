@@ -47,8 +47,14 @@ nav a:focus {
     color: #43699c;
 }
 
-.top-high-margin {
-    margin-top: 6rem;
+.page-item.active .page-link {
+    background-color: #963939;
+    border-color: #963939;
+    color: white;
+}
+
+.text-red{
+    color: #963939;
 }
 
 .max-width {

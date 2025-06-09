@@ -7,15 +7,18 @@
         <div class="card-body">
             <div id="artistContainer">
                 <div class="row">
-                    <div class="col-12 col-md-6 mb-4">
-                        <div class="card card-performance shadow-sm rounded-3 p-3 h-100">
-                            <div class="d-flex gap-3">
+                    <div class="mb-4">
+                        <div class="card card-performance shadow-sm rounded-3 p-3">
+                            <div class="d-flex" style="min-height: 300px;">
                                 {% if p_artist.path_immagine %}
-                                <img src="{{ url_for('uploaded_file', filename=p_artist.path_immagine.replace('uploads/', '')) }}"
-                                     alt="Performance Image"
-                                     class="img-fluid rounded-3 perf-img">
+                                <div class="flex-shrink-0 me-4" style="flex-basis: 25%;">
+                                    <img src="{{ url_for('uploaded_file', filename=p_artist.path_immagine.replace('uploads/', '')) }}"
+                                        alt="Performance Image"
+                                        class="img-fluid rounded-3 h-100 object-fit-cover w-100">
+                                </div>
                                 {% else %}
-                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3">
+                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4"
+                                    style="flex-basis: 25%; height: 100%;">
                                     Nessuna immagine
                                 </div>
                                 {% endif %}
@@ -30,13 +33,13 @@
                                         <li><b>Genere Musicale:</b> {{ p_artist.genere }}</li>
                                         <li><b>Descrizione:</b> {{ p_artist.descrizione }}</li>
                                         <li>
-                                            <div class="d-flex w-100">
+                                            <div class="d-flex">
                                                 <span><b>Creatore:</b> {{ p_artist.email_creatore }}</span>
                                                 <span class="ms-auto"><b>ID:</b> {{ p_artist.id_creatore }}</span>
                                             </div>
                                         </li>
                                         <li>
-                                            <div class="d-flex w-100">
+                                            <div class="d-flex">
                                                 <span><b>Palco:</b> {{ p_artist.nome_palco }}</span>
                                                 <span class="ms-auto"><b>ID:</b> {{ p_artist.id_palco }}</span>
                                             </div>
@@ -47,8 +50,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
+        </div>
         </div>
     </section>
 </article>

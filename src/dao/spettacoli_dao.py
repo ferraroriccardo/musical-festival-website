@@ -222,10 +222,17 @@ def get_artist_by_name(artist_name):
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        query = "SELECT * FROM SPETTACOLI WHERE artista = ?;"
-        cursor.execute(query, (artist_name, ))
+        query = query = """
+            SELECT SPETTACOLI.*, PALCHI.nome AS nome_palco, UTENTI.email AS email_creatore
+            FROM SPETTACOLI
+            JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
+            JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
+            AND SPETTACOLI.artista = ?
+            WHERE SPETTACOLI.pubblicato = ?;
+        """      
+        cursor.execute(query, (artist_name, 1))
 
-        shows = cursor.fetchall()
+        shows = cursor.fetchone()
         return shows
     except Exception as e:
         return False, "DATABASE_ERROR_GET_ARTIST_BY_NAME"

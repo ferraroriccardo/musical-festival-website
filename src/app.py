@@ -32,12 +32,22 @@ def home():
 # route for full program list (base, senza filtri)
 @app.route("/program")
 def program():
-    shows = spettacoli_dao.get_shows()
-    return render_template("program.html", p_shows=shows)
+    page = request.args.get("page", default=1, type=int)
+    shows = spettacoli_dao.get_published()
+
+    per_page = 10
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_shows = shows[start:end]
+    total_pages = (len(shows) + per_page - 1) // per_page
+
+    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages)
+
 
 # route to show all details about a single show
 @app.route("/program/<artist_name>")
 def artist(artist_name):
+    artist_name = artist_name.replace("%20", " ")
     artist = spettacoli_dao.get_artist_by_name(artist_name)
     return render_template("artist.html", p_artist=artist)
 

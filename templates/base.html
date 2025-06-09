@@ -18,6 +18,21 @@
 
     <title>OVERLOAD</title>
 </head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const navbar = document.querySelector("nav");
+        const topMarginElems = document.querySelectorAll(".top-margin");
+        if (navbar && topMarginElems.length > 0) {
+            const navbarHeight = navbar.offsetHeight;
+            const extraMargin = 64; // 4rem = 64px
+            const totalMargin = navbarHeight + extraMargin;
+
+            topMarginElems.forEach(elem => {
+                elem.style.marginTop = `${totalMargin}px`;
+            });
+        }
+    });
+</script>
 
 <body class="bg-image">
 
@@ -36,7 +51,7 @@
                     href="{{ url_for('event_page') }}">Create event</a>
                 {% endif %}
                 <a class="text-decoration-none {% if request.endpoint == 'program' %}active-nav-link{% endif %}"
-                    href="{{ url_for('program') }}">Program</a>
+                    href="{{ url_for('program', page=1) }}">Program</a>
                 <a class="text-decoration-none {% if request.endpoint == 'ticket_page' %}active-nav-link{% endif %}"
                     href="{{ url_for('ticket_page') }}">Tickets</a>
 
@@ -47,7 +62,7 @@
                         <i class="fas fa-user-circle fa-2x"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profilo</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile</a></li>
                         {% if current_user.is_authenticated %}
                         <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>
                         {% endif %}

@@ -19,3 +19,4 @@
 14. Messaggi palese di errore per sovrapposizione di eventi quando si vuole creare uno
 15. capire bene quando usare param.campo o param["campo"] in jinja, con Row e altro
 16. Togliere tutti i commenti inutili e gli style inline
+17. Sistemare i nomi delle query in modo che siano esplicativi (get artist by name)

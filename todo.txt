@@ -1,19 +1,24 @@
-1. la bozza può anche avere campi vuoti
-
-2. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
+1. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
     poi ci metti le foto, la playlist spotify
-3. filtri per gli eventi:
+2. filtri per gli eventi:
     - giorno
     - palco
     - genere
-3b. lo staff deve vedere la percentuale di vendite dei biglietti
-5. riempire il database di eventi (almeno 5 per giorno, almeno 1 bozza non pubblicata)
-6. riempire il database di biglietti (almeno 1 per tipo)
-7. mettere la location nella home
-8. aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
-9. controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato
-10. cambiare l'icona di my account in un cerchio con l'iniziale della mail
-11. nel profilo devo vedere le info sul mio biglietto
-12. togliere i valori hardcoded negli html e creare tabelle (giorni, palchi)
-13. correggere la vista per lo staff. Nel profilo mettere magari le bozze o le stats dei biglietti
-14. Inserire band: Emathome, Quadri Rotti, LOM, Only Us
+3. lo staff deve vedere la percentuale di vendite dei biglietti
+4. Inserire band: Emathome, Quadri Rotti, LOM, Only Us (Anche qualche bozza)
+5. riempire il database di biglietti (almeno 1 per tipo)
+6. mettere la location nella home
+7. aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
+8. controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato
+9. cambiare l'icona di my account in un cerchio con l'iniziale della mail
+10. nel profilo devo vedere le info sul mio biglietto (tipo biglietto, giorni disponibili)
+11. correggere la vista per lo staff. Nel profilo mettere le bozze SUE, TUTTI gli show pubblici + link alla create event (o update draft)
+11b.  mostrare le stats dei biglietti nella pagina tickets (solo per lo staff)
+12. NON TUTTO È UN DIV
+13. Utilizzo di tag HTML in mani (<b>)
+14. Messaggi palese di errore per sovrapposizione di eventi quando si vuole creare uno
+15. capire bene quando usare param.campo o param["campo"] in jinja, con Row e altro
+16. Togliere tutti i commenti inutili e gli style inline
+17. Sistemare i nomi delle query in modo che siano esplicativi (get artist by name)
+18. Controllare tutto il codice, che non ci siano nomi di variabili strane (example)
+19. Eliminare le classi inutili (sia nel codice che in style.css)

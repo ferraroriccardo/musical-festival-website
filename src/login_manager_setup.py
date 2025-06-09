@@ -11,6 +11,7 @@ def load_user(user_id):
         return None
     return User(
         id=db_user["id"],
+        nome=db_user["nome"],
         email=db_user["email"],
         password=db_user["password"],
         tipo=db_user["tipo"],

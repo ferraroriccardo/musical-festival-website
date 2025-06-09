@@ -41,11 +41,11 @@
         <div class="row align-items-center my-1">
             <div class="col-6">
                 <h1 class="mb-0">
-                    <a href="{{ url_for('home') }}" class="text-decoration-none black-han-sans-regular">OVERLOAD</a>
+                    <a href="{{ url_for('home') }}" class="text-decoration-none black-han-sans-regular ms-3">OVERLOAD</a>
                 </h1>
             </div>
 
-            <div class="col-6 d-flex align-items-center justify-content-end gap-4">
+            <div class="col-6 d-flex align-items-center justify-content-end gap-5">
                 {% if current_user.is_authenticated and current_user.tipo == "Staff" %}
                 <a class="text-decoration-none {% if request.endpoint == 'event_page' %}active-nav-link{% endif %}"
                     href="{{ url_for('event_page') }}">Create event</a>
@@ -55,14 +55,14 @@
                 <a class="text-decoration-none {% if request.endpoint == 'ticket_page' %}active-nav-link{% endif %}"
                     href="{{ url_for('ticket_page') }}">Tickets</a>
 
-                <div class="dropdown ms-3">
+                <div class="dropdown me-3">
                     <a href="#" class="text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false" aria-label="Account menu">
                         <i class="fas fa-user-circle fa-2x"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow">
                         {% if current_user.is_authenticated %}
-                        <h6 class="text-center text-red">{{ current_user.email.split("@")[0] }}</h6>
+                        <h6 class="text-center text-red">{{ current_user.nome }}</h6>
                         {% endif %}
                         <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile</a></li>
                         {% if current_user.is_authenticated %}

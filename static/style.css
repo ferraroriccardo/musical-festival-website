@@ -6,10 +6,6 @@
     background: rgba(255, 255, 255, 0.70);
 }
 
-.black-background {
-    background-color: rgb(5, 4, 4);
-}
-
 .red-text {
     color: #963939;
 }
@@ -121,7 +117,7 @@ footer div {
 }
 
 .banner-height {
-    min-height: 34rem;
+    min-height: 100vh;
 }
 
 .btn-custom-black {

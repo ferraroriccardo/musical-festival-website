@@ -35,13 +35,13 @@ def get_user_by_email(email):
         cursor.close()
         conn.close()
 
-def create_user(email, password, type):
+def create_user(name, email, password, type):
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         cursor = conn.cursor()
 
-        query = "INSERT INTO UTENTI (email, password, tipo) VALUES (?, ?, ?);"
-        cursor.execute(query, (email, password, type))
+        query = "INSERT INTO UTENTI (nome, email, password, tipo) VALUES (?, ?, ?, ?);"
+        cursor.execute(query, (name, email, password, type))
         conn.commit()
         
         return True

@@ -3,6 +3,7 @@ from flask import Flask, flash, render_template, redirect, request, url_for, sen
 from flask_login import LoginManager, login_required, current_user
 from login_manager_setup import setup_login_manager
 from werkzeug.utils import secure_filename
+from PIL import Image
 import time
 
 from dao import palchi_dao, spettacoli_dao, biglietti_dao
@@ -11,11 +12,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
-
-# Image module to preprocess the images uploaded by the users
-from PIL import Image
-PROFILE_IMG_HEIGHT = 130
-POST_IMG_WIDTH = 300
 
 # initialize the application
 app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
@@ -26,8 +22,10 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_DIR
 # route for homepage
 @app.route("/")
 def home():
-    shows = spettacoli_dao.get_shows()
-    return render_template("home.html", p_shows = shows)
+    shows_one = spettacoli_dao.get_shows_filtered(1, "all", "all", published=1)
+    shows_two = spettacoli_dao.get_shows_filtered(2, "all", "all", published=1)
+    shows_three = spettacoli_dao.get_shows_filtered(3, "all", "all", published=1)
+    return render_template("home.html", p_shows_one = shows_one, p_shows_two = shows_two, p_shows_three = shows_three)
 
 # route for full program list (base, senza filtri)
 @app.route("/program")
@@ -158,9 +156,11 @@ def create_event():
 
     db_img_path = None
     if img:
+        PROFILE_IMG_HEIGHT = 423
+        POST_IMG_WIDTH = 636
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
-        is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+        is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
         if not is_allowed_file:
             flash(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
             return redirect(url_for('event_page'))
@@ -168,6 +168,14 @@ def create_event():
         original_filename = secure_filename(img.filename)
         new_filename = f"{int(time.time())}_{original_filename}"
         upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
+
+        image = Image.open(img.stream)
+        aspect_ratio = image.height / image.width
+        new_height = int(POST_IMG_WIDTH * aspect_ratio)
+
+        resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
+        resized_image.save(upload_path)
+
         img.save(upload_path)
         db_img_path = f"uploads/{new_filename}"
 

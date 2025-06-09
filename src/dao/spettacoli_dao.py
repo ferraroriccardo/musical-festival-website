@@ -19,7 +19,7 @@ def get_shows():
         cursor.close()
         conn.close()
 
-def set_params(day, stage, genre, published, query=""):
+def set_params(query, day, stage, genre, published):
     params = []
     match day:
             case 1:
@@ -40,7 +40,9 @@ def set_params(day, stage, genre, published, query=""):
     if published:
         query += " AND pubblicato = ?"
         params.append(published)
+        
     query += ";"
+    return query, params
 
 def get_shows_filtered(day, stage, genre, published):
     try:
@@ -58,7 +60,6 @@ def get_shows_filtered(day, stage, genre, published):
 
         cursor.execute(query, params)
         shows = cursor.fetchall()
-        conn.close()
         return shows
     except Exception as e:
         return False, "DATABASE_ERROR_GET_SHOWS_FILTERED"

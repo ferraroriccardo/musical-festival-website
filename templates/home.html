@@ -17,15 +17,14 @@
                 <a href="{{ url_for('program', day=1) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL PROGRAM</a>
             </main>
             <aside class="col-6 d-flex align-items-center justify-content-center">
-                {% if p_shows and p_shows|length > 0 %}
-                <div id="showsCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                {% if p_shows_one %}
+                <div id="showsCarousel1" class="carousel slide w-100" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        {% for show in p_shows %}
+                        {% for show in p_shows_one %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ url_for('static', filename=show['img_path']) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                            <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>{{ show['artist'] }}</h5>
-                                <p>{{ show['description'] }}</p>
+                                <h5>{{ show['artista'] }}</h5>
                             </div>
                         </div>
                         {% endfor %}
@@ -53,15 +52,14 @@
     <div class="container h-100">
         <div class="row h-100">
             <aside class="col-6 d-flex align-items-center justify-content-center">
-                {% if p_shows and p_shows|length > 0 %}
-                <div id="showsCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                {% if p_shows_two and p_shows_two|length > 0 %}
+                <div id="showsCarousel2" class="carousel slide w-100" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        {% for show in p_shows %}
+                        {% for show in p_shows_two %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ url_for('static', filename=show['img_path']) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                            <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>{{ show['artist'] }}</h5>
-                                <p>{{ show['description'] }}</p>
+                                <h5>{{ show['artista'] }}</h5>
                             </div>
                         </div>
                         {% endfor %}
@@ -99,15 +97,14 @@
                 <a href="{{ url_for('program', day=3) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL PROGRAM</a>
             </main>
             <aside class="col-6 d-flex align-items-center justify-content-center">
-                {% if p_shows and p_shows|length > 0 %}
-                <div id="showsCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                {% if p_shows_three and p_shows_three|length > 0 %}
+                <div id="showsCarousel3" class="carousel slide w-100" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        {% for show in p_shows %}
+                        {% for show in p_shows_three %}
                         <div class="carousel-item {% if loop.first %}active{% endif %}">
-                            <img src="{{ url_for('static', filename=show['img_path']) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                            <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}" class="d-block w-100 rounded" alt="{{ show['artist'] }}">
                             <div class="carousel-caption d-none d-md-block">
-                                <h5>{{ show['artist'] }}</h5>
-                                <p>{{ show['description'] }}</p>
+                                <h5>{{ show['artista'] }}</h5>
                             </div>
                         </div>
                         {% endfor %}

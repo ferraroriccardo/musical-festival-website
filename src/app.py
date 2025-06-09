@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 print(TEMPLATES_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, "static")
-UPLOAD_DIR = os.path.join(os.getcwd(), "uploads")
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 
 # Image module to preprocess the images uploaded by the users
 from PIL import Image
@@ -33,10 +33,26 @@ def home():
 # route for full program list (base, senza filtri)
 @app.route("/program")
 def program():
-    shows = spettacoli_dao.get_shows()
-    return render_template("program.html", p_shows=shows)
+    page = request.args.get("page", default=1, type=int)
+    shows = spettacoli_dao.get_published()
 
-# route per programma filtrato (con parametri GET)
+    per_page = 10
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_shows = shows[start:end]
+    total_pages = (len(shows) + per_page - 1) // per_page
+
+    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages)
+
+
+# route to show all details about a single show
+@app.route("/program/<artist_name>")
+def artist(artist_name):
+    artist_name = artist_name.replace("%20", " ")
+    artist = spettacoli_dao.get_artist_by_name(artist_name)
+    return render_template("artist.html", p_artist=artist)
+
+# route per programma filtrato
 @app.route("/program/filter")
 def program_filtered():
     giorno = request.args.get('giorno')
@@ -49,10 +65,13 @@ def program_filtered():
 @app.route("/profile")
 @login_required
 def profile():
-    ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
-    if ticket:
-        return render_template("profile.html", p_ticket = ticket)
-    return render_template("profile.html")
+    if current_user.tipo == "Basic":
+        ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
+        return render_template("profile_basic.html", p_ticket = ticket)
+    else:
+        published = spettacoli_dao.get_published()
+        drafts = spettacoli_dao.get_drafts(current_user.id)
+        return render_template("profile_staff.html", p_published = published, p_drafts = drafts)
 
 # route to show all types of ticket
 @app.route("/ticket-form")
@@ -175,10 +194,9 @@ def create_event():
     flash("EVENT_CREATED_WITH_SUCCESS")
     return redirect(url_for("home"))
 
-# route to setup uploads/ directory
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory('uploads', filename)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 # route for handling settings operations, such as setting up a new staff password, or sell out all remaining tickets
 @app.route("/settings")

@@ -22,6 +22,7 @@ To register as a staff member, use the following password:
 - `STAFF_PASSWORD_ERROR`: The staff password is incorrect.
 - `EMAIL_ALREADY_REGISTERED_ERROR`: The email is already registered.
 - `MISSING_REQUIRED_PARAMETERS`: Required parameters are missing in the request.
+MISSING_NAME_ERROR
 
 ### <span style="color:#b03a2e">Tickets</span>
 - `NO_TICKETS_AVAILABLE`: No tickets available for the selected type.

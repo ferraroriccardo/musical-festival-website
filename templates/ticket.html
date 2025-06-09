@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center banner-blue full-height">
-  <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg">
+  <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg my-5 top-margin">
     <form action="/buy_ticket" method="POST">
       <h1 class="mb-4 text-center">PRICING</h1>
       {% if p_ticket %}
@@ -18,7 +18,7 @@
           <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
             <div class="card-header fw-bold text-center">ONE SHOT</div>
             <div class="card-body position-relative p-0">
-              <img src="{{ url_for('static', filename='ticket2a.jpg') }}" alt="One Shot Ticket"
+              <img src="{{ url_for('static', filename='ticket_one_day.jpg') }}" alt="One Shot Ticket"
                 class="img-fluid w-100 card-image">
               <span
                 class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">60€</span>
@@ -40,7 +40,7 @@
           <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
             <div class="card-header fw-bold text-center">DOUBLE TROUBLE</div>
             <div class="card-body position-relative p-0">
-              <img src="{{ url_for('static', filename='ticket1a.jpg') }}" alt="Double Trouble Ticket"
+              <img src="{{ url_for('static', filename='ticket_two_days.jpg') }}" alt="Double Trouble Ticket"
                 class="img-fluid w-100 card-image">
               <span
                 class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">100€</span>
@@ -66,7 +66,7 @@
             </span>
             <div class="card-header fw-bold text-center text-primary">FULL BLAST</div>
             <div class="card-body position-relative p-0">
-              <img src="{{ url_for('static', filename='ticket3a.jpg') }}" alt="Full Blast Ticket"
+              <img src="{{ url_for('static', filename='ticket_three_days.jpg') }}" alt="Full Blast Ticket"
                 class="img-fluid w-100 card-image">
               <span
                 class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">150€</span>

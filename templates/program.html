@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<article class="d-flex justify-content-center align-items-center banner-blue full-height">
+    <section class="card col-10 shadow rounded-4 p-3 transparent-white-bg">
+        <div class="card-body">
+            <div id="publishedContainer">
+                <div class="row">
+                    {% for perf in p_shows %}
+                    <div class="col-12 col-md-6 mb-4">
+                        <div class="card card-performance shadow-sm rounded-3 p-3 h-100">
+                            <div class="d-flex gap-3">
+                                {% if perf.path_immagine %}
+                                <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
+                                    alt="Performance Image" class="img-fluid rounded-3 perf-img">
+                                {% else %}
+                                <div
+                                    class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 perf-img">
+                                    Nessuna immagine
+                                </div>
+                                {% endif %}
+
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">
+                                        <a href="{{ url_for('artist', artist_name=perf.artista|urlencode) }}"
+                                            class="text-decoration-none text-dark">
+                                            {{ perf.artista }}
+                                        </a>
+                                    </h5>
+                                    <ul class="list-unstyled mb-0">
+                                        {% if current_user.tipo == "Staff" %}
+                                        <li><b>ID:</b> {{ perf.id }}</li>
+                                        {% endif %}
+                                        <li><b>Giorno:</b> {{ perf.giorno }}</li>
+                                        <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
+                                        <li><b>Durata:</b> {{ perf.durata }}</li>
+                                        {% if current_user.tipo == "Staff" %}
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>Creatore:</b> {{ perf.email_creatore }}</span>
+                                                <span class="ms-auto"><b>ID:</b> {{ perf.id_creatore }}</span>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        <li>
+                                            <div class="d-flex w-100">
+                                                <span><b>Palco:</b> {{ perf.nome_palco }}</span>
+                                                {% if current_user.tipo == "Staff" %}
+                                                <span class="ms-auto"><b>ID:</b> {{ perf.id_palco }}</span>
+                                                {% endif %}
+
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <nav class="d-flex justify-content-center mt-4">
+                    <ul class="pagination">
+                        {% for page_num in range(1, total_pages + 1) %}
+                        <li class="page-item {% if page_num == current_page %}active{% endif %}">
+                            <a class="page-link text-red" href="{{ url_for('program', page=page_num) }}">{{ page_num
+                                }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- No performances -->
+            {% if not p_shows %}
+            <div class="text-center mt-3">
+                <p>No performances to show.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+</article>
+
+{% endblock %}

@@ -45,6 +45,7 @@ def login():
 
     user = User(
         id=user_data["id"],
+        nome=user_data["nome"],
         email=user_data["email"],
         password=user_data["password"],
         tipo=user_data["tipo"],
@@ -73,12 +74,16 @@ def signup_page():
 # route to handle sign up data
 @auth_bp.route("/signup", methods=['POST'])
 def signup():
+    name = request.form.get('name')
     email = request.form.get('email')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     type = request.form.get('type')
     staff_password = request.form.get('staff_password')
 
+    if not name:
+        flash("MISSING_NAME_ERROR")
+        return redirect(url_for("auth.signup_page"))
     if not email or not password1 or not password2:
         flash("MISSING_EMAIL_OR_PASSWORD_ERROR")
         return redirect(url_for("auth.signup_page"))
@@ -100,11 +105,11 @@ def signup():
         return redirect(url_for("auth.signup_page"))
 
     hashed_passw = generate_password_hash(password1, method='pbkdf2:sha256')
-    user = utenti_dao.create_user(email, hashed_passw, type)
-
-    flash(user)
+    utenti_dao.create_user(name, email, hashed_passw, type)
+    user = utenti_dao.get_user_by_email(email)
     param_user = User(
         id=user["id"],
+        nome=user["nome"],
         email=user["email"],
         password=user["password"],
         tipo=user["tipo"],

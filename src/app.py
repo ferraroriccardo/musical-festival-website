@@ -33,7 +33,10 @@ def home():
 @app.route("/program")
 def program():
     page = request.args.get("page", default=1, type=int)
-    shows = spettacoli_dao.get_published()
+    day = request.args.get("day", default=0, type=int)
+    stage = request.args.get("stage", default=-1, type=int)
+    genre = request.args.get("genre", default="all", type=str)
+    shows = spettacoli_dao.get_shows_filtered(day, stage, genre, published=1)
 
     per_page = 10
     start = (page - 1) * per_page
@@ -50,15 +53,6 @@ def artist(artist_name):
     artist_name = artist_name.replace("%20", " ")
     artist = spettacoli_dao.get_artist_by_name(artist_name)
     return render_template("artist.html", p_artist=artist)
-
-# route per programma filtrato
-@app.route("/program/filter")
-def program_filtered():
-    giorno = request.args.get('giorno')
-    palco = request.args.get('palco')
-    genere = request.args.get('genere')
-    shows = spettacoli_dao.get_shows_filtered(giorno, palco, genere)
-    return render_template("program.html", p_shows=shows)
 
 # route for profile
 @app.route("/profile")
@@ -210,5 +204,3 @@ app.register_blueprint(auth.auth_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-#<img src="{{ url_for('uploaded_file', filename=new_filename) }}" alt="Uploaded Image">

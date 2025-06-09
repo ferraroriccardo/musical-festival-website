@@ -19,23 +19,42 @@ def get_shows():
         cursor.close()
         conn.close()
 
-def get_shows_filtered(giorno, palco, genere):
+def set_params(day, stage, genre, published, query=""):
+    params = []
+    match day:
+            case 1:
+                query += " AND giorno = ?"
+                params.append("friday 20th")
+            case 2:
+                query += " AND giorno = ?"
+                params.append("saturday 21st")
+            case 3:
+                query += " AND giorno = ?"
+                params.append("sunday 22nd")
+    if stage in [0,1,2]:
+            query += " AND id_palco = ?"
+            params.append(stage)
+    if genre != "all":
+        query += " AND genere = ?"
+        params.append(genre)
+    if published:
+        query += " AND pubblicato = ?"
+        params.append(published)
+    query += ";"
+
+def get_shows_filtered(day, stage, genre, published):
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        query = "SELECT artista FROM SPETTACOLI WHERE 1=1"
-        params = []
-        if giorno:
-            query += " AND giorno = ?"
-            params.append(giorno)
-        if palco:
-            query += " AND palco = ?"
-            params.append(palco)
-        if genere:
-            query += " AND genere = ?"
-            params.append(genere)
+        query = """
+            SELECT SPETTACOLI.*, PALCHI.nome AS nome_palco, UTENTI.email AS email_creatore
+            FROM SPETTACOLI
+            JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
+            JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
+        """
+        query, params = set_params(query, day, stage, genre, published)
 
         cursor.execute(query, params)
         shows = cursor.fetchall()

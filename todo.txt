@@ -3,7 +3,7 @@ NUOVE FUNZIONALITÀ
 2. Filtri per gli eventi:
    - giorno
    - palco
-   - genere
+   - genere             salvarsi in program() i parametri di args da mettere nei dropdown quando si fa il submit o usare js per non dover fare il submit
 3. Lo staff deve vedere la percentuale di vendite dei biglietti
 4. Inserire band: Emathome, Quadri Rotti, LOM, Only Us (Anche qualche bozza)
 5. Riempire il database di biglietti (almeno 1 per tipo)

@@ -42,7 +42,10 @@ def program():
     paginated_shows = shows[start:end]
     total_pages = (len(shows) + per_page - 1) // per_page
 
-    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages)
+    stages = palchi_dao.get_stages()
+    genres = spettacoli_dao.get_genres()
+
+    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages, p_stages=stages, p_genres=genres)
 
 
 # route to show all details about a single show

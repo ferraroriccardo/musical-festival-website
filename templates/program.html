@@ -4,6 +4,41 @@
 
 <article class="d-flex justify-content-center align-items-center banner-blue full-height">
     <section class="card col-10 shadow rounded-4 p-3 transparent-white-bg">
+        <section class="container mt-4">
+            <form method="get" action="{{ url_for('program') }}" class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label for="day" class="form-label">Giorno</label>
+                    <select class="form-select" name="day" id="day">
+                        <option value="0" {% if selected_day==0 %}selected{% endif %}>Tutti</option>
+                        <option value="1" {% if selected_day==1 %}selected{% endif %}>Venerdì 20</option>
+                        <option value="2" {% if selected_day==2 %}selected{% endif %}>Sabato 21</option>
+                        <option value="3" {% if selected_day==3 %}selected{% endif %}>Domenica 22</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="stage" class="form-label">Palco</label>
+                    <select class="form-select" name="stage" id="stage">
+                        <option value="-1" {% if selected_stage==-1 %}selected{% endif %}>Tutti</option>
+                        {% for stage in p_stages %}
+                        <option value="{{ stage.id }}" {% if selected_stage==stage.id %}selected{% endif %}>{{
+                            stage.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="genre" class="form-label">Genere</label>
+                    <select class="form-select" name="genre" id="genre">
+                        <option value="all" {% if selected_genre=="all" %}selected{% endif %}>Tutti</option>
+                        {% for g in p_genres %}
+                        <option value="{{ g }}" {% if selected_genre==g %}selected{% endif %}>{{ g }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">Filtra</button>
+                </div>
+            </form>
+        </section>
         <div class="card-body">
             <div id="publishedContainer">
                 <div class="row">

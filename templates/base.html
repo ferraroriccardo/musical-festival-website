@@ -55,13 +55,15 @@
                 <a class="text-decoration-none {% if request.endpoint == 'ticket_page' %}active-nav-link{% endif %}"
                     href="{{ url_for('ticket_page') }}">Tickets</a>
 
-
                 <div class="dropdown ms-3">
                     <a href="#" class="text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false" aria-label="Account menu">
                         <i class="fas fa-user-circle fa-2x"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        {% if current_user.is_authenticated %}
+                        <h6 class="text-center text-red">{{ current_user.email.split("@")[0] }}</h6>
+                        {% endif %}
                         <li><a class="dropdown-item" href="{{ url_for('profile') }}">Profile</a></li>
                         {% if current_user.is_authenticated %}
                         <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a></li>

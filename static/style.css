@@ -6,16 +6,11 @@
     background: rgba(255, 255, 255, 0.70);
 }
 
-.top-padding{
-    padding-top: 7rem;
-    padding-bottom: 7rem;
-}
-
-.black-background{
+.black-background {
     background-color: rgb(5, 4, 4);
 }
 
-.red-text{
+.red-text {
     color: #963939;
 }
 
@@ -23,7 +18,8 @@ nav {
     z-index: 10;
 }
 
-nav a, nav h1{
+nav a,
+nav h1 {
     color: #963939;
 }
 
@@ -32,9 +28,16 @@ nav a, nav h1{
     padding: 0.2rem 0.8rem;
     transition: background 0.2s;
 }
+
 .active-nav-link {
     background: #b03a2e;
+    color: #fff !important;
+    border-radius: 50rem;
+    padding: 0.3rem 1rem;
+    font-weight: bold;
+    transition: background 0.3s;
 }
+
 .active-nav-link a {
     color: #fff !important;
 }
@@ -44,15 +47,15 @@ nav a:focus {
     color: #43699c;
 }
 
-.top-high-margin{
+.top-high-margin {
     margin-top: 6rem;
 }
 
-.max-width{
-    max-width:180px;
+.max-width {
+    max-width: 180px;
 }
 
-.full-height{
+.full-height {
     height: fit-content;
     min-height: 100vh;
 }
@@ -111,7 +114,7 @@ footer div {
     background: linear-gradient(60deg, #5694d5 0%, #C76A79 100%);
 }
 
-.banner-height{
+.banner-height {
     min-height: 34rem;
 }
 
@@ -175,7 +178,8 @@ footer div {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hover-big:hover, .hover-big:focus {
+.hover-big:hover,
+.hover-big:focus {
     transform: scale(1.04);
     z-index: 2;
 }
@@ -198,9 +202,11 @@ footer div {
     0% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -214,6 +220,16 @@ footer div {
     transform: scale(1.02);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     z-index: 2;
+}
+
+.perf-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+#style-password-group{
+    display: none;
 }
 .view-toggle {
     display: flex;
@@ -231,13 +247,15 @@ footer div {
 
 .view-toggle span {
     cursor: pointer;
-    color: #963939; /* navbar color */
+    color: #963939;
+    /* navbar color */
     padding: 0.3rem 1rem;
     border-radius: 2rem;
     transition: background 0.3s, color 0.3s;
 }
 
 .view-toggle .active-toggle {
-    background: #b03a2e; /* navbar active color */
+    background: #b03a2e;
+    /* navbar active color */
     color: #fff;
 }

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center banner-blue full-height">
-  <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg top-padding">
+  <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg my-5 top-margin">
     <form action="/buy_ticket" method="POST">
       <h1 class="mb-4 text-center">PRICING</h1>
       {% if p_ticket %}
@@ -172,6 +172,21 @@
         }
       });
     });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbar = document.querySelector("nav");
+    const topMarginElems = document.querySelectorAll(".top-margin");
+    if (navbar && topMarginElems.length > 0) {
+      const navbarHeight = navbar.offsetHeight;
+      const extraMargin = 64; // 4rem = 64px
+      const totalMargin = navbarHeight + extraMargin;
+
+      topMarginElems.forEach(elem => {
+        elem.style.marginTop = `${totalMargin}px`;
+      });
+    }
   });
 </script>
 {% endblock %}

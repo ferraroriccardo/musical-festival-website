@@ -21,11 +21,9 @@
                                 {% if perf.path_immagine %}
                                 <img src="{{ url_for('uploaded_file', filename=perf.path_immagine.replace('uploads/', '')) }}"
                                      alt="Performance Image"
-                                     class="img-fluid rounded-3"
-                                     style="width: 120px; height: 120px; object-fit: cover;">
+                                     class="img-fluid rounded-3 perf-img">
                                 {% else %}
-                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3"
-                                     style="width: 120px; height: 120px;">
+                                <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 perf-img">
                                     Nessuna immagine
                                 </div>
                                 {% endif %}

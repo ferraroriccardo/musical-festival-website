@@ -3,6 +3,7 @@ from flask import Flask, flash, render_template, redirect, request, url_for, sen
 from flask_login import LoginManager, login_required, current_user
 from login_manager_setup import setup_login_manager
 from werkzeug.utils import secure_filename
+from PIL import Image
 import time
 
 from dao import palchi_dao, spettacoli_dao, biglietti_dao
@@ -13,11 +14,6 @@ print(TEMPLATES_DIR)
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 
-# Image module to preprocess the images uploaded by the users
-from PIL import Image
-PROFILE_IMG_HEIGHT = 130
-POST_IMG_WIDTH = 300
-
 # initialize the application
 app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 setup_login_manager(app)
@@ -27,14 +23,19 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_DIR
 # route for homepage
 @app.route("/")
 def home():
-    shows = spettacoli_dao.get_shows()
-    return render_template("home.html", p_shows = shows)
+    shows_one = spettacoli_dao.get_shows_filtered(1, "all", "all", published=1)
+    shows_two = spettacoli_dao.get_shows_filtered(2, "all", "all", published=1)
+    shows_three = spettacoli_dao.get_shows_filtered(3, "all", "all", published=1)
+    return render_template("home.html", p_shows_one = shows_one, p_shows_two = shows_two, p_shows_three = shows_three)
 
 # route for full program list (base, senza filtri)
 @app.route("/program")
 def program():
     page = request.args.get("page", default=1, type=int)
-    shows = spettacoli_dao.get_published()
+    day = request.args.get("day", default=0, type=int)
+    stage = request.args.get("stage", default=-1, type=int)
+    genre = request.args.get("genre", default="all", type=str)
+    shows = spettacoli_dao.get_shows_filtered(day, stage, genre, published=1)
 
     per_page = 10
     start = (page - 1) * per_page
@@ -42,7 +43,12 @@ def program():
     paginated_shows = shows[start:end]
     total_pages = (len(shows) + per_page - 1) // per_page
 
-    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages)
+    stages = palchi_dao.get_stages()
+    genres = spettacoli_dao.get_genres()
+
+    selected = {"day": day, "stage": stage, "genre":genre}
+
+    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages, p_stages=stages, p_genres=genres, p_selected=selected)
 
 
 # route to show all details about a single show
@@ -51,15 +57,6 @@ def artist(artist_name):
     artist_name = artist_name.replace("%20", " ")
     artist = spettacoli_dao.get_artist_by_name(artist_name)
     return render_template("artist.html", p_artist=artist)
-
-# route per programma filtrato
-@app.route("/program/filter")
-def program_filtered():
-    giorno = request.args.get('giorno')
-    palco = request.args.get('palco')
-    genere = request.args.get('genere')
-    shows = spettacoli_dao.get_shows_filtered(giorno, palco, genere)
-    return render_template("program.html", p_shows=shows)
 
 # route for profile
 @app.route("/profile")
@@ -165,9 +162,11 @@ def create_event():
 
     db_img_path = None
     if img:
+        PROFILE_IMG_HEIGHT = 423
+        POST_IMG_WIDTH = 636
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
-        is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+        is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
         if not is_allowed_file:
             flash(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
             return redirect(url_for('event_page'))
@@ -175,6 +174,14 @@ def create_event():
         original_filename = secure_filename(img.filename)
         new_filename = f"{int(time.time())}_{original_filename}"
         upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
+
+        image = Image.open(img.stream)
+        aspect_ratio = image.height / image.width
+        new_height = int(POST_IMG_WIDTH * aspect_ratio)
+
+        resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
+        resized_image.save(upload_path)
+
         img.save(upload_path)
         db_img_path = f"uploads/{new_filename}"
 
@@ -211,5 +218,3 @@ app.register_blueprint(auth.auth_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-#<img src="{{ url_for('uploaded_file', filename=new_filename) }}" alt="Uploaded Image">

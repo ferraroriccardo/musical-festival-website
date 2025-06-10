@@ -1,99 +1,93 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center banner-blue full-height">
-  <main class="card col-8 shadow rounded-4 p-5 transparent-white-bg my-5 top-margin">
-    <form action="/buy_ticket" method="POST">
-      <h1 class="mb-4 text-center">PRICING</h1>
-      {% if p_ticket %}
-      <p class="text-center text-muted">
-        You've already got your ticket — but feel free to take another look around!
-      </p>
-      {% else %}
-      <p class="text-center">Pick your pass and get loud with us!</p>
-      {% endif %}
-      <div class="container d-flex justify-content-evenly" id="ticket-cards-row">
-        <div class="row">
-          <!-- card #1 -->
-          <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
-            <div class="card-header fw-bold text-center">ONE SHOT</div>
-            <div class="card-body position-relative p-0">
-              <img src="{{ url_for('static', filename='ticket_one_day.jpg') }}" alt="One Shot Ticket"
-                class="img-fluid w-100 card-image">
-              <span
-                class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">60€</span>
-            </div>
-            <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-              <span>1 day of pure energy — pick your favorite!</span>
-              {% if not p_ticket and current_user.tipo == "Basic" %}
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
-                  data-ticket="one_day">
-                  Rock for a Day
-                </button>
-              </div>
-              {% endif %}
-            </div>
-          </section>
-
-          <!-- card #2 -->
-          <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
-            <div class="card-header fw-bold text-center">DOUBLE TROUBLE</div>
-            <div class="card-body position-relative p-0">
-              <img src="{{ url_for('static', filename='ticket_two_days.jpg') }}" alt="Double Trouble Ticket"
-                class="img-fluid w-100 card-image">
-              <span
-                class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">100€</span>
-            </div>
-            <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-              <span>2 days back-to-back - keep the vibe going!</span>
-              {% if not p_ticket and current_user.tipo == "Basic" %}
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
-                  data-ticket="two_days">
-                  Double the fun
-                </button>
-              </div>
-              {% endif %}
-            </div>
-          </section>
-
-          <!--  card #3 -->
-          <section class="col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
-            id="ticket-full">
-            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
-              Best Experience
-            </span>
-            <div class="card-header fw-bold text-center text-primary">FULL BLAST</div>
-            <div class="card-body position-relative p-0">
-              <img src="{{ url_for('static', filename='ticket_three_days.jpg') }}" alt="Full Blast Ticket"
-                class="img-fluid w-100 card-image">
-              <span
-                class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">150€</span>
-            </div>
-            <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-              <span>All 3 days — no breaks, just music!</span>
-              {% if not p_ticket and current_user.tipo == "Basic" %}
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
-                  data-ticket="three_days">
-                  Go All In
-                </button>
-              </div>
-              {% endif %}
-            </div>
-          </section>
+<form action="/buy_ticket" method="POST">
+  <h1 class="mb-4 text-center">PRICING</h1>
+  {% if p_ticket %}
+  <p class="text-center text-muted">
+    You've already got your ticket — but feel free to take another look around!
+  </p>
+  {% else %}
+  <p class="text-center">Pick your pass and get loud with us!</p>
+  {% endif %}
+  <div class="container d-flex justify-content-evenly" id="ticket-cards-row">
+    <div class="row">
+      <!-- card #1 -->
+      <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
+        <div class="card-header fw-bold text-center">ONE SHOT</div>
+        <div class="card-body position-relative p-0">
+          <img src="{{ url_for('static', filename='ticket_one_day.jpg') }}" alt="One Shot Ticket"
+            class="img-fluid w-100 card-image">
+          <span
+            class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">60€</span>
         </div>
-      </div>
-      <form method="POST" action="{{ url_for('buy_ticket') }}" class="text-center" id="buy-ticket-form">
-        <div id="dynamic-ticket-inputs">
+        <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+          <span>1 day of pure energy — pick your favorite!</span>
+          {% if not p_ticket and current_user.tipo == "Basic" %}
+          <div class="d-grid gap-2 mt-3">
+            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+              data-ticket="one_day">
+              Rock for a Day
+            </button>
+          </div>
+          {% endif %}
         </div>
-      </form>
-    </form>
-  </main>
-</div>
+      </section>
 
+      <!-- card #2 -->
+      <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
+        <div class="card-header fw-bold text-center">DOUBLE TROUBLE</div>
+        <div class="card-body position-relative p-0">
+          <img src="{{ url_for('static', filename='ticket_two_days.jpg') }}" alt="Double Trouble Ticket"
+            class="img-fluid w-100 card-image">
+          <span
+            class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">100€</span>
+        </div>
+        <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+          <span>2 days back-to-back - keep the vibe going!</span>
+          {% if not p_ticket and current_user.tipo == "Basic" %}
+          <div class="d-grid gap-2 mt-3">
+            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+              data-ticket="two_days">
+              Double the fun
+            </button>
+          </div>
+          {% endif %}
+        </div>
+      </section>
 
+      <!--  card #3 -->
+      <section class="col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
+        id="ticket-full">
+        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
+          Best Experience
+        </span>
+        <div class="card-header fw-bold text-center text-primary">FULL BLAST</div>
+        <div class="card-body position-relative p-0">
+          <img src="{{ url_for('static', filename='ticket_three_days.jpg') }}" alt="Full Blast Ticket"
+            class="img-fluid w-100 card-image">
+          <span
+            class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">150€</span>
+        </div>
+        <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+          <span>All 3 days — no breaks, just music!</span>
+          {% if not p_ticket and current_user.tipo == "Basic" %}
+          <div class="d-grid gap-2 mt-3">
+            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+              data-ticket="three_days">
+              Go All In
+            </button>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </div>
+  <form method="POST" action="{{ url_for('buy_ticket') }}" class="text-center" id="buy-ticket-form">
+    <div id="dynamic-ticket-inputs">
+    </div>
+  </form>
+</form>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

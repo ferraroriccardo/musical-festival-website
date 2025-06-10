@@ -18,7 +18,7 @@ def is_safe_url(target):
 # route for login page
 @auth_bp.route("/login-form", methods=['GET'])
 def login_page():
-    return render_template("login.html")
+    return render_template("login.html", current_file="login.html")
 
 # route to handle login data
 @auth_bp.route("/login", methods=['POST'])

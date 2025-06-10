@@ -34,14 +34,13 @@
     });
 </script>
 
-<body class="bg-image">
-
-    <nav
-        class="container mt-4 rounded-5 shadow transparent-white-bg position-absolute top-0 start-50 translate-middle-x">
-        <div class="row align-items-center my-1">
+<body class="background-gradient">
+    <nav class="container d-flex justify-content-center">
+        <div class="row half-length my-3 rounded-5 shadow transparent-white-bg">
             <div class="col-6">
                 <h1 class="mb-0">
-                    <a href="{{ url_for('home') }}" class="text-decoration-none black-han-sans-regular ms-3">OVERLOAD</a>
+                    <a href="{{ url_for('home') }}"
+                        class="text-decoration-none black-han-sans-regular ms-3">OVERLOAD</a>
                 </h1>
             </div>
 
@@ -73,10 +72,21 @@
             </div>
         </div>
     </nav>
+    {% if current_file != "login.html" %}
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center align-items-center">
+            <main class="col-10 shadow rounded-4 p-3 transparent-white-bg p-5">
+                {% block content %}
 
-    {% block content %}
-    {% endblock %}
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+    {% else %}
+        {% block login %}
 
+        {% endblock %}
+    {% endif %}
     <footer class="container-fluid">
         <div class="row align-items-center footer-div-height">
             <p class="col-8">Overload festival © - All rights reserved</p>

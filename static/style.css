@@ -6,6 +6,11 @@
     background: rgba(255, 255, 255, 0.70);
 }
 
+.fit-content{
+    width: fit-content;
+    height: fit-content;
+}
+
 .red-text {
     color: #963939;
 }
@@ -57,9 +62,20 @@ nav a:focus {
     max-width: 180px;
 }
 
+.half-length{
+    width: 75vw;
+}
+
+.min-margin-y {
+    margin-top: 7rem;
+    margin-bottom: 7rem;
+}
+
 .full-height {
     height: fit-content;
     min-height: 100vh;
+    margin-top: 7rem;
+    margin-bottom: 7rem;
 }
 
 .object-fit-cover {
@@ -99,20 +115,17 @@ footer div {
     height: 7rem;
 }
 
-.banner-black,
-.banner-blue {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0;
-}
-
 .banner-black {
     background: linear-gradient(60deg, #1c2128 0%, #202732 100%);
+    margin: 0 auto;
 }
 
-.banner-blue {
+.banner-gradient {
+    background: linear-gradient(60deg, #5694d5 0%, #C76A79 100%);
+    margin: 0 auto;
+}
+
+.background-gradient {
     background: linear-gradient(60deg, #5694d5 0%, #C76A79 100%);
 }
 
@@ -186,7 +199,8 @@ footer div {
     z-index: 2;
 }
 
-.border-gradient::before {
+.border-gradient:hover::before,
+.border-gradient:focus::before {
     content: "";
     position: absolute;
     top: -3px;

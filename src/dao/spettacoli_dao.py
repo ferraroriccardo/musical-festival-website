@@ -269,7 +269,9 @@ def get_genres():
         query = "SELECT DISTINCT(genere) FROM SPETTACOLI;"      
         cursor.execute(query)
 
-        genres = cursor.fetchall()
+        genres_raw = cursor.fetchall()
+        genres = [g[0] for g in genres_raw if g[0] is not None]
+
         return genres
     except Exception as e:
         return False, "DATABASE_ERROR_GET_ARTIST_BY_NAME"

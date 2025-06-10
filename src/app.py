@@ -45,7 +45,9 @@ def program():
     stages = palchi_dao.get_stages()
     genres = spettacoli_dao.get_genres()
 
-    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages, p_stages=stages, p_genres=genres)
+    selected = {"day": day, "stage": stage, "genre":genre}
+
+    return render_template("program.html", p_shows=paginated_shows, current_page=page, total_pages=total_pages, p_stages=stages, p_genres=genres, p_selected=selected)
 
 
 # route to show all details about a single show

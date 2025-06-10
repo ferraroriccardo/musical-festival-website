@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="view-toggle mb-3 card-header">
+<div class="view-toggle mb-3 card-header rounded-5 p-2">
     <span id="togglePublished" class="active-toggle">Published</span>
     <span id="toggleDrafts">Drafts</span>
 </div>
@@ -92,16 +92,12 @@
                             <li><b>Genere Musicale:</b> {{ perf.genere }}</li>
                             <li><b>Descrizione:</b> {{ perf.descrizione }}</li>
                             <li>
-                                <div class="d-flex w-100">
-                                    <span><b>ID Creatore:</b></span>
-                                    <span class="ms-auto">{{ perf.id_creatore }}</span>
-                                </div>
+                                <span><b>ID Creatore:</b></span>
+                                <span class="ms-auto">{{ perf.id_creatore }}</span>
                             </li>
                             <li>
-                                <div class="d-flex w-100">
-                                    <span><b>ID Palco:</b></span>
-                                    <span class="ms-auto">{{ perf.id_palco }}</span>
-                                </div>
+                                <span><b>ID Palco:</b></span>
+                                <span class="ms-auto">{{ perf.id_palco }}</span>
                             </li>
                         </ul>
                     </div>

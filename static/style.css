@@ -71,13 +71,6 @@ nav a:focus {
     margin-bottom: 7rem;
 }
 
-.full-height {
-    height: fit-content;
-    min-height: 100vh;
-    margin-top: 7rem;
-    margin-bottom: 7rem;
-}
-
 .object-fit-cover {
     object-fit: cover;
 }
@@ -133,18 +126,13 @@ footer div {
     min-height: 100vh;
 }
 
-.btn-custom-black {
+.btn-custom-centered {
     position: absolute;
     top: 84%;
     left: 44%;
-    z-index: 2;
-    background-color: #000;
     color: #fff;
     border-radius: 50rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    transition: background 0.3s, color 0.2s, box-shadow 0.2s;
     font-size: 1.5rem;
-    padding: 1rem 3rem;
     min-width: 220px;
     min-height: 60px;
     display: flex;

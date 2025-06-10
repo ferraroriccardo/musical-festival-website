@@ -1,24 +1,32 @@
-1. quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco...
-    poi ci metti le foto, la playlist spotify
-2. filtri per gli eventi:
-    - giorno
-    - palco
-    - genere
-3. lo staff deve vedere la percentuale di vendite dei biglietti
+NUOVE FUNZIONALITÀ
+1. Quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco... poi ci metti le foto, la playlist spotify
+2. Filtri per gli eventi:
+   - giorno
+   - palco
+   - genere             salvarsi in program() i parametri di args da mettere nei dropdown quando si fa il submit o usare js per non dover fare il submit
+3. Lo staff deve vedere la percentuale di vendite dei biglietti
 4. Inserire band: Emathome, Quadri Rotti, LOM, Only Us (Anche qualche bozza)
-5. riempire il database di biglietti (almeno 1 per tipo)
-6. mettere la location nella home
-7. aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
-8. controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato
-9. cambiare l'icona di my account in un cerchio con l'iniziale della mail
-10. nel profilo devo vedere le info sul mio biglietto (tipo biglietto, giorni disponibili)
-11. correggere la vista per lo staff. Nel profilo mettere le bozze SUE, TUTTI gli show pubblici + link alla create event (o update draft)
-11b.  mostrare le stats dei biglietti nella pagina tickets (solo per lo staff)
+5. Riempire il database di biglietti (almeno 1 per tipo)
+6. Mettere la location nella home
+7. Aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
+8. Correggere la vista per lo staff. Nel profilo mettere le bozze SUE, cliccando sul nome si rimanda alla update draft di quella bozza
+9. Mostrare le stats dei biglietti nella pagina tickets (solo per lo staff)
+
+DETTAGLI GRAFICI
+10. Cambiare le foto dei ticket
+11. Aggiungere il margin alle card bianche
 12. NON TUTTO È UN DIV
 13. Utilizzo di tag HTML in mani (<b>)
 14. Messaggi palese di errore per sovrapposizione di eventi quando si vuole creare uno
-15. capire bene quando usare param.campo o param["campo"] in jinja, con Row e altro
-16. Togliere tutti i commenti inutili e gli style inline
-17. Sistemare i nomi delle query in modo che siano esplicativi (get artist by name)
-18. Controllare tutto il codice, che non ci siano nomi di variabili strane (example)
-19. Eliminare le classi inutili (sia nel codice che in style.css)
+15. impostare dimensioni fisse per immagini uploadate
+
+FIX DEL CODICE
+15. Togliere tutti i commenti inutili e gli style inline
+16. Sistemare i nomi delle query in modo che siano esplicativi (get artist by name)
+17. Controllare tutto il codice, che non ci siano nomi di variabili strane (example)
+18. Eliminare le classi inutili (sia nel codice che in style.css)
+
+COSE DA RIVEDERE / STUDIARE PER L'ESAME
+19. Controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato
+20. Capire bene quando usare param.campo o param["campo"] in jinja, con Row e altro
+21. Capire le blueprint

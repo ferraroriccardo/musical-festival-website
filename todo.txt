@@ -1,32 +1,23 @@
-NUOVE FUNZIONALITÀ
-1. Quando clicchi su un artista apre la pagina con le sue info, ora di esibizione, palco... poi ci metti le foto, la playlist spotify
-2. Filtri per gli eventi:
-   - giorno
-   - palco
-   - genere             salvarsi in program() i parametri di args da mettere nei dropdown quando si fa il submit o usare js per non dover fare il submit
-3. Lo staff deve vedere la percentuale di vendite dei biglietti
-4. Inserire band: Emathome, Quadri Rotti, LOM, Only Us (Anche qualche bozza)
-5. Riempire il database di biglietti (almeno 1 per tipo)
-6. Mettere la location nella home
-7. Aggiungere l'impostazione "sell out all tickets" per vedere come cambiano le icone di un tipo di ticket
-8. Correggere la vista per lo staff. Nel profilo mettere le bozze SUE, cliccando sul nome si rimanda alla update draft di quella bozza
-9. Mostrare le stats dei biglietti nella pagina tickets (solo per lo staff)
+NUOVE FUNZIONALITÀ:
+1. Visualizzazione percentuale vendite biglietti (staff)
+2. Inserimento band: Emathome, Quadri Rotti, LOM, Only Us (con bozze)
+3. Popolamento database biglietti (almeno 1 per tipo)
+4. Inserimento location in home
+5. Aggiunta impostazione "sell out all tickets" (test icone ticket)
 
-DETTAGLI GRAFICI
-10. Cambiare le foto dei ticket
-11. Aggiungere il margin alle card bianche
-12. NON TUTTO È UN DIV
-13. Utilizzo di tag HTML in mani (<b>)
-14. Messaggi palese di errore per sovrapposizione di eventi quando si vuole creare uno
-15. impostare dimensioni fisse per immagini uploadate
+DETTAGLI GRAFICI:
+6. Cambio foto ticket
+7. NO DIV eccessivi
+8. Utilizzo tag HTML (<b>)
+9. Messaggi errore chiari per sovrapposizione eventi
 
-FIX DEL CODICE
-15. Togliere tutti i commenti inutili e gli style inline
-16. Sistemare i nomi delle query in modo che siano esplicativi (get artist by name)
-17. Controllare tutto il codice, che non ci siano nomi di variabili strane (example)
-18. Eliminare le classi inutili (sia nel codice che in style.css)
+FIX DEL CODICE:
+10. Rimozione commenti inutili
+11. Nomi query esplicativi (es. get artist by name)
+12. Controllo nomi variabili (eliminare nomi generici come "example")
+13. Eliminazione classi CSS inutilizzate
 
-COSE DA RIVEDERE / STUDIARE PER L'ESAME
-19. Controllare il readme, che ci sia tutto ciò che ha chiesto il prof, che tutto quello che c'è ha senso ed è stato implementato
-20. Capire bene quando usare param.campo o param["campo"] in jinja, con Row e altro
-21. Capire le blueprint
+COSE DA RIVEDERE / STUDIARE PER L'ESAME:
+14. Aggiornamento e verifica README (requisiti prof)
+15. Uso corretto param.campo vs param["campo"] in Jinja
+16. Blueprint

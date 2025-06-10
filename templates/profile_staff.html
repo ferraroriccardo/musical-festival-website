@@ -56,6 +56,17 @@
         </div>
         {% endfor %}
     </div>
+    {% if total_published_pages > 1 %}
+    <nav class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            {% for page_num in range(1, total_published_pages + 1) %}
+            <li class="page-item {% if page_num == current_page %}active{% endif %}">
+                <a class="page-link text-red" href="{{ url_for('profile', page=page_num) }}#publishedContainer">{{ page_num }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
 </div>
 
 <!-- Container Drafts -->
@@ -76,29 +87,31 @@
                     {% endif %}
 
                     <div class="flex-grow-1">
-                        <h5 class="mb-3">Performance ID: {{ perf.id }}</h5>
+                        <h5 class="mb-3">
+                            <a href="{{ url_for('event_page', artist_name=perf.artista|urlencode, day=perf.giorno, start_hour=perf.ora_inizio, duration=perf.durata, genre=perf.genere, description=perf.descrizione, playlist_link=perf.link_playlist, stage_id=perf.id_palco) }}"
+                                class="text-decoration-none text-dark">
+                                {{ perf.artista }}
+                            </a>
+                        </h5>
                         <ul class="list-unstyled mb-0">
-                            <li><b>Giorno:</b> {{ perf.giorno }}</li>
-                            <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
-                            <li>
-                                <h5 class="mb-3">
-                                    <a href="{{ url_for('artist', artist_name=perf.artista|urlencode) }}"
-                                        class="text-decoration-none text-dark">
-                                        {{ perf.artista }}
-                                    </a>
-                                </h5>
+                            <li><b>ID</b>:</b> {{ perf.id }}</li>
+                            <li><b>Day:</b> {{ perf.giorno }}</li>
+                            <li><b>Start Hour:</b> {{ perf.ora_inizio }}</li>
+                            <li><b>Duration:</b> {{ perf.durata }}</li>
+                            <li><b>Genre:</b> {{ perf.genere }}</li>
+                            <li><b>Description:</b> {{ perf.descrizione }}</li>
+                            <li><b>Playlist link:</b> {{ perf.link_playlist }}</li>
+                            <li class="d-flex justify-content-between">
+                                <div>
+                                    <span><b>Stage:</b></span>
+                                    <span>{{ perf.nome_palco }}</span>
+                                </div>
+                                <div>
+                                    <span><b>ID:</b></span>
+                                    <span>{{ perf.id_palco }}</span>
+                                </div>
                             </li>
-                            <li><b>Durata:</b> {{ perf.durata }}</li>
-                            <li><b>Genere Musicale:</b> {{ perf.genere }}</li>
-                            <li><b>Descrizione:</b> {{ perf.descrizione }}</li>
-                            <li>
-                                <span><b>ID Creatore:</b></span>
-                                <span class="ms-auto">{{ perf.id_creatore }}</span>
-                            </li>
-                            <li>
-                                <span><b>ID Palco:</b></span>
-                                <span class="ms-auto">{{ perf.id_palco }}</span>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -106,6 +119,17 @@
         </div>
         {% endfor %}
     </div>
+    {% if total_drafts_pages > 1 %}
+    <nav class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            {% for page_num in range(1, total_drafts_pages + 1) %}
+            <li class="page-item {% if page_num == current_page %}active{% endif %}">
+                <a class="page-link text-red" href="{{ url_for('profile', page=page_num) }}#draftsContainer">{{ page_num }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
 </div>
 
 <!-- Nessuna performance -->

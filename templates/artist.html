@@ -20,20 +20,23 @@
                 <h5 class="mb-3">{{ p_artist.artista }}</h5>
                 <ul class="list-unstyled mb-0">
                     <li><b>ID:</b> {{ p_artist.id }}</li>
-                    <li><b>Giorno:</b> {{ p_artist.giorno }}</li>
-                    <li><b>Ora Inizio:</b> {{ p_artist.ora_inizio }}</li>
-                    <li><b>Durata:</b> {{ p_artist.durata }}</li>
-                    <li><b>Genere Musicale:</b> {{ p_artist.genere }}</li>
-                    <li><b>Descrizione:</b> {{ p_artist.descrizione }}</li>
+                    <li><b>Day:</b> {{ p_artist.giorno }}</li>
+                    <li><b>Start hour:</b> {{ p_artist.ora_inizio }}</li>
+                    <li><b>Duration:</b> {{ p_artist.durata }}</li>
+                    <li><b>Genre:</b> {{ p_artist.genere }}</li>
+                    <li><b>Description:</b> {{ p_artist.descrizione }}</li>
+                    {% if p_artist.link_playlist %}
+                    <li><b>Playlist:</b> <a href="{{ p_artist.link_playlist }}">Listen now</a></li>
+                    {% endif %}
                     <li>
                         <div class="d-flex">
-                            <span><b>Creatore:</b> {{ p_artist.email_creatore }}</span>
+                            <span><b>Creator:</b> {{ p_artist.email_creatore }}</span>
                             <span class="ms-auto"><b>ID:</b> {{ p_artist.id_creatore }}</span>
                         </div>
                     </li>
                     <li>
                         <div class="d-flex">
-                            <span><b>Palco:</b> {{ p_artist.nome_palco }}</span>
+                            <span><b>Stage:</b> {{ p_artist.nome_palco }}</span>
                             <span class="ms-auto"><b>ID:</b> {{ p_artist.id_palco }}</span>
                         </div>
                     </li>

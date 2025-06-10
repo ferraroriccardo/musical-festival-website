@@ -135,6 +135,7 @@ def create_event():
     duration = request.form.get('duration')
     artist = request.form.get('artist')
     description = request.form.get('description') or None
+    playlist_link = request.form.get('playlist_link') or None
     genre = request.form.get('genre') or None
     stage_name = request.form.get('stage')
     img = request.files.get('image')
@@ -157,7 +158,26 @@ def create_event():
     missing_fields = [name for name, value in required_fields.items() if not value]
     if missing_fields:
         flash(f"Missing required fields: {', '.join(missing_fields)}")
-        return redirect(url_for('event_page'))
+        # Recupera e converte le bozze e i palchi in dict per la serializzazione JSON
+        new_drafts = spettacoli_dao.get_drafts(current_user.id)
+        new_stages = palchi_dao.get_stages()
+        if isinstance(new_drafts, list):
+            new_drafts = [dict(row) for row in new_drafts]
+        if isinstance(new_stages, list):
+            new_stages = [dict(row) for row in new_stages]
+        return render_template(
+            "create_event.html",
+            p_drafts=new_drafts,   # per JS e dropdown bozze
+            p_stages=new_stages,   # per dropdown palchi (fix: sempre p_stages)
+            p_day=day,
+            p_start_hour=start_hour,
+            p_duration=duration,
+            p_artist=artist,
+            p_description=description,
+            p_playlist_link=playlist_link,
+            p_genre=genre,
+            p_stage=stage_name     # valore preselezionato nel dropdown stage
+        )
 
     db_img_path = None
     if img:
@@ -186,17 +206,36 @@ def create_event():
 
     if draft_id:
         success, error = spettacoli_dao.update_draft(
-            draft_id, day, start_hour, duration, artist, description, db_img_path,
+            draft_id, day, start_hour, duration, artist, description, playlist_link, db_img_path,
             genre, published, current_user.id, stage_name
         )
     else:
         success, error = spettacoli_dao.create_event(
-            day, start_hour, duration, artist, description, db_img_path,
+            day, start_hour, duration, artist, description, playlist_link, db_img_path,
             genre, published, current_user.id, stage_name
         )
     if not success:
         flash(error)
-        return redirect(url_for('event_page'))
+        # Recupera di nuovo le bozze e i palchi e li converte in dict per la serializzazione JSON
+        new_drafts = spettacoli_dao.get_drafts(current_user.id)
+        new_stages = palchi_dao.get_stages()
+        if isinstance(new_drafts, list):
+            new_drafts = [dict(row) for row in new_drafts]
+        if isinstance(new_stages, list):
+            new_stages = [dict(row) for row in new_stages]
+        return render_template(
+            "create_event.html",
+            p_drafts=new_drafts,
+            p_stages=new_stages,
+            p_day=day,
+            p_start_hour=start_hour,
+            p_duration=duration,
+            p_artist=artist,
+            p_description=description,
+            p_playlist_link=playlist_link,
+            p_genre=genre,
+            p_stage=stage_name
+        )
     flash("EVENT_CREATED_WITH_SUCCESS")
     return redirect(url_for("home"))
 

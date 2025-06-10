@@ -67,7 +67,7 @@ def get_shows_filtered(day, stage, genre, published):
         cursor.close()
         conn.close()
 
-def create_event(day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_name):
+def create_event(day, start_hour, duration, artist, description, playlist_link, img_path, genre, published, creator_id, stage_name):
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
@@ -85,14 +85,11 @@ def create_event(day, start_hour, duration, artist, description, img_path, genre
                 return False, "ARTIST_ALREADY_PERFORMING"
 
         insert_query = """
-            INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, path_immagine, genere, pubblicato, id_creatore, id_palco)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            INSERT INTO SPETTACOLI (giorno, ora_inizio, durata, artista, descrizione, link_playlist, path_immagine, genere, pubblicato, id_creatore, id_palco)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """
-        
-        print(f"Valori passati a execute: {(day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_id)}")
-        print(f"Numero valori: {len((day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_id))}")
 
-        cursor.execute(insert_query, (day, start_hour, duration, artist, description, img_path, genre, published, creator_id, stage_id))
+        cursor.execute(insert_query, (day, start_hour, duration, artist, description, playlist_link, img_path, genre, published, creator_id, stage_id))
         conn.commit()
 
         return True, None
@@ -108,7 +105,7 @@ def create_event(day, start_hour, duration, artist, description, img_path, genre
         if 'conn' in locals():
             conn.close()
 
-def update_draft(draft_id, day, start_hour, duration, artist, description, img_path,
+def update_draft(draft_id, day, start_hour, duration, artist, description, playlist_link, img_path,
             genre, published, creator_id, stage_name):
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
@@ -128,12 +125,12 @@ def update_draft(draft_id, day, start_hour, duration, artist, description, img_p
 
         update_query = """
             UPDATE SPETTACOLI
-            SET giorno = ?, ora_inizio = ?, durata = ?, artista = ?, descrizione = ?,
+            SET giorno = ?, ora_inizio = ?, durata = ?, artista = ?, descrizione = ?, link_playlist = ?,
                 path_immagine = ?, genere = ?, pubblicato = ?, id_creatore = ?, id_palco = ?
             WHERE id = ?;
         """
 
-        cursor.execute(update_query, (day, start_hour, duration, artist, description, img_path,
+        cursor.execute(update_query, (day, start_hour, duration, artist, description, playlist_link, img_path,
             genre, published, creator_id, stage_id, draft_id))
         conn.commit()
 

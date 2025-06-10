@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger" role="alert">
+      <ul class="mb-0">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endwith %}
 <!-- return beforeSubmit(event) sostituisce onclick="setPublished(false)" perché la il sumbit
         era troppo veloce, quindi non si faceva in tempo a modificare la variable published  -->
 <form action="/create_event" method="POST" enctype="multipart/form-data" id="eventForm"
@@ -8,9 +19,9 @@
     <h1 class="mb-4 text-center">CREATE EVENT</h1>
     {% if p_drafts and p_drafts|length > 0 %}
     <div class="mb-4">
-        <label for="draft_selector" class="form-label">Riprendi da una bozza</label>
+        <label for="draft_selector" class="form-label">Start from a draft</label>
         <select class="form-select" id="draft_selector" name="draft_id">
-            <option value="">-- Seleziona una bozza artista --</option>
+            <option value="">-- Select draft --</option>
             {% for draft in p_drafts %}
             <option value="{{ draft['id'] }}">{{ draft['artista'] }}</option>
             {% endfor %}
@@ -22,48 +33,54 @@
             <label for="day" class="form-label">Day</label>
             <select class="form-select" id="day" name="day" required>
                 <option value="">Select day</option>
-                <option value="friday 20th">Friday 20th</option>
-                <option value="saturday 21st">Saturday 21st</option>
-                <option value="sunday 22nd">Sunday 22nd</option>
+                <option value="friday 20th" {% if p_day == 'friday 20th' %}selected{% endif %}>Friday 20th</option>
+                <option value="saturday 21st" {% if p_day == 'saturday 21st' %}selected{% endif %}>Saturday 21st</option>
+                <option value="sunday 22nd" {% if p_day == 'sunday 22nd' %}selected{% endif %}>Sunday 22nd</option>
             </select>
         </div>
         <div class="col-6">
             <label for="start_hour" class="form-label">Start hour</label>
-            <input type="time" class="form-control" id="start_hour" name="start_hour" min="10:00" max="23:59" required>
+            <input type="time" class="form-control" id="start_hour" name="start_hour" min="10:00" max="23:59" required value="{{ p_start_hour|default('') }}">
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-6">
             <label for="duration" class="form-label">Duration (minutes)</label>
-            <input type="number" class="form-control" id="duration" name="duration" min="1" required>
+            <input type="number" class="form-control" id="duration" name="duration" min="1" required value="{{ p_duration|default('') }}">
         </div>
         <div class="col-6">
             <label for="artist" class="form-label">Artist</label>
-            <input type="text" class="form-control" id="artist" name="artist" required>
+            <input type="text" class="form-control" id="artist" name="artist" required value="{{ p_artist|default('') }}">
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-6 d-flex flex-column h-100">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control h-100" id="description" name="description" rows="5"></textarea>
+            <textarea class="form-control h-100" id="description" name="description" rows="5">{{ p_description|default('') }}</textarea>
         </div>
         <div class="col-6 d-flex flex-column justify-content-between h-100">
             <div class="mb-3">
                 <label for="genre" class="form-label">Genre</label>
-                <input type="text" class="form-control" id="genre" name="genre">
+                <input type="text" class="form-control" id="genre" name="genre" value="{{ p_genre|default('') }}">
             </div>
             <label for="stage" class="form-label">Stage</label>
             <select class="form-select" id="stage" name="stage" required>
                 <option value="">Select stage</option>
                 {% for s in p_stages %}
-                <option value="{{ s.nome }}">{{ s.nome }}</option>
+                <option value="{{ s.nome }}" {% if p_stage == s.nome %}selected{% endif %}>{{ s.nome }}</option>
                 {% endfor %}
             </select>
         </div>
     </div>
-    <div class="mb-3">
-        <label for="image" class="form-label">Upload image</label>
-        <input class="form-control" type="file" id="image" name="image" accept="image/*">
+    <div class="row mb-3">
+        <div class="col">
+            <label for="image" class="form-label">Upload image</label>
+            <input class="form-control" type="file" id="image" name="image" accept="image/*">
+        </div>
+        <div class="col">
+            <label for="playlist_link" class="form-label">Link a playlist</label>
+            <input class="form-control" type="text" id="playlist_link" name="playlist_link" value="{{ p_playlist_link|default('') }}">
+        </div>
     </div>
     <div class="d-flex justify-content-evenly align-items-center mt-4 gap-4">
         <button type="submit" name="action" value="draft" class="btn btn-secondary w-50 rounded-pill max-width">Save

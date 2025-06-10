@@ -62,13 +62,30 @@ def artist(artist_name):
 @app.route("/profile")
 @login_required
 def profile():
+    page = request.args.get("page", default=1, type=int)
+    per_page = 10
     if current_user.tipo == "Basic":
         ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
         return render_template("profile_basic.html", p_ticket = ticket)
     else:
         published = spettacoli_dao.get_published()
         drafts = spettacoli_dao.get_drafts(current_user.id)
-        return render_template("profile_staff.html", p_published = published, p_drafts = drafts)
+        # Paginazione
+        start = (page - 1) * per_page
+        end = start + per_page
+        paginated_published = published[start:end]
+        paginated_drafts = drafts[start:end]
+        total_published_pages = (len(published) + per_page - 1) // per_page
+        total_drafts_pages = (len(drafts) + per_page - 1) // per_page
+        print(total_drafts_pages)
+        return render_template(
+            "profile_staff.html",
+            p_published = paginated_published,
+            p_drafts = paginated_drafts,
+            current_page = page,
+            total_published_pages = total_published_pages,
+            total_drafts_pages = total_drafts_pages
+        )
 
 # route to show all types of ticket
 @app.route("/ticket-form")
@@ -107,7 +124,8 @@ def buy_ticket():
 @app.route("/event")
 @login_required
 def event_page():
-    # check for logs by console
+    page = request.args.get("page", default=1, type=int)
+    per_page = 10
     if current_user.tipo == "Basic":
         return redirect(url_for("home"))
 
@@ -120,11 +138,45 @@ def event_page():
     if isinstance(stages, list):
         stages = [dict(row) for row in stages]
 
-    return render_template("create_event.html", p_drafts=drafts, p_stages=stages)
+    # Paginazione
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_drafts = drafts[start:end]
+    total_drafts_pages = (len(drafts) + per_page - 1) // per_page
+
+    # Precompilazione da parametri GET (bozza)
+    p_day = request.args.get('day')
+    p_start_hour = request.args.get('start_hour')
+    p_duration = request.args.get('duration')
+    p_artist = request.args.get('artist_name')
+    p_description = request.args.get('description')
+    p_playlist_link = request.args.get('playlist_link')
+    p_genre = request.args.get('genre')
+    stage_id = request.args.get('stage_id')
+    p_stage = None
+    if stage_id:
+        palco = next((s for s in stages if str(s['id']) == str(stage_id)), None)
+        p_stage = palco['nome'] if palco else None
+
+    return render_template(
+        "create_event.html",
+        p_drafts=paginated_drafts,
+        p_stages=stages,
+        p_day=p_day or None,
+        p_start_hour=p_start_hour or None,
+        p_duration=p_duration or None,
+        p_artist=p_artist or None,
+        p_description=p_description or None,
+        p_playlist_link=p_playlist_link or None,
+        p_genre=p_genre or None,
+        p_stage=p_stage or None,
+        current_page=page,
+        total_drafts_pages=total_drafts_pages
+    )
 
 
 # route for creating an event
-@app.route("/create_event", methods = ['POST'])
+@app.route("/create_event", methods = ['POST', 'GET'])
 @login_required
 def create_event():
     #TODO: quando parto da una bozza e pubblico l'evento devo modificare la bozza e settarla come pubblicata + salvare la foto in bozza
@@ -136,6 +188,7 @@ def create_event():
     duration = request.form.get('duration')
     artist = request.form.get('artist')
     description = request.form.get('description') or None
+    playlist_link = request.form.get('playlist_link') or None
     genre = request.form.get('genre') or None
     stage_name = request.form.get('stage')
     img = request.files.get('image')
@@ -158,7 +211,26 @@ def create_event():
     missing_fields = [name for name, value in required_fields.items() if not value]
     if missing_fields:
         flash(f"Missing required fields: {', '.join(missing_fields)}")
-        return redirect(url_for('event_page'))
+        # Recupera e converte le bozze e i palchi in dict per la serializzazione JSON
+        new_drafts = spettacoli_dao.get_drafts(current_user.id)
+        new_stages = palchi_dao.get_stages()
+        if isinstance(new_drafts, list):
+            new_drafts = [dict(row) for row in new_drafts]
+        if isinstance(new_stages, list):
+            new_stages = [dict(row) for row in new_stages]
+        return render_template(
+            "create_event.html",
+            p_drafts=new_drafts,   # per JS e dropdown bozze
+            p_stages=new_stages,   # per dropdown palchi (fix: sempre p_stages)
+            p_day=day,
+            p_start_hour=start_hour,
+            p_duration=duration,
+            p_artist=artist,
+            p_description=description,
+            p_playlist_link=playlist_link,
+            p_genre=genre,
+            p_stage=stage_name     # valore preselezionato nel dropdown stage
+        )
 
     db_img_path = None
     if img:
@@ -187,17 +259,36 @@ def create_event():
 
     if draft_id:
         success, error = spettacoli_dao.update_draft(
-            draft_id, day, start_hour, duration, artist, description, db_img_path,
+            draft_id, day, start_hour, duration, artist, description, playlist_link, db_img_path,
             genre, published, current_user.id, stage_name
         )
     else:
         success, error = spettacoli_dao.create_event(
-            day, start_hour, duration, artist, description, db_img_path,
+            day, start_hour, duration, artist, description, playlist_link, db_img_path,
             genre, published, current_user.id, stage_name
         )
     if not success:
         flash(error)
-        return redirect(url_for('event_page'))
+        # Recupera di nuovo le bozze e i palchi e li converte in dict per la serializzazione JSON
+        new_drafts = spettacoli_dao.get_drafts(current_user.id)
+        new_stages = palchi_dao.get_stages()
+        if isinstance(new_drafts, list):
+            new_drafts = [dict(row) for row in new_drafts]
+        if isinstance(new_stages, list):
+            new_stages = [dict(row) for row in new_stages]
+        return render_template(
+            "create_event.html",
+            p_drafts=new_drafts,
+            p_stages=new_stages,
+            p_day=day,
+            p_start_hour=start_hour,
+            p_duration=duration,
+            p_artist=artist,
+            p_description=description,
+            p_playlist_link=playlist_link,
+            p_genre=genre,
+            p_stage=stage_name
+        )
     flash("EVENT_CREATED_WITH_SUCCESS")
     return redirect(url_for("home"))
 

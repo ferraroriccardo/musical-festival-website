@@ -3,15 +3,14 @@
 {% block content %}
 <div class="card-body">
     <div class="card card-performance shadow-sm rounded-4 p-3">
-        <div class="d-flex" style="min-height: 300px;">
+        <div class="d-flex img-min-height">
             {% if p_artist.path_immagine %}
-            <div class="flex-shrink-0 me-4" style="flex-basis: 25%;">
+            <div class="flex-shrink-0 me-4 flex-basis-25">
                 <img src="{{ url_for('uploaded_file', filename=p_artist.path_immagine.replace('uploads/', '')) }}"
                     alt="Performance Image" class="img-fluid rounded-3 h-100 object-fit-cover w-100">
             </div>
             {% else %}
-            <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4"
-                style="flex-basis: 25%; height: 100%;">
+            <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4 flex-basis-25 heigth-100">
                 Nessuna immagine
             </div>
             {% endif %}

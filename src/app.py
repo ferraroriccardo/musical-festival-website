@@ -61,13 +61,30 @@ def artist(artist_name):
 @app.route("/profile")
 @login_required
 def profile():
+    page = request.args.get("page", default=1, type=int)
+    per_page = 10
     if current_user.tipo == "Basic":
         ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
         return render_template("profile_basic.html", p_ticket = ticket)
     else:
         published = spettacoli_dao.get_published()
         drafts = spettacoli_dao.get_drafts(current_user.id)
-        return render_template("profile_staff.html", p_published = published, p_drafts = drafts)
+        # Paginazione
+        start = (page - 1) * per_page
+        end = start + per_page
+        paginated_published = published[start:end]
+        paginated_drafts = drafts[start:end]
+        total_published_pages = (len(published) + per_page - 1) // per_page
+        total_drafts_pages = (len(drafts) + per_page - 1) // per_page
+        print(total_drafts_pages)
+        return render_template(
+            "profile_staff.html",
+            p_published = paginated_published,
+            p_drafts = paginated_drafts,
+            current_page = page,
+            total_published_pages = total_published_pages,
+            total_drafts_pages = total_drafts_pages
+        )
 
 # route to show all types of ticket
 @app.route("/ticket-form")
@@ -106,7 +123,8 @@ def buy_ticket():
 @app.route("/event")
 @login_required
 def event_page():
-    # check for logs by console
+    page = request.args.get("page", default=1, type=int)
+    per_page = 10
     if current_user.tipo == "Basic":
         return redirect(url_for("home"))
 
@@ -119,11 +137,45 @@ def event_page():
     if isinstance(stages, list):
         stages = [dict(row) for row in stages]
 
-    return render_template("create_event.html", p_drafts=drafts, p_stages=stages)
+    # Paginazione
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_drafts = drafts[start:end]
+    total_drafts_pages = (len(drafts) + per_page - 1) // per_page
+
+    # Precompilazione da parametri GET (bozza)
+    p_day = request.args.get('day')
+    p_start_hour = request.args.get('start_hour')
+    p_duration = request.args.get('duration')
+    p_artist = request.args.get('artist_name')
+    p_description = request.args.get('description')
+    p_playlist_link = request.args.get('playlist_link')
+    p_genre = request.args.get('genre')
+    stage_id = request.args.get('stage_id')
+    p_stage = None
+    if stage_id:
+        palco = next((s for s in stages if str(s['id']) == str(stage_id)), None)
+        p_stage = palco['nome'] if palco else None
+
+    return render_template(
+        "create_event.html",
+        p_drafts=paginated_drafts,
+        p_stages=stages,
+        p_day=p_day or None,
+        p_start_hour=p_start_hour or None,
+        p_duration=p_duration or None,
+        p_artist=p_artist or None,
+        p_description=p_description or None,
+        p_playlist_link=p_playlist_link or None,
+        p_genre=p_genre or None,
+        p_stage=p_stage or None,
+        current_page=page,
+        total_drafts_pages=total_drafts_pages
+    )
 
 
 # route for creating an event
-@app.route("/create_event", methods = ['POST'])
+@app.route("/create_event", methods = ['POST', 'GET'])
 @login_required
 def create_event():
     #TODO: quando parto da una bozza e pubblico l'evento devo modificare la bozza e settarla come pubblicata + salvare la foto in bozza

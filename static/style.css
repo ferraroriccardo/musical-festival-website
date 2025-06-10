@@ -6,7 +6,7 @@
     background: rgba(255, 255, 255, 0.70);
 }
 
-.fit-content{
+.fit-content {
     width: fit-content;
     height: fit-content;
 }
@@ -54,7 +54,7 @@ nav a:focus {
     color: white;
 }
 
-.text-red{
+.text-red {
     color: #963939;
 }
 
@@ -62,7 +62,7 @@ nav a:focus {
     max-width: 180px;
 }
 
-.half-length{
+.half-length {
     width: 75vw;
 }
 
@@ -232,9 +232,22 @@ footer div {
     object-fit: cover;
 }
 
-#style-password-group{
+.img-min-height {
+    min-height: 300px;
+}
+
+.flex-basis-25 {
+    flex-basis: 25;
+}
+
+.heigth-100{
+    height: 100%;
+}
+
+#style-password-group {
     display: none;
 }
+
 .view-toggle {
     display: flex;
     justify-content: center;

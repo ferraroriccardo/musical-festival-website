@@ -256,7 +256,6 @@ def create_event():
         resized_image.save(upload_path)
 
         db_img_path = f"uploads/{new_filename}"
-
     if draft_id:
         success, error = spettacoli_dao.update_draft(
             draft_id, day, start_hour, duration, artist, description, playlist_link, db_img_path,

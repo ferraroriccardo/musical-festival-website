@@ -1,6 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Flash messages card -->
+{% set filtered_messages = [] %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {% if message != 'Please log in to access this page.' %}
+        {% set _ = filtered_messages.append(message) %}
+      {% endif %}
+    {% endfor %}
+    {% if filtered_messages %}
+      <div class="card mb-4 border-danger">
+        <div class="card-body p-3">
+          <ul class="mb-0">
+            {% for message in filtered_messages %}
+              <li class="text-danger">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endwith %}
+
 <!-- return beforeSubmit(event) sostituisce onclick="setPublished(false)" perché la il sumbit
         era troppo veloce, quindi non si faceva in tempo a modificare la variable published  -->
 <form action="/create_event" method="POST" enctype="multipart/form-data" id="eventForm"

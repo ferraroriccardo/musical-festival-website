@@ -32,6 +32,16 @@
           </div>
           {% endif %}
         </div>
+        <!-- Bootstrap progress bar -->
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            aria-valuenow="{{ p_sells[0].count }}" aria-valuemin="0" aria-valuemax="200"
+            style="width: {{ (p_sells[0].count * 100 / 200) | round(2) }}%">
+            {{ p_sells[0].count }} / 200
+          </div>
+        </div>
+
+
       </section>
 
       <!-- card #2 -->
@@ -53,6 +63,14 @@
             </button>
           </div>
           {% endif %}
+        </div>
+        <!-- Bootstrap progress bar -->
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            aria-valuenow="{{ p_sells[0].count }}" aria-valuemin="0" aria-valuemax="200"
+            style="width: {{ (p_sells[0].count * 100 / 200) | round(2) }}%">
+            {{ p_sells[0].count }} / 200
+          </div>
         </div>
       </section>
 
@@ -80,6 +98,14 @@
           </div>
           {% endif %}
         </div>
+        <!-- Bootstrap progress bar -->
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            aria-valuenow="{{ p_sells[0].count }}" aria-valuemin="0" aria-valuemax="200"
+            style="width: {{ (p_sells[0].count * 100 / 200) | round(2) }}%">
+            {{ p_sells[0].count }} / 200
+          </div>
+        </div>
       </section>
     </div>
   </div>
@@ -88,6 +114,7 @@
     </div>
   </form>
 </form>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

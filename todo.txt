@@ -1,23 +1,19 @@
 NUOVE FUNZIONALITÀ:
-1. Visualizzazione percentuale vendite biglietti (staff)
-2. Inserimento band: Emathome, Quadri Rotti, LOM, Only Us (con bozze)
-3. Popolamento database biglietti (almeno 1 per tipo)
-4. Inserimento location in home
-5. Aggiunta impostazione "sell out all tickets" (test icone ticket)
-
-DETTAGLI GRAFICI:
+1. Aggiunta impostazione "sell out all tickets" (test icone ticket)
+2. Messaggi errore chiari per sovrapposizione eventi
+3. Validazione forms
+4. Sistemare i caroselli nella home
+5. Modalità responsive
 6. Cambio foto ticket
-7. NO DIV eccessivi
-8. Utilizzo tag HTML (<b>)
-9. Messaggi errore chiari per sovrapposizione eventi
 
 FIX DEL CODICE:
-10. Rimozione commenti inutili
-11. Nomi query esplicativi (es. get artist by name)
-12. Controllo nomi variabili (eliminare nomi generici come "example")
-13. Eliminazione classi CSS inutilizzate
+7. Utilizzo tag HTML (<b>)
+8. NO DIV eccessivi
+9. Rimozione commenti inutili
+10. Nomi query esplicativi (es. get artist by name)
+11. Controllo nomi variabili (eliminare nomi generici come "example")
+12. Eliminazione classi CSS inutilizzate
 
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-14. Aggiornamento e verifica README (requisiti prof)
-15. Uso corretto param.campo vs param["campo"] in Jinja
-16. Blueprint
+13. Uso corretto param.campo vs param["campo"] in Jinja
+14. Blueprint

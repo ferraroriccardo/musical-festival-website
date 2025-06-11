@@ -2,15 +2,15 @@
 
 {% block content %}
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="alert alert-danger" role="alert">
-      <ul class="mb-0">
+{% if messages %}
+<div class="alert alert-danger" role="alert">
+    <ul class="mb-0">
         {% for message in messages %}
-          <li>{{ message }}</li>
+        <li>{{ message }}</li>
         {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+    </ul>
+</div>
+{% endif %}
 {% endwith %}
 <!-- return beforeSubmit(event) sostituisce onclick="setPublished(false)" perché la il sumbit
         era troppo veloce, quindi non si faceva in tempo a modificare la variable published  -->
@@ -25,6 +25,7 @@
             {% for draft in p_drafts %}
             <option value="{{ draft['id'] }}">{{ draft['artista'] }}</option>
             {% endfor %}
+            <input type="hidden" id="hidden_draft_id" name="draft_id" value="{{ p_draft_id|default('',) }}">
         </select>
     </div>
     {% endif %}
@@ -33,41 +34,45 @@
             <label for="day" class="form-label">Day</label>
             <select class="form-select" id="day" name="day" required>
                 <option value="">Select day</option>
-                <option value="friday 20th" {% if p_day == 'friday 20th' %}selected{% endif %}>Friday 20th</option>
-                <option value="saturday 21st" {% if p_day == 'saturday 21st' %}selected{% endif %}>Saturday 21st</option>
-                <option value="sunday 22nd" {% if p_day == 'sunday 22nd' %}selected{% endif %}>Sunday 22nd</option>
+                <option value="friday 20th" {% if p_day=='friday 20th' %}selected{% endif %}>Friday 20th</option>
+                <option value="saturday 21st" {% if p_day=='saturday 21st' %}selected{% endif %}>Saturday 21st</option>
+                <option value="sunday 22nd" {% if p_day=='sunday 22nd' %}selected{% endif %}>Sunday 22nd</option>
             </select>
         </div>
         <div class="col-6">
             <label for="start_hour" class="form-label">Start hour</label>
-            <input type="time" class="form-control" id="start_hour" name="start_hour" min="10:00" max="23:59" required value="{{ p_start_hour|default('') }}">
+            <input type="time" class="form-control" id="start_hour" name="start_hour" min="10:00" max="23:59" required
+                value="{{ p_start_hour|default('', true) }}">
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-6">
             <label for="duration" class="form-label">Duration (minutes)</label>
-            <input type="number" class="form-control" id="duration" name="duration" min="1" required value="{{ p_duration|default('') }}">
+            <input type="number" class="form-control" id="duration" name="duration" min="1" required
+                value="{{ p_duration|default('', true) }}">
         </div>
         <div class="col-6">
             <label for="artist" class="form-label">Artist</label>
-            <input type="text" class="form-control" id="artist" name="artist" required value="{{ p_artist|default('') }}">
+            <input type="text" class="form-control" id="artist" name="artist" required
+                value="{{ p_artist|default('', true) }}">
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-6 d-flex flex-column h-100">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control h-100" id="description" name="description" rows="5">{{ p_description|default('') }}</textarea>
+            <textarea class="form-control h-100" id="description" name="description"
+                rows="5">{{ p_description|default('', true) }}</textarea>
         </div>
         <div class="col-6 d-flex flex-column justify-content-between h-100">
             <div class="mb-3">
                 <label for="genre" class="form-label">Genre</label>
-                <input type="text" class="form-control" id="genre" name="genre" value="{{ p_genre|default('') }}">
+                <input type="text" class="form-control" id="genre" name="genre" value="{{ p_genre|default('', true) }}">
             </div>
             <label for="stage" class="form-label">Stage</label>
             <select class="form-select" id="stage" name="stage" required>
                 <option value="">Select stage</option>
                 {% for s in p_stages %}
-                <option value="{{ s.nome }}" {% if p_stage == s.nome %}selected{% endif %}>{{ s.nome }}</option>
+                <option value="{{ s.nome }}" {% if p_stage==s.nome %}selected{% endif %}>{{ s.nome }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -79,7 +84,8 @@
         </div>
         <div class="col">
             <label for="playlist_link" class="form-label">Link a playlist</label>
-            <input class="form-control" type="text" id="playlist_link" name="playlist_link" value="{{ p_playlist_link|default('') }}">
+            <input class="form-control" type="text" id="playlist_link" name="playlist_link"
+                value="{{ p_playlist_link|default('', true) }}">
         </div>
     </div>
     <div class="d-flex justify-content-evenly align-items-center mt-4 gap-4">
@@ -110,6 +116,8 @@
         const selectedId = this.value;
         const draft = drafts.find(d => d.id == selectedId);
 
+        document.getElementById('hidden_draft_id').value = selectedId;
+
         if (!draft) {
             document.getElementById('day').value = '';
             document.getElementById('start_hour').value = '';
@@ -130,5 +138,6 @@
         document.getElementById('stage').value = getStageNameById(draft.id_palco);
     });
 </script>
+
 
 {% endblock %}

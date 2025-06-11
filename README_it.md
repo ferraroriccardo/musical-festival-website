@@ -22,7 +22,7 @@ Per registrarsi come membro dello staff, usa la seguente password:
 - `STAFF_PASSWORD_ERROR`: La password staff non è corretta.
 - `EMAIL_ALREADY_REGISTERED_ERROR`: L'email è già registrata.
 - `MISSING_REQUIRED_PARAMETERS`: Parametri richiesti mancanti nella richiesta.
-MISSING_NAME_ERROR
+- `MISSING_NAME_ERROR`: Il campo nome è obbligatorio.
 
 ### <span style="color:#b03a2e">Biglietti</span>
 - `NO_TICKETS_AVAILABLE`: Non ci sono biglietti disponibili per la tipologia selezionata.
@@ -33,7 +33,7 @@ MISSING_NAME_ERROR
 - `ARTIST_ALREADY_PERFORMING`: Ogni artista non può esibirsi due volte nel festival.
 - `EVENT_CREATED_WITH_SUCCESS`: Evento creato con successo.
 - `DATABASE_ERROR`: Si è verificato un errore durante l'elaborazione della richiesta. Riprova più tardi.
-FILE_TYPE_NOT_ALLOWED_ERROR
+- `FILE_TYPE_NOT_ALLOWED_ERROR`: Il tipo di file caricato non è supportato.
 
 ## <span style="color:#884ea0">Test Statici</span>
 
@@ -45,10 +45,11 @@ Nella sezione impostazioni, sotto "Set staff password", puoi impostare una nuova
 
 ## <span style="color:#2471a3">Credenziali Utenti di Prova</span>
 
-| Email                      | Password      | Tipo Utente |
-|----------------------------|--------------|-------------|
-| marco.rossi@gmail.com      | marcopassw   | base        |
-| davide.verdi@gmail.com     | davidepassw  | base        |
-| marghe.montru@gmail.com    | marghepassw  | base        |
-| riccardo.ferraro@gmail.com | riccardopassw| staff       |
-| samu.poli@gmail.com        | samupassw    | staff       |
+| Email                      | Password      | Tipo Utente | ID Biglietto |
+|----------------------------|--------------|-------------|--------------|
+| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
+| davide.verdi@gmail.com     | davidepassw  | base        | -            |
+| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
+| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
+| samu.poli@gmail.com        | samupassw    | staff       | -            |
+| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |

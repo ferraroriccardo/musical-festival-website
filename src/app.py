@@ -95,7 +95,8 @@ def ticket_page():
     ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
     if ticket:
         return render_template("ticket.html", p_ticket = ticket)
-    return render_template("ticket.html", p_ticket_types = ("one_day", "two_days", "three_days"), p_n_days = "")
+    sells = biglietti_dao.get_sells()
+    return render_template("ticket.html", p_ticket_types = ("one_day", "two_days", "three_days"), p_sells = sells)
 
 # route to buy a ticket
 @app.route("/buy_ticket", methods=["POST"])

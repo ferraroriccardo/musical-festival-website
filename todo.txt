@@ -1,34 +1,19 @@
 NUOVE FUNZIONALITÀ:
-1. Sistemare i caroselli nella home
-2. Visualizzazione percentuale vendite biglietti (staff)
-3. Inserimento band: Emathome, Quadri Rotti, LOM, Only Us (con bozze)
-4. Popolamento database biglietti (almeno 1 per tipo)
-5. Inserimento location in home
-6. Aggiunta impostazione "sell out all tickets" (test icone ticket)
-7. Messaggi errore chiari per sovrapposizione eventi
-8. Modalità responsive
-9. Validazione forms
-10. Mettere la location nel profilo
-11. Inserire le bozze
-12. alla consegna, l’applicazione web dovrà contenere almeno 5 utenti registrati (due 
-organizzatori e tre partecipanti), alcune performance inserite (almeno 5 per ogni giorno del 
-festival, una delle quali non pubblicata), e biglietti acquistati con diverse tipologie (ad esempio, 
-almeno una richiesta di acquisto di biglietto giornaliero, una di pass 2 giorni e una di full pass).
-
-DETTAGLI GRAFICI:
-8. Nella create event se non ho parametri non devo vedere "None", ma niente
-8. Cambio foto ticket
-9. NO DIV eccessivi
-10. Utilizzo tag HTML (<b>)
-11. Tradurre tutte le prime descrizioni degli artisti
+1. Aggiunta impostazione "sell out all tickets" (test icone ticket)
+2. Messaggi errore chiari per sovrapposizione eventi
+3. Validazione forms
+4. Sistemare i caroselli nella home
+5. Modalità responsive
+6. Cambio foto ticket
 
 FIX DEL CODICE:
-11. Rimozione commenti inutili
-12. Nomi query esplicativi (es. get artist by name)
-13. Controllo nomi variabili (eliminare nomi generici come "example")
-14. Eliminazione classi CSS inutilizzate
+7. Utilizzo tag HTML (<b>)
+8. NO DIV eccessivi
+9. Rimozione commenti inutili
+10. Nomi query esplicativi (es. get artist by name)
+11. Controllo nomi variabili (eliminare nomi generici come "example")
+12. Eliminazione classi CSS inutilizzate
 
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-15. Aggiornamento e verifica README (requisiti prof)
-16. Uso corretto param.campo vs param["campo"] in Jinja
-17. Blueprint
+13. Uso corretto param.campo vs param["campo"] in Jinja
+14. Blueprint

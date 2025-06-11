@@ -45,10 +45,11 @@ Nella sezione impostazioni, sotto "Set staff password", puoi impostare una nuova
 
 ## <span style="color:#2471a3">Credenziali Utenti di Prova</span>
 
-| Email                      | Password      | Tipo Utente |
-|----------------------------|--------------|-------------|
-| marco.rossi@gmail.com      | marcopassw   | base        |
-| davide.verdi@gmail.com     | davidepassw  | base        |
-| marghe.montru@gmail.com    | marghepassw  | base        |
-| riccardo.ferraro@gmail.com | riccardopassw| staff       |
-| samu.poli@gmail.com        | samupassw    | staff       |
+| Email                      | Password      | Tipo Utente | ID Biglietto |
+|----------------------------|--------------|-------------|--------------|
+| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
+| davide.verdi@gmail.com     | davidepassw  | base        | -            |
+| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
+| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
+| samu.poli@gmail.com        | samupassw    | staff       | -            |
+| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |

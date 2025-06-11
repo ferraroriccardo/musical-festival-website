@@ -67,3 +67,20 @@ def get_ticket_by_user_id(user_id):
     finally:
         cursor.close()
         conn.close()
+
+def get_sells():
+    try:
+        conn = sqlite3.connect(DB_PATH, timeout=10)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        query = "SELECT tipo, COUNT(id) as count FROM BIGLIETTI GROUP BY tipo;"
+        cursor.execute(query)
+        tickets = cursor.fetchall()
+
+        return tickets
+    except Exception as e:
+        return False, "DATABASE_ERROR_GET_SELLS"
+    finally:
+        cursor.close()
+        conn.close()

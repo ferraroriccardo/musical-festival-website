@@ -45,10 +45,11 @@ In the settings section, under "Set staff password", you can set a new password 
 
 ## <span style="color:#2471a3">Test User Credentials</span>
 
-| Email                      | Password      | User Type   |
-|----------------------------|--------------|-------------|
-| marco.rossi@gmail.com      | marcopassw   | base        |
-| davide.verdi@gmail.com     | davidepassw  | base        |
-| marghe.montru@gmail.com    | marghepassw  | base        |
-| riccardo.ferraro@gmail.com | riccardopassw| staff       |
-| samu.poli@gmail.com        | samupassw    | staff       |
+| Email                      | Password      | User Type   | Ticket ID    |
+|----------------------------|--------------|-------------|--------------|
+| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
+| davide.verdi@gmail.com     | davidepassw  | base        | -            |
+| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
+| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
+| samu.poli@gmail.com        | samupassw    | staff       | -            |
+| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |

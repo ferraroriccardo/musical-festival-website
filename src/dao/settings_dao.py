@@ -16,8 +16,10 @@ def get_staff_passw():
         query = "SELECT staff_password FROM SETTINGS;"
         cursor.execute(query)
 
-        user = cursor.fetchone()
-        return user
+        password = cursor.fetchone()
+        if password is None:
+            return False, "DATABASE_ERROR_GET_STAFF_PASSW"
+        return password[0]
     except Exception as e:
         return False, "DATABASE_ERROR_GET_STAFF_PASSW"
     finally:
@@ -42,16 +44,6 @@ def set_staff_passw(plain_text_passw):
         return False, "DATABASE_ERROR_SET_STAFF_PASSW"
     finally:
         cursor.close()
-        conn.close()
-
-def get_connection():
-    try:
-        conn = sqlite3.connect(DB_PATH, timeout=10)
-        conn.row_factory = sqlite3.Row
-        return conn
-    except Exception as e:
-        return False, "DATABASE_ERROR_GET_CONNECTION"
-    finally:
         conn.close()
 
 def time_to_minutes(time_str):

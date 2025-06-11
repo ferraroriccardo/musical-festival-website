@@ -100,7 +100,7 @@ def signup():
         return redirect(url_for("auth.signup_page"))
     
     staff_hash = settings_dao.get_staff_passw()
-    if type == "staff" and not check_password_hash(staff_hash[0], staff_password):
+    if type == "staff" and not check_password_hash(staff_hash, staff_password):
         flash("STAFF_PASSWORD_ERROR")
         return redirect(url_for("auth.signup_page"))
 

@@ -26,11 +26,14 @@ def buy_ticket_for_user(user_id, ticket_type, start_day):
         conn.commit()
         return True, None
     except Exception as e:
-        conn.rollback()
+        if 'conn' in locals():
+            conn.rollback()
         return False, "DATABASE_ERROR_BUY_TICKET_FOR_USER"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 def has_ticket(user_id, conn):
     try:
@@ -65,8 +68,10 @@ def get_ticket_by_user_id(user_id):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_TICKET_BY_USER_ID"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 def get_sells():
     try:
@@ -82,5 +87,7 @@ def get_sells():
     except Exception as e:
         return False, "DATABASE_ERROR_GET_SELLS"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()

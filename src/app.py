@@ -28,7 +28,7 @@ def home():
     shows_three = spettacoli_dao.get_shows_filtered(3, "all", "all", published=1)
     return render_template("home.html", p_shows_one = shows_one, p_shows_two = shows_two, p_shows_three = shows_three)
 
-# route for full program list (base, senza filtri)
+# route for full program list
 @app.route("/program")
 def program():
     page = request.args.get("page", default=1, type=int)

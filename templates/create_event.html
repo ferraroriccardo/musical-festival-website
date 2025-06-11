@@ -1,17 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<div class="alert alert-danger" role="alert">
-    <ul class="mb-0">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
-{% endwith %}
 <!-- return beforeSubmit(event) sostituisce onclick="setPublished(false)" perché la il sumbit
         era troppo veloce, quindi non si faceva in tempo a modificare la variable published  -->
 <form action="/create_event" method="POST" enctype="multipart/form-data" id="eventForm"

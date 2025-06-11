@@ -18,21 +18,6 @@
 
     <title>OVERLOAD</title>
 </head>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const navbar = document.querySelector("nav");
-        const topMarginElems = document.querySelectorAll(".top-margin");
-        if (navbar && topMarginElems.length > 0) {
-            const navbarHeight = navbar.offsetHeight;
-            const extraMargin = 64; // 4rem = 64px
-            const totalMargin = navbarHeight + extraMargin;
-
-            topMarginElems.forEach(elem => {
-                elem.style.marginTop = `${totalMargin}px`;
-            });
-        }
-    });
-</script>
 
 <body class="background-gradient">
     <nav class="container d-flex justify-content-center">

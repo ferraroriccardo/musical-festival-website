@@ -10,7 +10,8 @@
                     alt="Performance Image" class="img-fluid rounded-3 h-100 object-fit-cover w-100">
             </div>
             {% else %}
-            <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4 flex-basis-25 heigth-100">
+            <div
+                class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4 flex-basis-25 height-100">
                 Nessuna immagine
             </div>
             {% endif %}
@@ -25,7 +26,9 @@
                     <li><b>Genre:</b> {{ p_artist.genere }}</li>
                     <li><b>Description:</b> {{ p_artist.descrizione }}</li>
                     {% if p_artist.link_playlist %}
-                    <li><b>Playlist:</b> <a href="{{ p_artist.link_playlist }}">Listen now</a></li>
+                    <li><b>Playlist:</b> <a href="{{ p_artist.link_playlist }}" target="_blank"
+                            rel="noopener noreferrer">Listen now</a>
+                    </li>
                     {% endif %}
                     <li>
                         <div class="d-flex">

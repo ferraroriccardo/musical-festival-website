@@ -5,9 +5,6 @@ NUOVE FUNZIONALITÀ:
 5. Modalità responsive
 6. Cambio foto ticket
 
-FIX DEL CODICE:
-8. NO DIV eccessivi
-
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-13. Uso corretto param.campo vs param["campo"] in Jinja
-14. Blueprint
+7. Uso corretto param.campo vs param["campo"] in Jinja
+8. Blueprint

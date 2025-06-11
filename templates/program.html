@@ -65,24 +65,24 @@
                             </h5>
                             <ul class="list-unstyled mb-0">
                                 {% if current_user.tipo == "Staff" %}
-                                <li><b>ID:</b> {{ perf.id }}</li>
+                                <li><strong>ID:</strong> {{ perf.id }}</li>
                                 {% endif %}
-                                <li><b>Giorno:</b> {{ perf.giorno }}</li>
-                                <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
-                                <li><b>Durata:</b> {{ perf.durata }}</li>
+                                <li><strong>Giorno:</strong> {{ perf.giorno }}</li>
+                                <li><strong>Ora Inizio:</strong> {{ perf.ora_inizio }}</li>
+                                <li><strong>Durata:</strong> {{ perf.durata }}</li>
                                 {% if current_user.tipo == "Staff" %}
                                 <li>
                                     <div class="d-flex w-100">
-                                        <span><b>Creatore:</b> {{ perf.email_creatore }}</span>
-                                        <span class="ms-auto"><b>ID:</b> {{ perf.id_creatore }}</span>
+                                        <span><strong>Creatore:</strong> {{ perf.email_creatore }}</span>
+                                        <span class="ms-auto"><strong>ID:</strong> {{ perf.id_creatore }}</span>
                                     </div>
                                 </li>
                                 {% endif %}
                                 <li>
                                     <div class="d-flex w-100">
-                                        <span><b>Palco:</b> {{ perf.nome_palco }}</span>
+                                        <span><strong>Palco:</strong> {{ perf.nome_palco }}</span>
                                         {% if current_user.tipo == "Staff" %}
-                                        <span class="ms-auto"><b>ID:</b> {{ perf.id_palco }}</span>
+                                        <span class="ms-auto"><strong>ID:</strong> {{ perf.id_palco }}</span>
                                         {% endif %}
 
                                     </div>

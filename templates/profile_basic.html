@@ -21,14 +21,14 @@
             <ul class="list-group list-group-flush mb-3">
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col-md-6"><strong>Ticket Type:</strong> {{ p_ticket["tipo"].replace('_', '
+                        <div class="col-md-6"><b>Ticket Type:</strong> {{ p_ticket["tipo"].replace('_', '
                             ').title() }}</div>
                         {% if p_ticket["giorno_inizio"] %}
-                        <div class="col-md-6"><strong>Start Day:</strong> {{ p_ticket["giorno_inizio"] }}</div>
+                        <div class="col-md-6"><b>Start Day:</strong> {{ p_ticket["giorno_inizio"] }}</div>
                         {% endif %}
                     </div>
                 </li>
-                <li class="list-group-item"><strong>Ticket ID:</strong> {{ p_ticket["id"] }}</li>
+                <li class="list-group-item"><b>Ticket ID:</strong> {{ p_ticket["id"] }}</li>
 
                 <li class="list-group-item">
                     <div class="row">

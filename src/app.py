@@ -3,6 +3,7 @@ from flask import Flask, flash, render_template, redirect, request, url_for, sen
 from flask_login import LoginManager, login_required, current_user
 from login_manager_setup import setup_login_manager
 from werkzeug.utils import secure_filename
+from urllib.parse import unquote
 from PIL import Image
 import time
 
@@ -185,7 +186,7 @@ def create_event():
     day = request.form.get('day')
     start_hour = request.form.get('start_hour')
     duration = request.form.get('duration')
-    artist = request.form.get('artist')
+    artist = unquote(request.form.get('artist'))
     description = request.form.get('description') or None
     playlist_link = request.form.get('playlist_link') or None
     genre = request.form.get('genre') or None
@@ -253,7 +254,6 @@ def create_event():
         resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
         resized_image.save(upload_path)
 
-        img.save(upload_path)
         db_img_path = f"uploads/{new_filename}"
 
     if draft_id:

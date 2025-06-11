@@ -22,7 +22,7 @@ To register as a staff member, use the following password:
 - `STAFF_PASSWORD_ERROR`: The staff password is incorrect.
 - `EMAIL_ALREADY_REGISTERED_ERROR`: The email is already registered.
 - `MISSING_REQUIRED_PARAMETERS`: Required parameters are missing in the request.
-MISSING_NAME_ERROR
+- `MISSING_NAME_ERROR`: The name field is required.
 
 ### <span style="color:#b03a2e">Tickets</span>
 - `NO_TICKETS_AVAILABLE`: No tickets available for the selected type.
@@ -33,7 +33,7 @@ MISSING_NAME_ERROR
 - `ARTIST_ALREADY_PERFORMING`: Each artist can only perform once at the festival.
 - `EVENT_CREATED_WITH_SUCCESS`: Event created successfully.
 - `DATABASE_ERROR`: An error occurred while processing the request. Please try again later.
-FILE_TYPE_NOT_ALLOWED_ERROR
+- `FILE_TYPE_NOT_ALLOWED_ERROR`: The uploaded file type is not supported.
 
 ## <span style="color:#884ea0">Static Tests</span>
 

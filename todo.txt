@@ -1,23 +1,26 @@
 NUOVE FUNZIONALITÀ:
-1. Visualizzazione percentuale vendite biglietti (staff)
-2. Inserimento band: Emathome, Quadri Rotti, LOM, Only Us (con bozze)
-3. Popolamento database biglietti (almeno 1 per tipo)
-4. Inserimento location in home
-5. Aggiunta impostazione "sell out all tickets" (test icone ticket)
+1. Sistemare i caroselli nella home
+2. Visualizzazione percentuale vendite biglietti (staff)
+3. Inserimento band: Emathome, Quadri Rotti, LOM, Only Us (con bozze)
+4. Popolamento database biglietti (almeno 1 per tipo)
+5. Inserimento location in home
+6. Aggiunta impostazione "sell out all tickets" (test icone ticket)
+7. Messaggi errore chiari per sovrapposizione eventi
 
 DETTAGLI GRAFICI:
-6. Cambio foto ticket
-7. NO DIV eccessivi
-8. Utilizzo tag HTML (<b>)
-9. Messaggi errore chiari per sovrapposizione eventi
+8. Nella create event se non ho parametri non devo vedere "None", ma niente
+8. Cambio foto ticket
+9. NO DIV eccessivi
+10. Utilizzo tag HTML (<b>)
+11. Tradurre tutte le prime descrizioni degli artisti
 
 FIX DEL CODICE:
-10. Rimozione commenti inutili
-11. Nomi query esplicativi (es. get artist by name)
-12. Controllo nomi variabili (eliminare nomi generici come "example")
-13. Eliminazione classi CSS inutilizzate
+11. Rimozione commenti inutili
+12. Nomi query esplicativi (es. get artist by name)
+13. Controllo nomi variabili (eliminare nomi generici come "example")
+14. Eliminazione classi CSS inutilizzate
 
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-14. Aggiornamento e verifica README (requisiti prof)
-15. Uso corretto param.campo vs param["campo"] in Jinja
-16. Blueprint
+15. Aggiornamento e verifica README (requisiti prof)
+16. Uso corretto param.campo vs param["campo"] in Jinja
+17. Blueprint

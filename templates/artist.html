@@ -2,47 +2,50 @@
 
 {% block content %}
 <div class="card-body">
-    <div class="card card-performance shadow-sm rounded-4 p-3">
-        <div class="d-flex img-min-height">
+    <main class="container card card-performance shadow-sm rounded-4 p-3">
+        <div class="row img-min-height">
             {% if p_artist.path_immagine %}
-            <div class="flex-shrink-0 me-4 flex-basis-25">
+            <aside class="col-5 flex-shrink-0 me-4 flex-basis-25">
                 <img src="{{ url_for('uploaded_file', filename=p_artist.path_immagine.replace('uploads/', '')) }}"
                     alt="Performance Image" class="img-fluid rounded-3 h-100 object-fit-cover w-100">
-            </div>
+            </aside>
             {% else %}
-            <div class="d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4 flex-basis-25 heigth-100">
+            <aside
+                class="col-5 d-flex align-items-center justify-content-center bg-secondary text-white rounded-3 me-4 flex-basis-25 height-100">
                 Nessuna immagine
-            </div>
+            </aside>
             {% endif %}
 
-            <div class="flex-grow-1">
+            <article class="col-6 flex-grow-1">
                 <h5 class="mb-3">{{ p_artist.artista }}</h5>
                 <ul class="list-unstyled mb-0">
-                    <li><b>ID:</b> {{ p_artist.id }}</li>
-                    <li><b>Day:</b> {{ p_artist.giorno }}</li>
-                    <li><b>Start hour:</b> {{ p_artist.ora_inizio }}</li>
-                    <li><b>Duration:</b> {{ p_artist.durata }}</li>
-                    <li><b>Genre:</b> {{ p_artist.genere }}</li>
-                    <li><b>Description:</b> {{ p_artist.descrizione }}</li>
+                    <li><strong>ID:</strong> {{ p_artist.id }}</li>
+                    <li><strong>Day:</strong> {{ p_artist.giorno }}</li>
+                    <li><strong>Start hour:</strong> {{ p_artist.ora_inizio }}</li>
+                    <li><strong>Duration:</strong> {{ p_artist.durata }}</li>
+                    <li><strong>Genre:</strong> {{ p_artist.genere }}</li>
+                    <li><strong>Description:</strong> {{ p_artist.descrizione }}</li>
                     {% if p_artist.link_playlist %}
-                    <li><b>Playlist:</b> <a href="{{ p_artist.link_playlist }}">Listen now</a></li>
+                    <li><strong>Playlist:</strong> <a href="{{ p_artist.link_playlist }}" target="_blank"
+                            rel="noopener noreferrer">Listen now</a>
+                    </li>
                     {% endif %}
                     <li>
                         <div class="d-flex">
-                            <span><b>Creator:</b> {{ p_artist.email_creatore }}</span>
-                            <span class="ms-auto"><b>ID:</b> {{ p_artist.id_creatore }}</span>
+                            <span><strong>Creator:</strong> {{ p_artist.email_creatore }}</span>
+                            <span class="ms-auto"><strong>ID:</strong> {{ p_artist.id_creatore }}</span>
                         </div>
                     </li>
                     <li>
                         <div class="d-flex">
-                            <span><b>Stage:</b> {{ p_artist.nome_palco }}</span>
-                            <span class="ms-auto"><b>ID:</b> {{ p_artist.id_palco }}</span>
+                            <span><strong>Stage:</strong> {{ p_artist.nome_palco }}</span>
+                            <span class="ms-auto"><strong>ID:</strong> {{ p_artist.id_palco }}</span>
                         </div>
                     </li>
                 </ul>
-            </div>
+            </article>
         </div>
-    </div>
 </div>
+</main>
 
 {% endblock %}

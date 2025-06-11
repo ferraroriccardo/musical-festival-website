@@ -8,7 +8,7 @@ def get_shows():
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
-        query = "SELECT * FROM SPETTACOLI;"
+        query = "SELECT * FROM SPETTACOLI ORDER BY SPETTACOLI.giorno, SPETTACOLI.ora_inizio;"
         cursor.execute(query)
 
         shows = cursor.fetchall()
@@ -40,8 +40,7 @@ def set_params(query, day, stage, genre, published):
     if published:
         query += " AND pubblicato = ?"
         params.append(published)
-        
-    query += ";"
+    
     return query, params
 
 def get_shows_filtered(day, stage, genre, published):
@@ -57,6 +56,7 @@ def get_shows_filtered(day, stage, genre, published):
             JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
         """
         query, params = set_params(query, day, stage, genre, published)
+        query += " ORDER BY SPETTACOLI.giorno, SPETTACOLI.ora_inizio"
 
         cursor.execute(query, params)
         shows = cursor.fetchall()
@@ -112,16 +112,16 @@ def update_draft(draft_id, day, start_hour, duration, artist, description, playl
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
+        stage_id = palchi_dao.get_palco_by_name(stage_name)
+        if stage_id is None:
+            return False, "STAGE_NOT_FOUND"
+        
         if published == 1 :
-            if exist_overlapping_published_shows(day, start_hour, duration, stage_id, conn):
+            if exist_overlapping_published_shows(day, start_hour, duration, stage_id, conn, exclude_id=draft_id):
                 return False, "SHOW_SLOT_ALREADY_OCCUPIED"
             
             if is_already_performing(artist, conn):
                 return False, "ARTIST_ALREADY_PERFORMING"
-
-        stage_id = palchi_dao.get_palco_by_name(stage_name)
-        if stage_id is None:
-            return False, "STAGE_NOT_FOUND"
 
         update_query = """
             UPDATE SPETTACOLI
@@ -148,29 +148,46 @@ def update_draft(draft_id, day, start_hour, duration, artist, description, playl
             conn.close()
 
 
-def exist_overlapping_published_shows(day, hour_slot, duration, stage, conn):
-    cursor = conn.cursor()
+def exist_overlapping_published_shows(day, hour_slot, duration, stage, conn, exclude_id=None):
     try:
-        query = "SELECT * FROM SPETTACOLI WHERE pubblicato = '1' AND giorno = ? AND id_palco = ?;"
-        
-        start = time_to_minutes(hour_slot)
-        end = start + int(duration)
+        cursor = conn.cursor()
+
+        # Converti l'ora in minuti
+        new_start = time_to_minutes(hour_slot)
+        new_end = new_start + int(duration)
+
+        query = """
+            SELECT id, ora_inizio, durata
+            FROM SPETTACOLI
+            WHERE pubblicato = 1
+              AND giorno = ?
+              AND id_palco = ?
+        """
 
         cursor.execute(query, (day, stage))
-        shows = []
+        shows = cursor.fetchall()
+        for s in shows:
+            print(s)
+        for row in shows:
+            if exclude_id is not None and row["id"] == exclude_id:
+                continue
+            existing_start = time_to_minutes(row["ora_inizio"])
+            existing_duration = int(row["durata"])
+            existing_end = existing_start + existing_duration
 
-        for row in cursor.fetchall():
-            other_start = time_to_minutes(row['ora_inizio'])
-            other_end = other_start + row['durata']
-            if start < other_end and other_start < end:
-                shows.append(row)
+            # Condizione di sovrapposizione: intervalli che si intersecano
+            if new_start < existing_end and existing_start < new_end:
+                return True
 
-        return len(shows) > 0
+        return False  # Nessuna sovrapposizione trovata
+
     except Exception as e:
         print("Errore overlapping:", e)
         return False
     finally:
-        cursor.close()
+        if 'cursor' in locals():
+            cursor.close()
+
 
 def is_already_performing(artist, conn):
     cursor = conn.cursor()
@@ -196,7 +213,8 @@ def get_drafts(user_id):
             FROM SPETTACOLI
             JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
             JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
-            WHERE SPETTACOLI.id_creatore = ? AND SPETTACOLI.pubblicato = ?;
+            WHERE SPETTACOLI.id_creatore = ? AND SPETTACOLI.pubblicato = ?
+            ORDER BY SPETTACOLI.giorno, SPETTACOLI.ora_inizio;
         """
         cursor.execute(query, (user_id, 0))
 
@@ -204,7 +222,6 @@ def get_drafts(user_id):
         return shows
     
     except Exception as e:
-        conn.rollback()
         return False, "DATABASE_ERROR_GET_DRAFTS"
     finally:
         cursor.close()
@@ -221,7 +238,8 @@ def get_published():
             FROM SPETTACOLI
             JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
             JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
-            WHERE SPETTACOLI.pubblicato = ?;
+            WHERE SPETTACOLI.pubblicato = ?
+            ORDER BY SPETTACOLI.giorno, SPETTACOLI.ora_inizio;
         """        
         cursor.execute(query, (1, ))
 
@@ -244,10 +262,10 @@ def get_artist_by_name(artist_name):
             FROM SPETTACOLI
             JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
             JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
-            AND SPETTACOLI.artista = ?
-            WHERE SPETTACOLI.pubblicato = ?;
+            WHERE SPETTACOLI.pubblicato = ?
+            AND SPETTACOLI.artista = ?;
         """      
-        cursor.execute(query, (artist_name, 1))
+        cursor.execute(query, (1, artist_name))
 
         artist = cursor.fetchone()
         return artist

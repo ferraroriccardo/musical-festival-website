@@ -7,7 +7,7 @@
 </div>
 
 <!-- Container Published -->
-<div id="publishedContainer" class="card-body">
+<main id="publishedContainer" class="card-body">
     <div class="row">
         {% for perf in p_published %}
         <div class="col-12 col-md-6 mb-4">
@@ -31,22 +31,22 @@
                             </a>
                         </h5>
                         <ul class="list-unstyled mb-0">
-                            <li><b>ID:</b> {{ perf.id }}</li>
-                            <li><b>Giorno:</b> {{ perf.giorno }}</li>
-                            <li><b>Ora Inizio:</b> {{ perf.ora_inizio }}</li>
-                            <li><b>Durata:</b> {{ perf.durata }}</li>
-                            <li><b>Genere Musicale:</b> {{ perf.genere }}</li>
-                            <li><b>Descrizione:</b> {{ perf.descrizione }}</li>
+                            <li><strong>ID:</strong> {{ perf.id }}</li>
+                            <li><strong>Giorno:</strong> {{ perf.giorno }}</li>
+                            <li><strong>Ora Inizio:</strong> {{ perf.ora_inizio }}</li>
+                            <li><strong>Durata:</strong> {{ perf.durata }}</li>
+                            <li><strong>Genere Musicale:</strong> {{ perf.genere }}</li>
+                            <li><strong>Descrizione:</strong> {{ perf.descrizione }}</li>
                             <li>
                                 <div class="d-flex w-100">
-                                    <span><b>Creatore:</b> {{ perf.email_creatore }}</span>
-                                    <span class="ms-auto"><b>ID:</b> {{ perf.id_creatore }}</span>
+                                    <span><strong>Creatore:</strong> {{ perf.email_creatore }}</span>
+                                    <span class="ms-auto"><strong>ID:</strong> {{ perf.id_creatore }}</span>
                                 </div>
                             </li>
                             <li>
                                 <div class="d-flex w-100">
-                                    <span><b>Palco:</b> {{ perf.nome_palco }}</span>
-                                    <span class="ms-auto"><b>ID:</b> {{ perf.id_palco }}</span>
+                                    <span><strong>Palco:</strong> {{ perf.nome_palco }}</span>
+                                    <span class="ms-auto"><strong>ID:</strong> {{ perf.id_palco }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -67,13 +67,13 @@
         </ul>
     </nav>
     {% endif %}
-</div>
+</main>
 
 <!-- Container Drafts -->
-<div id="draftsContainer">
+<main id="draftsContainer">
     <div class="row">
         {% for perf in p_drafts %}
-        <div class="col-12 col-md-6 mb-4">
+        <section class="col-12 col-md-6 mb-4">
             <div class="card shadow-sm rounded-3 p-3 h-100">
                 <div class="d-flex gap-3">
                     {% if perf.path_immagine %}
@@ -94,20 +94,20 @@
                             </a>
                         </h5>
                         <ul class="list-unstyled mb-0">
-                            <li><b>ID</b>:</b> {{ perf.id }}</li>
-                            <li><b>Day:</b> {{ perf.giorno }}</li>
-                            <li><b>Start Hour:</b> {{ perf.ora_inizio }}</li>
-                            <li><b>Duration:</b> {{ perf.durata }}</li>
-                            <li><b>Genre:</b> {{ perf.genere }}</li>
-                            <li><b>Description:</b> {{ perf.descrizione }}</li>
-                            <li><b>Playlist link:</b> {{ perf.link_playlist }}</li>
+                            <li><strong>ID</strong>:</strong> {{ perf.id }}</li>
+                            <li><strong>Day:</strong> {{ perf.giorno }}</li>
+                            <li><strong>Start Hour:</strong> {{ perf.ora_inizio }}</li>
+                            <li><strong>Duration:</strong> {{ perf.durata }}</li>
+                            <li><strong>Genre:</strong> {{ perf.genere }}</li>
+                            <li><strong>Description:</strong> {{ perf.descrizione }}</li>
+                            <li><strong>Playlist link:</strong> {{ perf.link_playlist }}</li>
                             <li class="d-flex justify-content-between">
                                 <div>
-                                    <span><b>Stage:</b></span>
+                                    <span><strong>Stage:</strong></span>
                                     <span>{{ perf.nome_palco }}</span>
                                 </div>
                                 <div>
-                                    <span><b>ID:</b></span>
+                                    <span><strong>ID:</strong></span>
                                     <span>{{ perf.id_palco }}</span>
                                 </div>
                             </li>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         {% endfor %}
     </div>
     {% if total_drafts_pages > 1 %}
@@ -130,13 +130,13 @@
         </ul>
     </nav>
     {% endif %}
-</div>
+</main>
 
 <!-- Nessuna performance -->
 {% if not p_published and not p_drafts %}
-<div class="text-center">
+<main class="text-center">
     <p>No performances to show.</p>
-</div>
+</main>
 {% endif %}
 
 <!-- JS toggle senza refresh -->

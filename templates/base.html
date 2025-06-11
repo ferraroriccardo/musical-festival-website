@@ -18,21 +18,6 @@
 
     <title>OVERLOAD</title>
 </head>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const navbar = document.querySelector("nav");
-        const topMarginElems = document.querySelectorAll(".top-margin");
-        if (navbar && topMarginElems.length > 0) {
-            const navbarHeight = navbar.offsetHeight;
-            const extraMargin = 64; // 4rem = 64px
-            const totalMargin = navbarHeight + extraMargin;
-
-            topMarginElems.forEach(elem => {
-                elem.style.marginTop = `${totalMargin}px`;
-            });
-        }
-    });
-</script>
 
 <body class="background-gradient">
     <nav class="container d-flex justify-content-center">
@@ -72,7 +57,7 @@
             </div>
         </div>
     </nav>
-    {% if current_file != "login.html" %}
+    {% if current_file not in ["login.html", "signup.html"] %}
     <div class="container-fluid min-vh-100 mb-5">
         <div class="row d-flex justify-content-center align-items-center">
             <main class="col-10 shadow rounded-4 p-3 transparent-white-bg p-5">

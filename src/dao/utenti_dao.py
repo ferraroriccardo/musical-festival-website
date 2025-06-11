@@ -13,6 +13,8 @@ def get_user_by_id(user_id):
         cursor.execute(query, (user_id, ))
 
         user = cursor.fetchone()
+        if user is None:
+            return None
         return dict(user)
     except Exception as e:
         return False, "DATABASE_ERROR_GET_USER_BY_ID"
@@ -30,21 +32,23 @@ def get_user_by_email(email):
         cursor.execute(query, (email, ))
 
         user = cursor.fetchone()
-        return user
+        if user is None:
+            return None
+        return dict(user)
     except Exception as e:
-        return None
+        return False, "DATABASE_ERROR_GET_USER_BY_EMAIL"
     finally:
         cursor.close()
         conn.close()
 
-def create_user(name, email, password, type):
+def create_user(name, email, password, user_type):
     try:
         conn = sqlite3.connect(DB_PAT, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
         query = "INSERT INTO UTENTI (nome, email, password, tipo) VALUES (?, ?, ?, ?);"
-        cursor.execute(query, (name, email, password, type))
+        cursor.execute(query, (name, email, password, user_type))
         conn.commit()
 
         query = "SELECT * FROM UTENTI WHERE email = ?;"

@@ -69,7 +69,7 @@ def logout():
 @auth_bp.route("/sign-up-form", methods=['GET'])
 def signup_page():
     next_page = request.args.get("next") or request.args.get("next_page")
-    return render_template("signup.html", p_type=("Basic", "Staff"), next=next_page)
+    return render_template("signup.html", p_type=("Basic", "Staff"), next=next_page, current_file="login.html")
 
 # route to handle sign up data
 @auth_bp.route("/signup", methods=['POST'])
@@ -100,7 +100,7 @@ def signup():
         return redirect(url_for("auth.signup_page"))
     
     staff_hash = settings_dao.get_staff_passw()
-    if type == "staff" and not check_password_hash(staff_hash[0], staff_password):
+    if type == "staff" and not check_password_hash(staff_hash, staff_password):
         flash("STAFF_PASSWORD_ERROR")
         return redirect(url_for("auth.signup_page"))
 

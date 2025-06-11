@@ -96,10 +96,12 @@
                         <div class="carousel-inner">
                             {% for show in p_shows_one %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
-                                    class="d-block w-100 rounded" alt="{{ show['artist'] }}">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ show['artista'] }}</h5>
+                                <div class="carousel-img-gradient-wrapper">
+                                    <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
+                                        class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 class="artist-caption-text">{{ show['artista'] }}</h5>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -134,10 +136,12 @@
                         <div class="carousel-inner">
                             {% for show in p_shows_two %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
-                                    class="d-block w-100 rounded" alt="{{ show['artist'] }}">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ show['artista'] }}</h5>
+                                <div class="carousel-img-gradient-wrapper">
+                                    <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
+                                        class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 class="artist-caption-text">{{ show['artista'] }}</h5>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -184,10 +188,12 @@
                         <div class="carousel-inner">
                             {% for show in p_shows_three %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
-                                    class="d-block w-100 rounded" alt="{{ show['artist'] }}">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ show['artista'] }}</h5>
+                                <div class="carousel-img-gradient-wrapper">
+                                    <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
+                                        class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 class="artist-caption-text">{{ show['artista'] }}</h5>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}

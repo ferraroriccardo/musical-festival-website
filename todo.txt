@@ -1,7 +1,8 @@
 NUOVE FUNZIONALITÀ:
 1. Sistemare i caroselli nella home
-2. Modalità responsive
+2. Togliere i commenti
 
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-4. Uso corretto param.campo vs param["campo"] in Jinja
-5. Blueprint
+3. Uso corretto param.campo vs param["campo"] in Jinja
+4. Blueprint
+5. Eliminare .git dalla cartella del prof

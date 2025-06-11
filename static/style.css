@@ -256,12 +256,47 @@ footer div {
     color: #fff;
 }
 
-/* Stili per l'effetto "staccato" del carousel */
 .carousel {
-    /* Aggiunge un'ombra per dare profondità */
     box-shadow: 0 8px 16px rgba(255, 255, 255, 0.673), 0 12px 40px rgba(255, 255, 255, 0.673);
-    /* Arrotonda gli angoli del carousel */
     border-radius: 0.7rem;
-    /* Assicura che il contenuto interno rispetti gli angoli arrotondati */
     overflow: hidden;
+}
+
+.carousel-img-gradient-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.carousel-img-gradient-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: inherit;
+}
+.carousel-img-gradient-wrapper::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 100%);
+    z-index: 1;
+}
+.carousel-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding-bottom: 2.5rem;
+}
+.artist-caption-text {
+    color: #fff;
+    text-shadow: 2px 2px 8px #000, 0 0 4px #222;
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
 }

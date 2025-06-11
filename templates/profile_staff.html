@@ -7,7 +7,7 @@
 </div>
 
 <!-- Container Published -->
-<div id="publishedContainer" class="card-body">
+<main id="publishedContainer" class="card-body">
     <div class="row">
         {% for perf in p_published %}
         <div class="col-12 col-md-6 mb-4">
@@ -67,13 +67,13 @@
         </ul>
     </nav>
     {% endif %}
-</div>
+</main>
 
 <!-- Container Drafts -->
-<div id="draftsContainer">
+<main id="draftsContainer">
     <div class="row">
         {% for perf in p_drafts %}
-        <div class="col-12 col-md-6 mb-4">
+        <section class="col-12 col-md-6 mb-4">
             <div class="card shadow-sm rounded-3 p-3 h-100">
                 <div class="d-flex gap-3">
                     {% if perf.path_immagine %}
@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         {% endfor %}
     </div>
     {% if total_drafts_pages > 1 %}
@@ -130,13 +130,13 @@
         </ul>
     </nav>
     {% endif %}
-</div>
+</main>
 
 <!-- Nessuna performance -->
 {% if not p_published and not p_drafts %}
-<div class="text-center">
+<main class="text-center">
     <p>No performances to show.</p>
-</div>
+</main>
 {% endif %}
 
 <!-- JS toggle senza refresh -->

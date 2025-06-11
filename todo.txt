@@ -6,7 +6,6 @@ NUOVE FUNZIONALITÀ:
 6. Cambio foto ticket
 
 FIX DEL CODICE:
-7. Utilizzo tag HTML (<b>)
 8. NO DIV eccessivi
 
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:

@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="card shadow rounded-4 p-2 transparent-white-bg mb-5">
-    <section class="container my-4">
+    <div class="container my-4">
         <form method="get" action="{{ url_for('program') }}" class="row g-2 align-items-end">
             <div class="col-md-3">
                 <label for="day" class="form-label">Day</label>
@@ -37,13 +37,13 @@
                 <button type="submit" class="btn btn-primary btn-custom-gradient w-100">Filter</button>
             </div>
         </form>
-    </section>
+    </div>
 </section>
 <div class="card-body">
     <div id="publishedContainer">
         <div class="row">
             {% for perf in p_shows %}
-            <div class="col-12 col-md-6 mb-4">
+            <section class="col-12 col-md-6 mb-4">
                 <div class="card card-performance shadow-sm rounded-3 p-3 h-100">
                     <div class="d-flex gap-3">
                         {% if perf.path_immagine %}
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             {% endfor %}
         </div>
         <nav class="d-flex justify-content-center mt-4">

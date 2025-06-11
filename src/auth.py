@@ -69,7 +69,7 @@ def logout():
 @auth_bp.route("/sign-up-form", methods=['GET'])
 def signup_page():
     next_page = request.args.get("next") or request.args.get("next_page")
-    return render_template("signup.html", p_type=("Basic", "Staff"), next=next_page)
+    return render_template("signup.html", p_type=("Basic", "Staff"), next=next_page, current_file="login.html")
 
 # route to handle sign up data
 @auth_bp.route("/signup", methods=['POST'])

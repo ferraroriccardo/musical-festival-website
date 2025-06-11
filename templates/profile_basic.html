@@ -4,36 +4,36 @@
 <div class="card-body row">
 
     {% if p_ticket %}
-    <div class="col-md-4 d-flex align-items-stretch">
+    <aside class="col-md-4 d-flex align-items-stretch">
         <div class="w-100 d-flex align-items-center justify-content-center">
             <img src="{{ url_for('static', filename='ticket_' + p_ticket['tipo'] + '.jpg') }}" alt="Ticket Banner"
                 class="img-fluid h-100 w-auto rounded-4 shadow object-fit-cover">
         </div>
-    </div>
+    </aside>
 
     <div class="col-md-8">
-        <div class="p-4 border rounded-4 bg-light-subtle shadow-sm">
+        <article class="p-4 border rounded-4 bg-light-subtle shadow-sm">
             <h1 class="mb-4 green-text fw-bold text-center">🎫 Ticket Confirmed!</h1>
-            <p class="mb-3 fs-5 text-center">Hi <b>{{ current_user.nome }}</b>, you're all set
+            <p class="mb-3 fs-5 text-center">Hi <strong>{{ current_user.nome }}</strong>, you're all set
                 for the
                 soundwave! <br>Your pass is ready - just show it at the gate.</p>
 
             <ul class="list-group list-group-flush mb-3">
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col-md-6"><b>Ticket Type:</strong> {{ p_ticket["tipo"].replace('_', '
+                        <div class="col-md-6"><strong>Ticket Type:</strong> {{ p_ticket["tipo"].replace('_', '
                             ').title() }}</div>
                         {% if p_ticket["giorno_inizio"] %}
-                        <div class="col-md-6"><b>Start Day:</strong> {{ p_ticket["giorno_inizio"] }}</div>
+                        <div class="col-md-6"><strong>Start Day:</strong> {{ p_ticket["giorno_inizio"] }}</div>
                         {% endif %}
                     </div>
                 </li>
-                <li class="list-group-item"><b>Ticket ID:</strong> {{ p_ticket["id"] }}</li>
+                <li class="list-group-item"><strong>Ticket ID:</strong> {{ p_ticket["id"] }}</li>
 
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-6">
-                            <p><b>Location:</b> Parco Dora</p>
+                            <p><strong>Location:</strong> Parco Dora</p>
                         </div>
                         <div class="col-6">
                             <a href="https://maps.app.goo.gl/6GwcTJkoQybNuRxQ7">see on Google maps</a>
@@ -45,14 +45,14 @@
             <div class="text-center mt-3">
                 <span class="badge bg-success fs-6">Valid</span>
             </div>
-        </div>
+        </article>
     </div>
 
     {% else %}
 
     <div class="col-md-12 text-center">
         <h1 class="mb-4 red-text fw-bold">🔥 No Ticket Yet?</h1>
-        <p class="mb-4 fs-5">Hi <b>{{ current_user.nome }}</b>, you're just one step away from
+        <p class="mb-4 fs-5">Hi <strong>{{ current_user.nome }}</strong>, you're just one step away from
             joining the soundwave. <br>Pick your pass and turn up the volume!</p>
         <a href="{{ url_for('ticket_page') }}"
             class="btn btn-lg rounded-pill fw-bold btn-custom-gradient border-gradient" type="submit">

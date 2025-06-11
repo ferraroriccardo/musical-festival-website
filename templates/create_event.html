@@ -24,8 +24,8 @@
   {% endif %}
 {% endwith %}
 
-<!-- return beforeSubmit(event) sostituisce onclick="setPublished(false)" perché la il sumbit
-        era troppo veloce, quindi non si faceva in tempo a modificare la variable published  -->
+<!-- 'return beforeSubmit(event)' replaces onclick="setPublished(false)" because the submit
+     was too fast, so there was no time to modify the 'published' variable  -->
 <form action="/create_event" method="POST" enctype="multipart/form-data" id="eventForm"
     onsubmit="return beforeSubmit(event)">
     <h1 class="mb-4 text-center">CREATE EVENT</h1>
@@ -95,7 +95,7 @@
             <input class="form-control" type="file" id="image" name="image" accept="image/*">
         </div>
         <div class="col">
-            <label for="playlist_link" class="form-label">Link a playlist</label>
+            <label for="playlist_link" class="form-label">Playlist link</label>
             <input class="form-control" type="text" id="playlist_link" name="playlist_link"
                 value="{{ p_playlist_link|default('', true) }}">
         </div>
@@ -108,7 +108,7 @@
             event</button>
     </div>
 </form>
-<!-- Parse jinja's drafts and stages parameters into json to enable JS autocompletion -->
+<!-- Parse Jinja's drafts and stages parameters into JSON to enable JS autocompletion -->
 <script id="drafts-data" type="application/json">
     {{ p_drafts|tojson }}
 </script>
@@ -124,6 +124,7 @@
         return stage ? stage.nome : '';
     }
 
+    // When a draft is selected, fill the form fields with the draft's data
     document.getElementById('draft_selector')?.addEventListener('change', function () {
         const selectedId = this.value;
         const draft = drafts.find(d => d.id == selectedId);

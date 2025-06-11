@@ -147,7 +147,6 @@ article:not([class]) {
 }
 
 .btn-custom-yellow {
-    /* transizione di colore graduale */
     transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -250,7 +249,6 @@ article:not([class]) {
 .view-toggle span {
     cursor: pointer;
     color: #963939;
-    /* navbar color */
     padding: 0.3rem 1rem;
     border-radius: 2rem;
     transition: background 0.3s, color 0.3s;
@@ -258,7 +256,6 @@ article:not([class]) {
 
 .view-toggle .active-toggle {
     background: #b03a2e;
-    /* navbar active color */
     color: #fff;
 }
 

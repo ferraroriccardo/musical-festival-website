@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 
     <title>OVERLOAD</title>
 </head>
@@ -68,9 +69,9 @@
         </div>
     </div>
     {% else %}
-        {% block login %}
+    {% block login %}
 
-        {% endblock %}
+    {% endblock %}
     {% endif %}
     <footer class="container-fluid">
         <div class="row align-items-center footer-div-height">

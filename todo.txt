@@ -1,10 +1,4 @@
-NUOVE FUNZIONALITÀ:
-1. Aggiunta impostazione "sell out all tickets" (test icone ticket)
-2. Messaggi errore chiari per sovrapposizione eventi
-4. Sistemare i caroselli nella home
-5. Modalità responsive
-6. Cambio foto ticket
-
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-7. Uso corretto param.campo vs param["campo"] in Jinja
-8. Blueprint
+3. Uso corretto param.campo vs param["campo"] in Jinja
+4. Blueprint
+5. Eliminare .git dalla cartella del prof

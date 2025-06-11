@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 
     <title>OVERLOAD</title>
 </head>
@@ -24,7 +25,7 @@
         const topMarginElems = document.querySelectorAll(".top-margin");
         if (navbar && topMarginElems.length > 0) {
             const navbarHeight = navbar.offsetHeight;
-            const extraMargin = 64; // 4rem = 64px
+            const extraMargin = 64;
             const totalMargin = navbarHeight + extraMargin;
 
             topMarginElems.forEach(elem => {
@@ -75,7 +76,7 @@
     </nav>
     <article>
         <img src="{{ url_for('static', filename='home-overload-background1b.jpg') }}" alt="" class="full-width-bg">
-        <!-- href con # per portare all'article con id corrispondente  -->
+        <!-- href with # to scroll to the article with the corresponding id  -->
         <a href="#discover-section"
             class="btn btn-custom-centered px-4 py-2 btn-custom-gradient border-gradient shadow btn-lg rounded-pill fw-bold">DISCOVER
             US</a>
@@ -96,10 +97,12 @@
                         <div class="carousel-inner">
                             {% for show in p_shows_one %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
-                                    class="d-block w-100 rounded" alt="{{ show['artist'] }}">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ show['artista'] }}</h5>
+                                <div class="carousel-img-gradient-wrapper">
+                                    <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
+                                        class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 class="artist-caption-text">{{ show['artista'] }}</h5>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -134,10 +137,12 @@
                         <div class="carousel-inner">
                             {% for show in p_shows_two %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
-                                    class="d-block w-100 rounded" alt="{{ show['artist'] }}">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ show['artista'] }}</h5>
+                                <div class="carousel-img-gradient-wrapper">
+                                    <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
+                                        class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 class="artist-caption-text">{{ show['artista'] }}</h5>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}
@@ -184,10 +189,12 @@
                         <div class="carousel-inner">
                             {% for show in p_shows_three %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
-                                    class="d-block w-100 rounded" alt="{{ show['artist'] }}">
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ show['artista'] }}</h5>
+                                <div class="carousel-img-gradient-wrapper">
+                                    <img src="{{ url_for('uploaded_file', filename=show['path_immagine'].split('/')[-1]) }}"
+                                        class="d-block w-100 rounded" alt="{{ show['artist'] }}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5 class="artist-caption-text">{{ show['artista'] }}</h5>
+                                    </div>
                                 </div>
                             </div>
                             {% endfor %}

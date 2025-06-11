@@ -7,7 +7,7 @@
 }
 
 .vh-110 {
-  height: 110vh;
+    height: 110vh;
 }
 
 .red-text {
@@ -110,10 +110,16 @@ footer div {
     min-height: 100vh;
 }
 
+
+article:not([class]) {
+    position: relative;
+}
+
 .btn-custom-centered {
     position: absolute;
     top: 84%;
-    left: 44%;
+    left: 50%;
+    transform: translateX(-50%);
     color: #fff;
     border-radius: 50rem;
     font-size: 1.5rem;
@@ -141,7 +147,6 @@ footer div {
 }
 
 .btn-custom-yellow {
-    /* transizione di colore graduale */
     transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -223,7 +228,7 @@ footer div {
     flex-basis: 25;
 }
 
-.height-100{
+.height-100 {
     height: 100%;
 }
 
@@ -244,7 +249,6 @@ footer div {
 .view-toggle span {
     cursor: pointer;
     color: #963939;
-    /* navbar color */
     padding: 0.3rem 1rem;
     border-radius: 2rem;
     transition: background 0.3s, color 0.3s;
@@ -252,6 +256,75 @@ footer div {
 
 .view-toggle .active-toggle {
     background: #b03a2e;
-    /* navbar active color */
     color: #fff;
+}
+
+.carousel {
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.673), 0 12px 40px rgba(255, 255, 255, 0.673);
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+
+.carousel-img-gradient-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.carousel-img-gradient-wrapper img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: inherit;
+}
+.carousel-img-gradient-wrapper::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 100%);
+    z-index: 1;
+}
+.carousel-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding-bottom: 2.5rem;
+}
+.artist-caption-text {
+    color: #fff;
+    text-shadow: 2px 2px 8px #000, 0 0 4px #222;
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .btn-custom-centered {
+        font-size: 1.1rem;
+        min-width: 160px;
+        min-height: 45px;
+        left: 50%;
+        transform: translateX(-50%);
+
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-custom-centered {
+        font-size: 0.9rem;
+        min-width: 0;
+        width: auto;
+        padding-left: 0.8rem !important;
+        padding-right: 0.8rem !important;
+        padding-top: 0.4rem !important;
+        padding-bottom: 0.4rem !important;
+        min-height: 35px;
+
+    }
 }

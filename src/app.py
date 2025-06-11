@@ -92,11 +92,10 @@ def profile():
 @app.route("/ticket-form")
 @login_required
 def ticket_page():
-    # users can buy only one ticket, if they already got it, the form disappears and their ticket will be shown 
     ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
-    if ticket:
-        return render_template("ticket.html", p_ticket = ticket)
     sells = biglietti_dao.get_sells()
+    if ticket:
+        return render_template("ticket.html", p_ticket = ticket, p_sells=sells)
     return render_template("ticket.html", p_ticket_types = ("one_day", "two_days", "three_days"), p_sells = sells)
 
 # route to buy a ticket
@@ -229,7 +228,7 @@ def create_event():
             p_duration=duration,
             p_artist=artist,
             p_description=description,
-            p_playlist_link=playlist_link,
+            p_playlist_link=playlist_link or None,
             p_genre=genre,
             p_stage=stage_name     # valore preselezionato nel dropdown stage
         )
@@ -257,7 +256,6 @@ def create_event():
         resized_image.save(upload_path)
 
         db_img_path = f"uploads/{new_filename}"
-
     if draft_id:
         success, error = spettacoli_dao.update_draft(
             draft_id, day, start_hour, duration, artist, description, playlist_link, db_img_path,

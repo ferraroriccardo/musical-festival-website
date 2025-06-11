@@ -104,9 +104,10 @@ def create_event(day, start_hour, duration, artist, description, playlist_link, 
             cursor.close()
         if 'conn' in locals():
             conn.close()
-
+            
 def update_draft(draft_id, day, start_hour, duration, artist, description, playlist_link, img_path,
             genre, published, creator_id, stage_name):
+    print("ENTROOOOOO")
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row

@@ -7,7 +7,7 @@
 }
 
 .vh-110 {
-  height: 110vh;
+    height: 110vh;
 }
 
 .red-text {
@@ -110,10 +110,16 @@ footer div {
     min-height: 100vh;
 }
 
+
+article:not([class]) {
+    position: relative;
+}
+
 .btn-custom-centered {
     position: absolute;
     top: 84%;
-    left: 44%;
+    left: 50%;
+    transform: translateX(-50%);
     color: #fff;
     border-radius: 50rem;
     font-size: 1.5rem;
@@ -223,7 +229,7 @@ footer div {
     flex-basis: 25;
 }
 
-.height-100{
+.height-100 {
     height: 100%;
 }
 
@@ -299,4 +305,29 @@ footer div {
     font-weight: bold;
     font-size: 1.5rem;
     letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .btn-custom-centered {
+        font-size: 1.1rem;
+        min-width: 160px;
+        min-height: 45px;
+        left: 50%;
+        transform: translateX(-50%);
+
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-custom-centered {
+        font-size: 0.9rem;
+        min-width: 0;
+        width: auto;
+        padding-left: 0.8rem !important;
+        padding-right: 0.8rem !important;
+        padding-top: 0.4rem !important;
+        padding-bottom: 0.4rem !important;
+        min-height: 35px;
+
+    }
 }

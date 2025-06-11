@@ -147,7 +147,6 @@ article:not([class]) {
 }
 
 .btn-custom-yellow {
-    /* transizione di colore graduale */
     transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -258,17 +257,13 @@ article:not([class]) {
 
 .view-toggle .active-toggle {
     background: #b03a2e;
-    /* navbar active color */
     color: #fff;
 }
 
-/* Stili per l'effetto "staccato" del carousel */
+
 .carousel {
-    /* Aggiunge un'ombra per dare profondità */
     box-shadow: 0 8px 16px rgba(255, 255, 255, 0.673), 0 12px 40px rgba(255, 255, 255, 0.673);
-    /* Arrotonda gli angoli del carousel */
     border-radius: 0.7rem;
-    /* Assicura che il contenuto interno rispetti gli angoli arrotondati */
     overflow: hidden;
 }
 

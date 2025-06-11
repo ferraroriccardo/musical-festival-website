@@ -6,3 +6,6 @@ NUOVE FUNZIONALITÀ:
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
 4. Uso corretto param.campo vs param["campo"] in Jinja
 5. Blueprint
+
+
+6. eliminare .git prima di inviare i file

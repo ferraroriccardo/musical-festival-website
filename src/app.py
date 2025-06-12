@@ -1,6 +1,6 @@
 import os
 from flask import Flask, flash, render_template, redirect, request, url_for, send_from_directory
-from flask_login import LoginManager, login_required, current_user
+from flask_login import login_required, current_user
 from login_manager_setup import setup_login_manager
 from werkzeug.utils import secure_filename
 from urllib.parse import unquote

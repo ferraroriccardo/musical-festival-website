@@ -10,6 +10,17 @@ To register as a staff member, use the following password:
 
 `FESTIVAL`
 
+## <span style="color:#2471a3">Test User Credentials</span>
+
+| Email                      | Password      | User Type   | Ticket ID    |
+|----------------------------|--------------|-------------|--------------|
+| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
+| davide.verdi@gmail.com     | davidepassw  | base        | -            |
+| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
+| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
+| samu.poli@gmail.com        | samupassw    | staff       | -            |
+| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |
+
 ## <span style="color:#b03a2e">Error Messages</span>
 ### <span style="color:#b03a2e">Login</span>
 - `EMAIL_NOT_FOUND_ERROR`: The entered email does not exist.
@@ -35,21 +46,3 @@ To register as a staff member, use the following password:
 - `DATABASE_ERROR`: An error occurred while processing the request. Please try again later.
 - `FILE_TYPE_NOT_ALLOWED_ERROR`: The uploaded file type is not supported.
 
-## <span style="color:#884ea0">Static Tests</span>
-
-### <span style="color:#884ea0">Sold Out Tickets</span>
-In the settings section, under "Sell Out Tickets", you can sell out all remaining tickets to see how the ticket cards page changes (gray card with "SOLD OUT" message).
-
-### <span style="color:#884ea0">Set Staff Password</span>
-In the settings section, under "Set staff password", you can set a new password that must be entered to register as a new staff account.
-
-## <span style="color:#2471a3">Test User Credentials</span>
-
-| Email                      | Password      | User Type   | Ticket ID    |
-|----------------------------|--------------|-------------|--------------|
-| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
-| davide.verdi@gmail.com     | davidepassw  | base        | -            |
-| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
-| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
-| samu.poli@gmail.com        | samupassw    | staff       | -            |
-| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |

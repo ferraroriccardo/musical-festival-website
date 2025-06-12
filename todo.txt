@@ -2,3 +2,4 @@ COSE DA RIVEDERE / STUDIARE PER L'ESAME:
 3. Uso corretto param.campo vs param["campo"] in Jinja
 4. Blueprint
 5. Eliminare .git dalla cartella del prof
+6. Controllare il readme, riempire il db con i biglietti giusti e segnarli nel readme

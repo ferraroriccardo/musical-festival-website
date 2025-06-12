@@ -252,7 +252,13 @@ def create_event():
         new_height = int(POST_IMG_WIDTH * aspect_ratio)
 
         resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
-        resized_image.save(upload_path)
+        # Save with higher quality for JPEG, and default for others
+        ext = original_filename.rsplit('.', 1)[1].lower()
+        if ext in ["jpg", "jpeg"]:
+            resized_image = resized_image.convert("RGB")
+            resized_image.save(upload_path, quality=95, optimize=True)
+        else:
+            resized_image.save(upload_path)
 
         db_img_path = f"uploads/{new_filename}"
     if draft_id:

@@ -84,14 +84,15 @@
             US</a>
     </article>
 
-    <article id="discover-section" class="banner-black d-flex align-items-center banner-height">
+    <article id="discover-section" class="background-black-gradient mx-auto d-flex align-items-center banner-height">
         <div class="container h-100">
             <div class="row h-100 d-flex align-items-center">
                 <main class="col-6 d-flex flex-column justify-content-center align-items-center h-100">
-                    <h2 class="text-white">OVERLOAD DAY 1</h2>
-                    <p class="text-white mb-4">alternative rock</p>
-                    <a href="{{ url_for('program', day=1) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL
-                        PROGRAM</a>
+                    <div class="decorated-main-box background-gradient p-5 text-center position-relative">
+                        <h2 class="text-black mb-4">OVERLOAD DAY 1</h2>
+                        <a href="{{ url_for('program', day=1) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL
+                            PROGRAM</a>
+                    </div>
                 </main>
                 <aside class="col-6 d-flex align-items-center justify-content-center">
                     {% if p_shows_one %}
@@ -130,7 +131,7 @@
         </div>
     </article>
 
-    <article class="banner-gradient d-flex align-items-center banner-height">
+    <article class="background-gradient mx-auto d-flex align-items-center banner-height">
         <div class="container h-100">
             <div class="row h-100 d-flex align-items-center">
                 <aside class="col-6 d-flex align-items-center justify-content-center">
@@ -167,23 +168,25 @@
                     {% endif %}
                 </aside>
                 <main class="col-6 d-flex flex-column justify-content-center align-items-center h-100">
-                    <h2 class="text-black">OVERLOAD DAY 2</h2>
-                    <p class="text-black mb-4">hard rock</p>
-                    <a href="{{ url_for('program', day=2) }}"
-                        class="btn btn-custom-yellow rounded-pill px-4 py-2 text-black">FULL PROGRAM</a>
+                    <div class="decorated-main-box background-black-gradient p-5 text-center position-relative shadow-lg">
+                        <h2 class="text-white mb-4">OVERLOAD DAY 2</h2>
+                        <a href="{{ url_for('program', day=2) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2 text-black white-shadow">FULL
+                            PROGRAM</a>
+                    </div>
                 </main>
             </div>
         </div>
     </article>
 
-    <article class="banner-black d-flex align-items-center banner-height">
+    <article class="background-black-gradient mx-auto d-flex align-items-center banner-height">
         <div class="container h-100">
             <div class="row h-100 d-flex align-items-center">
                 <main class="col-6 d-flex flex-column justify-content-center align-items-center h-100">
-                    <h2 class="text-white">OVERLOAD DAY 3</h2>
-                    <p class="text-white mb-4">punk rock</p>
-                    <a href="{{ url_for('program', day=3) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL
-                        PROGRAM</a>
+                    <div class="decorated-main-box background-gradient p-5 text-center position-relative">
+                        <h2 class="text-black mb-4">OVERLOAD DAY 3</h2>
+                        <a href="{{ url_for('program', day=3) }}" class="btn btn-custom-yellow rounded-pill px-4 py-2">FULL
+                            PROGRAM</a>
+                    </div>
                 </main>
                 <aside class="col-6 d-flex align-items-center justify-content-center">
                     {% if p_shows_three and p_shows_three|length > 0 %}

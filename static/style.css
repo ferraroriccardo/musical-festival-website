@@ -6,6 +6,10 @@
     background: rgba(255, 255, 255, 0.70);
 }
 
+.black-background {
+    background-color: #1c2128 !important;
+}
+
 .vh-110 {
     height: 110vh;
 }
@@ -92,14 +96,8 @@ footer div {
     height: 7rem;
 }
 
-.banner-black {
+.background-black-gradient {
     background: linear-gradient(60deg, #1c2128 0%, #202732 100%);
-    margin: 0 auto;
-}
-
-.banner-gradient {
-    background: linear-gradient(60deg, #5694d5 0%, #C76A79 100%);
-    margin: 0 auto;
 }
 
 .background-gradient {
@@ -155,7 +153,7 @@ article:not([class]) {
     background-color: rgb(209, 233, 74);
     color: #111;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-    transform: translateY(-0.3rem);
+    transform: scale(1.04);
 }
 
 .btn-custom-black:hover,
@@ -304,6 +302,25 @@ article:not([class]) {
     letter-spacing: 1px;
 }
 
+.decorated-main-box {
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(155, 160, 227, 0.25);
+    border: 2px solid rgba(255,255,255,0.18);
+    position: relative;
+    overflow: visible;
+    min-width: 320px;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.music-icon {
+    color: #ffe066;
+    top: -1.5rem;
+    left: 50%;
+    z-index: 2;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+}
+
 @media (max-width: 768px) {
     .btn-custom-centered {
         font-size: 1.1rem;
@@ -326,5 +343,17 @@ article:not([class]) {
         padding-bottom: 0.4rem !important;
         min-height: 35px;
 
+    }
+}
+
+@media (max-width: 600px) {
+    .decorated-main-box {
+        padding: 2rem 0.5rem;
+        min-width: 200px;
+        max-width: 95vw;
+    }
+    .music-icon {
+        font-size: 1.5rem;
+        top: -1rem;
     }
 }

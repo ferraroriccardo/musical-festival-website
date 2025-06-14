@@ -9,7 +9,7 @@ def buy_ticket_for_user(user_id, ticket_type, start_day):
 
         already_bought = has_ticket(user_id, conn)
         if isinstance(already_bought, tuple) and already_bought[0] is False:
-            return already_bought  # Propaga errore DB
+            return already_bought
         if already_bought:
             return False, "HAS_TICKET"
 

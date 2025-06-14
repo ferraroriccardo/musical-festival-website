@@ -43,7 +43,7 @@ To register as a staff member, use the following password:
 ### <span style="color:#b03a2e">Event</span>
 - `SHOW_SLOT_ALREADY_OCCUPIED`: The selected time slot is already occupied by another published event.
 - `ARTIST_ALREADY_PERFORMING`: Each artist can only perform once at the festival.
-- `EVENT_CREATED_WITH_SUCCESS`: Event created successfully.
+- `EVENT_CREATED_SUCCESSFULLY`: Event created successfully.
 - `DATABASE_ERROR`: An error occurred while processing the request. Please try again later.
 - `FILE_TYPE_NOT_ALLOWED_ERROR`: The uploaded file type is not supported.
 

@@ -14,110 +14,110 @@
   {% endif %}
   <div class="container d-flex justify-content-evenly" id="ticket-cards-row">
     <div class="row">
-      <!-- card #1 -->
-      <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
-        <div class="card-header fw-bold text-center">ONE SHOT</div>
-        <div class="card-body position-relative p-0">
-          <img src="{{ url_for('static', filename='ticket_one_day.jpeg') }}" alt="One Shot Ticket"
-            class="img-fluid w-100 card-image">
-          <span
-            class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">60€</span>
-        </div>
-        <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-          <span>1 day of pure energy — pick your favorite!</span>
-          {% if not p_ticket and current_user.tipo == "Basic" %}
-          <div class="d-grid gap-2 mt-3">
-            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
-              data-ticket="one_day">
-              Rock for a Day
-            </button>
-          </div>
-          {% elif current_user.tipo == "Staff" %}
-          <!-- Bootstrap progress bar -->
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-              aria-valuenow="{{ p_sells[0].count }}" aria-valuemin="0" aria-valuemax="200"
-              style="width: {{ (p_sells[0].count * 100 / 200) | round(2) }}%">
-              {{ p_sells[0].count }} / 200
-            </div>
-          </div>
-          {% endif %}
-        </div>
-      </section>
+      <!-- set progress bar colors based on sold tickets -->
+      {% set count0 = p_sells[0].count %}
+      {% set count1 = p_sells[1].count %}
+      {% set count2 = p_sells[2].count %}
 
-      <!-- card #2 -->
-      <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
-        <div class="card-header fw-bold text-center">DOUBLE TROUBLE</div>
-        <div class="card-body position-relative p-0">
-          <img src="{{ url_for('static', filename='ticket_two_days.jpeg') }}" alt="Double Trouble Ticket"
-            class="img-fluid w-100 card-image">
-          <span
-            class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">100€</span>
-        </div>
-        <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-          <span>2 days back-to-back - keep the vibe going!</span>
-          {% if not p_ticket and current_user.tipo == "Basic" %}
-          <div class="d-grid gap-2 mt-3">
-            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
-              data-ticket="two_days">
-              Double the fun
-            </button>
+      {% set color0 = 'bg-primary' if count0 < 50 else 'bg-success' if count0 < 100 else 'bg-warning' if count0 < 150
+        else 'bg-danger' %} {% set color1='bg-primary' if count1 < 50 else 'bg-success' if count1 < 100
+        else 'bg-warning' if count1 < 150 else 'bg-danger' %} {% set color2='bg-primary' if count2 < 50
+        else 'bg-success' if count2 < 100 else 'bg-warning' if count2 < 150 else 'bg-danger' %} <!-- card #1 -->
+        <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-one-day">
+          <div class="card-header fw-bold text-center">ONE SHOT</div>
+          <div class="card-body position-relative p-0">
+            <img src="{{ url_for('static', filename='ticket_one_day.jpeg') }}" alt="One Shot Ticket"
+              class="img-fluid w-100 card-image">
+            <span
+              class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">60€</span>
           </div>
-          {% elif current_user.tipo == "Staff" %}
-          <!-- Bootstrap progress bar -->
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-              aria-valuenow="{{ p_sells[0].count }}" aria-valuemin="0" aria-valuemax="200"
-              style="width: {{ (p_sells[0].count * 100 / 200) | round(2) }}%">
-              {{ p_sells[0].count }} / 200
+          <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+            <span>1 day of pure energy — pick your favorite!</span>
+            {% if not p_ticket and current_user.tipo == "Basic" %}
+            <div class="d-grid gap-2 mt-3">
+              <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+                data-ticket="one_day">
+                Rock for a Day
+              </button>
             </div>
-          </div>
-          {% endif %}
-        </div>
-      </section>
 
-      <!--  card #3 -->
-      <section class="col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
-        id="ticket-full">
-        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
-          Best Experience
-        </span>
-        <div class="card-header fw-bold text-center text-primary">FULL BLAST</div>
-        <div class="card-body position-relative p-0">
-          <img src="{{ url_for('static', filename='ticket_three_days.jpeg') }}" alt="Full Blast Ticket"
-            class="img-fluid w-100 card-image">
-          <span
-            class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">150€</span>
-        </div>
-        <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
-          <span>All 3 days — no breaks, just music!</span>
-          {% if not p_ticket and current_user.tipo == "Basic" %}
-          <div class="d-grid gap-2 mt-3">
-            <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
-              data-ticket="three_days">
-              Go All In
-            </button>
-          </div>
-          {% elif current_user.tipo == "Staff" %}
-          <!-- Bootstrap progress bar -->
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-              aria-valuenow="{{ p_sells[0].count }}" aria-valuemin="0" aria-valuemax="200"
-              style="width: {{ (p_sells[0].count * 100 / 200) | round(2) }}%">
-              {{ p_sells[0].count }} / 200
+            {% elif current_user.tipo == "Staff" %}
+            <div class="progress my-3">
+              <div class="progress-bar progress-bar-striped progress-bar-animated {{ color0 }}" role="progressbar"
+                aria-valuenow="{{ count0 }}" aria-valuemin="0" aria-valuemax="200"
+                style="width: {{ (count0 / 200 * 100)|round(2) }}%">{{ count0 }}/200</div>
             </div>
+            {% endif %}
           </div>
-          {% endif %}
-        </div>
-      </section>
+        </section>
+
+        <!-- card #2 -->
+        <section class="col-3 card mx-4 my-4 rounded-4 shadow flex-fill hover-big" id="ticket-double">
+          <div class="card-header fw-bold text-center">DOUBLE TROUBLE</div>
+          <div class="card-body position-relative p-0">
+            <img src="{{ url_for('static', filename='ticket_two_days.jpeg') }}" alt="Double Trouble Ticket"
+              class="img-fluid w-100 card-image">
+            <span
+              class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">100€</span>
+          </div>
+          <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+            <span>2 days back-to-back - keep the vibe going!</span>
+            {% if not p_ticket and current_user.tipo == "Basic" %}
+            <div class="d-grid gap-2 mt-3">
+              <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+                data-ticket="two_days">
+                Double the fun
+              </button>
+            </div>
+            {% elif current_user.tipo == "Staff" %}
+            <div class="progress my-3">
+              <div class="progress-bar progress-bar-striped progress-bar-animated {{ color2 }}" role="progressbar"
+                aria-valuenow="{{ count2 }}" aria-valuemin="0" aria-valuemax="200"
+                style="width: {{ (count2 / 200 * 100)|round(2) }}%">{{ count2 }}/200</div>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+
+        <!--  card #3 -->
+        <section class="col-3 card mx-4 my-4 rounded-4 shadow border-primary border-3 flex-fill hover-big"
+          id="ticket-full">
+          <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary">
+            Best Experience
+          </span>
+          <div class="card-header fw-bold text-center text-primary">FULL BLAST</div>
+          <div class="card-body position-relative p-0">
+            <img src="{{ url_for('static', filename='ticket_three_days.jpeg') }}" alt="Full Blast Ticket"
+              class="img-fluid w-100 card-image">
+            <span
+              class="position-absolute top-50 start-50 translate-middle fs-4 fw-bold text-white black-shadow">150€</span>
+          </div>
+          <div class="card-footer text-center flex-grow-1 d-flex flex-column justify-content-end">
+            <span>All 3 days — no breaks, just music!</span>
+            {% if not p_ticket and current_user.tipo == "Basic" %}
+            <div class="d-grid gap-2 mt-3">
+              <button class="btn btn-outline-primary btn-lg rounded-pill fw-bold scroll-to-form" type="button"
+                data-ticket="three_days">
+                Go All In
+              </button>
+            </div>
+            {% elif current_user.tipo == "Staff" %}
+            <div class="progress my-3">
+              <div class="progress-bar progress-bar-striped progress-bar-animated {{ color1 }}" role="progressbar"
+                aria-valuenow="{{ count1 }}" aria-valuemin="0" aria-valuemax="200"
+                style="width: {{ (count1 / 200 * 100)|round(2) }}%">{{ count1 }}/200</div>
+            </div>
+            {% endif %}
+          </div>
+        </section>
     </div>
   </div>
+
   <form method="POST" action="{{ url_for('buy_ticket') }}" class="text-center" id="buy-ticket-form">
     <div id="dynamic-ticket-inputs">
     </div>
   </form>
 </form>
-
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

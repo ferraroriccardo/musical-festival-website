@@ -68,6 +68,12 @@ def artist(artist_name):
 @app.route("/profile")
 @login_required
 def profile():
+    # Controllo per messaggi di successo da flash_messages
+    flash_messages = request.args.getlist('flash_messages')
+    good_messages = []
+    for msg in flash_messages:
+        if 'event_created_successfully' in msg.lower():
+            good_messages.append(msg)
     page = request.args.get("page", default=1, type=int)
     per_page = 10
     if current_user.tipo == "Basic":
@@ -89,7 +95,8 @@ def profile():
             p_drafts = paginated_drafts,
             current_page = page,
             total_published_pages = total_published_pages,
-            total_drafts_pages = total_drafts_pages
+            total_drafts_pages = total_drafts_pages,
+            p_errors=good_messages if good_messages else None
         )
 
 # route to show all types of ticket
@@ -197,6 +204,7 @@ def create_event():
     img = request.files.get('image')
     action = request.form.get('action')  # draft or publish
     published = 1 if action == 'publish' else 0
+    db_img_path = None #initialy None
 
     required_fields = {
         "day": day,
@@ -236,23 +244,6 @@ def create_event():
             p_errors=errors
         )
 
-    # Determine minimum max-dimension among all carousel images
-    carousel_dir = app.config["UPLOAD_FOLDER"]
-    min_max_dim = None
-    for fname in os.listdir(carousel_dir):
-        if fname.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
-            try:
-                img_path = os.path.join(carousel_dir, fname)
-                with Image.open(img_path) as im:
-                    w, h = im.size
-                    max_dim = max(w, h)
-                    if min_max_dim is None or max_dim < min_max_dim:
-                        min_max_dim = max_dim
-            except Exception:
-                continue
-    if min_max_dim is None:
-        min_max_dim = 800
-    db_img_path = None
     if img:
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
         is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -276,29 +267,16 @@ def create_event():
         new_filename = f"{int(time.time())}_{original_filename}"
         upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
         img.save(upload_path)
-        # Resize image to min_max_dim
-        try:
-            with Image.open(upload_path) as im:
-                w, h = im.size
-                scale = min(min_max_dim / w, min_max_dim / h)
-                new_size = (int(w * scale), int(h * scale))
-                im = im.resize(new_size, Image.LANCZOS)
-                im.save(upload_path)
-        except Exception:
-            errors.append("IMAGE_RESIZE_ERROR")
-        db_img_path = f"uploads/{new_filename}"
+        db_img_path = f"/uploads/{new_filename}"
 
-    # DRAFT LOGIC: check if draft_id is present and valid for this user
     draft_id_valid = False
     if draft_id:
         try:
-            draft_id_int = int(draft_id)
-            draft_id_valid = spettacoli_dao.draft_exists_for_user(draft_id_int, current_user.id)
+            draft_id_valid = spettacoli_dao.draft_exist(int(draft_id))
         except Exception:
             draft_id_valid = False
 
     if not published:
-        # Always check for overlap with published events
         stage_id = palchi_dao.get_palco_by_name(stage_name)
         if stage_id is None:
             errors.append("STAGE_NOT_FOUND")
@@ -326,7 +304,6 @@ def create_event():
                 p_errors=errors
             )
 
-    # Save or update draft/event
     if not published:
         if draft_id_valid:
             success, error = spettacoli_dao.update_draft(
@@ -339,7 +316,6 @@ def create_event():
                 genre, published, current_user.id, stage_name
             )
     else:
-        # Publishing: always create a new event (not a draft update)
         success, error = spettacoli_dao.create_event(
             day, start_hour, duration, artist, description, playlist_link, db_img_path,
             genre, published, current_user.id, stage_name
@@ -366,7 +342,8 @@ def create_event():
             p_stage=stage_name,
             p_errors=errors
         )
-    return redirect(url_for("home"))
+    flash("EVENT_CREATED_SUCCESSFULLY")
+    return redirect(url_for("profile"))
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

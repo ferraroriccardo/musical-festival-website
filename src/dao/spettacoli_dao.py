@@ -300,22 +300,19 @@ def get_genres():
         cursor.close()
         conn.close()
 
-def draft_exists_for_user(draft_id, user_id):
+def draft_exist(draft_id):
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        query = """
-            SELECT id FROM SPETTACOLI
-            WHERE id = ? AND id_creatore = ? AND pubblicato = 0
-        """
-        cursor.execute(query, (draft_id, user_id))
-        result = cursor.fetchone()
-        return result is not None
+
+        query = "SELECT id FROM SPETTACOLI WHERE id = ? AND pubblicato = 0;"
+        cursor.execute(query, (draft_id,))
+
+        draft = cursor.fetchone()
+        return draft is not None
     except Exception as e:
-        return False
+        return False, "DATABASE_ERROR_DRAFT_EXIST"
     finally:
-        if 'cursor' in locals():
-            cursor.close()
-        if 'conn' in locals():
-            conn.close()
+        cursor.close()
+        conn.close()

@@ -1,6 +1,6 @@
 COSE DA RIVEDERE PER L'ESAME:
-2. Eliminare .git dalla cartella del prof
-3. Uso corretto param.campo vs param["campo"] in Jinja
-4. Blueprint
+1. Eliminare .git dalla cartella del prof
+2. Uso corretto param.campo vs param["campo"] in Jinja
+3. Blueprint
 
-5. !!! CARICARE TUTTO IN ELABORATI !!!
+4. !!! CARICARE TUTTO IN ELABORATI !!!

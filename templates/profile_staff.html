@@ -88,7 +88,7 @@
 
                     <div class="flex-grow-1">
                         <h5 class="mb-3">
-                            <a href="{{ url_for('event_page', artist_name=perf.artista|urlencode, day=perf.giorno, start_hour=perf.ora_inizio, duration=perf.durata, genre=perf.genere, description=perf.descrizione, playlist_link=perf.link_playlist, stage_id=perf.id_palco) }}"
+                            <a href="{{ url_for('event_page', draft_id=perf.id, artist_name=perf.artista|urlencode, day=perf.giorno, start_hour=perf.ora_inizio, duration=perf.durata, genre=perf.genere, description=perf.descrizione, playlist_link=perf.link_playlist, stage_id=perf.id_palco) }}"
                                 class="text-decoration-none text-dark">
                                 {{ perf.artista }}
                             </a>

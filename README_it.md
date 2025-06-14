@@ -4,22 +4,23 @@
 > 🇬🇧 For the English version, see [README.md](README.md)
 
 ## <span style="color:#27ae60">URL dopo il deploy</span>
+[https://ferraroriccardo.pythonanywhere.com/](https://ferraroriccardo.pythonanywhere.com/)
 
 ## <span style="color:#af601a">Password Registrazione Staff</span>
 Per registrarsi come membro dello staff, usa la seguente password:
 
-`FESTIVAL`
+`FESTIVAL!1`
 
 ## <span style="color:#2471a3">Credenziali Utenti di Prova</span>
 
-| Email                      | Password      | Tipo Utente | ID Biglietto |
-|----------------------------|--------------|-------------|--------------|
-| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
-| davide.verdi@gmail.com     | davidepassw  | base        | -            |
-| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
-| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
-| samu.poli@gmail.com        | samupassw    | staff       | -            |
-| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |
+| Email                      | Password     | Tipo Utente | Biglietto               |
+|----------------------------|--------------|-------------|-------------------------|
+| marco.rossi@gmail.com      | marcopassw   | base        | Domenica 22             |
+| davide.verdi@gmail.com     | davidepassw  | base        | Sabato 21 - Domenica 22 |
+| alice.blu@gmail.com        | alicepassw   | base        | 3 giorni                |
+| matteo.bianchi@gmail.com   | matteopassw  | basic       | -                       |
+| riccardo.ferraro@gmail.com | riccardopassw| staff       | -                       |
+| marghe.montru@gmail.com    | marghepassw  | staff       | -                       |
 
 ## <span style="color:#b03a2e">Messaggi di Errore</span>
 ### <span style="color:#b03a2e">Login</span>

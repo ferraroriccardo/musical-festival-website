@@ -1,25 +1,26 @@
 # <span style="color:#2e86c1">Music Festival Website</span>
-<span style="color:#566573">A website for managing a music festival, with administration for both organizers and participants.</span>
+<span style="color:#566573">Website for managing a music festival, with administration for both organizers and participants.</span>
 
 > 🇮🇹 Per la versione italiana, vedi [README_it.md](README_it.md)
 
 ## <span style="color:#27ae60">Deployed URL</span>
+[https://ferraroriccardo.pythonanywhere.com/](https://ferraroriccardo.pythonanywhere.com/)
 
 ## <span style="color:#af601a">Staff Registration Password</span>
 To register as a staff member, use the following password:
 
-`FESTIVAL`
+`FESTIVAL!1`
 
 ## <span style="color:#2471a3">Test User Credentials</span>
 
-| Email                      | Password      | User Type   | Ticket ID    |
-|----------------------------|--------------|-------------|--------------|
-| marco.rossi@gmail.com      | marcopassw   | base        | 2            |
-| davide.verdi@gmail.com     | davidepassw  | base        | -            |
-| marghe.montru@gmail.com    | marghepassw  | base        | 1            |
-| riccardo.ferraro@gmail.com | riccardopassw| staff       | -            |
-| samu.poli@gmail.com        | samupassw    | staff       | -            |
-| matteo.bianchi@gmail.com   | matteopassw  | basic       | -            |
+| Email                      | Password       | User Type | Ticket                   |
+|----------------------------|---------------|-----------|--------------------------|
+| marco.rossi@gmail.com      | marcopassw    | basic     | Sun 22nd                 |
+| davide.verdi@gmail.com     | davidepassw   | basic     | Sat 21st - Sun 22nd      |
+| alice.blu@gmail.com        | alicepassw    | basic     | 3 days                   |
+| matteo.bianchi@gmail.com   | matteopassw   | basic     | -                        |
+| riccardo.ferraro@gmail.com | riccardopassw | staff     | -                        |
+| marghe.montru@gmail.com    | marghepassw   | staff     | -                        |
 
 ## <span style="color:#b03a2e">Error Messages</span>
 ### <span style="color:#b03a2e">Login</span>

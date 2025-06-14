@@ -1,6 +1,7 @@
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-1. Riscaricare le foto
-2. Controllare il readme, riempire il db con i biglietti giusti e segnarli nel readme
-3. Eliminare .git dalla cartella del prof
-4. Uso corretto param.campo vs param["campo"] in Jinja
-5. Blueprint
+1. Non mi fa pubblicare una draft domenica alle 19 nell'underground
+2. Eliminare .git dalla cartella del prof
+3. Uso corretto param.campo vs param["campo"] in Jinja
+4. Blueprint
+
+5. !!! CARICARE TUTTO IN ELABORATI !!!

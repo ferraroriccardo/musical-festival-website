@@ -1,6 +1,5 @@
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-1. Riscaricare le foto
-Nel profilo mostrare le performance pubblicate
+1. Nel profilo mostrare le performance pubblicate
 1. Ordinare gli artisti di program per giorno e ora
 3. Eliminare .git dalla cartella del prof
 4. Uso corretto param.campo vs param["campo"] in Jinja

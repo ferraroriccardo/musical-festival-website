@@ -7,7 +7,7 @@ import dao.utenti_dao as utenti_dao
 import dao.settings_dao as settings_dao
 from models import User
 
-auth_bp = Blueprint("auth", __name__)  # handles separation of this module from app.py
+auth_bp = Blueprint("auth", __name__)
 
 # security function to avoid open redirects
 def is_safe_url(target):
@@ -27,7 +27,7 @@ def login():
     password = request.form.get('password')
     next_page = request.form.get('next') or request.args.get('next')
     errors = []
-    # Validation
+
     if not email or not password:
         errors.append("MISSING_EMAIL_OR_PASSWORD_ERROR")
     elif "@" not in email:

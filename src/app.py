@@ -75,14 +75,13 @@ def profile():
     else:
         published = spettacoli_dao.get_published(current_user.id)
         drafts = spettacoli_dao.get_drafts(current_user.id)
-        # Paginazione
+
         start = (page - 1) * per_page
         end = start + per_page
         paginated_published = published[start:end]
         paginated_drafts = drafts[start:end]
         total_published_pages = (len(published) + per_page - 1) // per_page
         total_drafts_pages = (len(drafts) + per_page - 1) // per_page
-        print(total_drafts_pages)
         return render_template(
             "profile_staff.html",
             p_published = paginated_published,
@@ -138,19 +137,16 @@ def event_page():
     drafts = spettacoli_dao.get_drafts(current_user.id)
     stages = palchi_dao.get_stages()
 
-    # Converti i risultati in liste di dizionari (se non sono errori)
     if isinstance(drafts, list):
         drafts = [dict(row) for row in drafts]
     if isinstance(stages, list):
         stages = [dict(row) for row in stages]
 
-    # Paginazione
     start = (page - 1) * per_page
     end = start + per_page
     paginated_drafts = drafts[start:end]
     total_drafts_pages = (len(drafts) + per_page - 1) // per_page
 
-    # Precompilazione da parametri GET (bozza)
     p_day = request.args.get('day')
     p_start_hour = request.args.get('start_hour')
     p_duration = request.args.get('duration')
@@ -160,6 +156,8 @@ def event_page():
     p_genre = request.args.get('genre')
     stage_id = request.args.get('stage_id')
     p_stage = None
+    p_draft_id = request.args.get('draft_id')
+
     if stage_id:
         palco = next((s for s in stages if str(s['id']) == str(stage_id)), None)
         p_stage = palco['nome'] if palco else None
@@ -176,6 +174,7 @@ def event_page():
         p_playlist_link=p_playlist_link or None,
         p_genre=p_genre or None,
         p_stage=p_stage or None,
+        p_draft_id=p_draft_id or '',
         current_page=page,
         total_drafts_pages=total_drafts_pages
     )
@@ -185,9 +184,6 @@ def event_page():
 @app.route("/create_event", methods = ['POST', 'GET'])
 @login_required
 def create_event():
-    #TODO: quando parto da una bozza e pubblico l'evento devo modificare la bozza e settarla come pubblicata + salvare la foto in bozza
-    #controllo della non sovrapposizione con altri eventi (SOLO TRA QUELLI GIA' PUBBLICATI) solo al momento della pubblicazione dell'evento
-    # sarà valutato all'esame con due tab aperte, si inizia una transazione che si lascia a metà, si prenota uno slot concerto in quell'orario e si verifica che la prima non sia più possibile
     draft_id = request.form.get('draft_id')
     day = request.form.get('day')
     start_hour = request.form.get('start_hour')
@@ -198,7 +194,7 @@ def create_event():
     genre = request.form.get('genre') or None
     stage_name = request.form.get('stage')
     img = request.files.get('image')
-    action = request.form.get('action')  # draft o publish
+    action = request.form.get('action')  # draft or publish
     published = 1 if action == 'publish' else 0
 
     required_fields = {
@@ -218,7 +214,6 @@ def create_event():
     errors = []
     if missing_fields:
         errors.append(f"MISSING_FIELDS_ERROR: {', '.join(missing_fields)}")
-        # Recupera e converte le bozze e i palchi in dict per la serializzazione JSON
         new_drafts = spettacoli_dao.get_drafts(current_user.id)
         new_stages = palchi_dao.get_stages()
         if isinstance(new_drafts, list):
@@ -280,13 +275,70 @@ def create_event():
         new_filename = f"{int(time.time())}_{original_filename}"
         upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
         img.save(upload_path)
+        # Resize image to min_max_dim
+        try:
+            with Image.open(upload_path) as im:
+                w, h = im.size
+                scale = min(min_max_dim / w, min_max_dim / h)
+                new_size = (int(w * scale), int(h * scale))
+                im = im.resize(new_size, Image.LANCZOS)
+                im.save(upload_path)
+        except Exception:
+            errors.append("IMAGE_RESIZE_ERROR")
         db_img_path = f"uploads/{new_filename}"
+
+    # DRAFT LOGIC: check if draft_id is present and valid for this user
+    draft_id_valid = False
     if draft_id:
-        success, error = spettacoli_dao.update_draft(
-            draft_id, day, start_hour, duration, artist, description, playlist_link, db_img_path,
-            genre, published, current_user.id, stage_name
-        )
+        try:
+            draft_id_int = int(draft_id)
+            draft_id_valid = spettacoli_dao.draft_exists_for_user(draft_id_int, current_user.id)
+        except Exception:
+            draft_id_valid = False
+
+    if not published:
+        # Always check for overlap with published events
+        stage_id = palchi_dao.get_palco_by_name(stage_name)
+        if stage_id is None:
+            errors.append("STAGE_NOT_FOUND")
+        elif spettacoli_dao.exist_overlapping_published_shows(day, start_hour, duration, stage_id, None, exclude_id=draft_id if draft_id_valid else None):
+            errors.append("SHOW_SLOT_ALREADY_OCCUPIED")
+        if errors:
+            new_drafts = spettacoli_dao.get_drafts(current_user.id)
+            new_stages = palchi_dao.get_stages()
+            if isinstance(new_drafts, list):
+                new_drafts = [dict(row) for row in new_drafts]
+            if isinstance(new_stages, list):
+                new_stages = [dict(row) for row in new_stages]
+            return render_template(
+                "create_event.html",
+                p_drafts=new_drafts,
+                p_stages=new_stages,
+                p_day=day,
+                p_start_hour=start_hour,
+                p_duration=duration,
+                p_artist=artist,
+                p_description=description,
+                p_playlist_link=playlist_link or None,
+                p_genre=genre,
+                p_stage=stage_name,
+                p_errors=errors
+            )
+
+    # Save or update draft/event
+    if not published:
+        if draft_id_valid:
+            success, error = spettacoli_dao.update_draft(
+                draft_id, day, start_hour, duration, artist, description, playlist_link, db_img_path,
+                genre, published, current_user.id, stage_name
+            )
+        else:
+            success, error = spettacoli_dao.create_event(
+                day, start_hour, duration, artist, description, playlist_link, db_img_path,
+                genre, published, current_user.id, stage_name
+            )
     else:
+        # Publishing: always create a new event (not a draft update)
         success, error = spettacoli_dao.create_event(
             day, start_hour, duration, artist, description, playlist_link, db_img_path,
             genre, published, current_user.id, stage_name
@@ -318,12 +370,6 @@ def create_event():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
-
-# route for handling settings operations, such as setting up a new staff password, or sell out all remaining tickets
-@app.route("/settings")
-@login_required
-def settings():
-    return render_template("settings.html")
 
 import auth
 

@@ -15,7 +15,7 @@
         <select class="form-select" id="draft_selector" name="draft_id">
             <option value="">-- Select draft --</option>
             {% for draft in p_drafts %}
-            <option value="{{ draft['id'] }}">{{ draft['artista'] }}</option>
+            <option value="{{ draft['id'] }}" {% if draft['id']|string == p_draft_id|string %}selected{% endif %}>{{ draft['artista'] }}</option>
             {% endfor %}
             <input type="hidden" id="hidden_draft_id" name="draft_id" value="{{ p_draft_id|default('',) }}">
         </select>

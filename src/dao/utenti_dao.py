@@ -49,7 +49,7 @@ def get_user_by_email(email):
 
 def create_user(name, email, password, user_type):
     try:
-        conn = sqlite3.connect(DB_PAT, timeout=10)
+        conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 

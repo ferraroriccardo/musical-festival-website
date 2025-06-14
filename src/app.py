@@ -105,7 +105,7 @@ def profile():
 def ticket_page():
     ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
     sells = biglietti_dao.get_sells()
-    if ticket:
+    if ticket:  
         return render_template("ticket.html", p_ticket = ticket, p_sells=sells)
     return render_template("ticket.html", p_ticket_types = ("one_day", "two_days", "three_days"), p_sells = sells)
 

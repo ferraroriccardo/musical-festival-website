@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set error_keywords = ['error'] %}
+{% include 'generic_error_popup.html' with context %}
 <form action="/buy_ticket" method="POST">
   <h1 class="mb-4 text-center">PRICING</h1>
   {% if p_ticket %}
@@ -30,7 +32,7 @@
               Rock for a Day
             </button>
           </div>
-          {% else %}
+          {% elif current_user.tipo == "Staff" %}
           <!-- Bootstrap progress bar -->
           <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
@@ -61,7 +63,7 @@
               Double the fun
             </button>
           </div>
-          {% else %}
+          {% elif current_user.tipo == "Staff" %}
           <!-- Bootstrap progress bar -->
           <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
@@ -96,7 +98,7 @@
               Go All In
             </button>
           </div>
-          {% else %}
+          {% elif current_user.tipo == "Staff" %}
           <!-- Bootstrap progress bar -->
           <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"

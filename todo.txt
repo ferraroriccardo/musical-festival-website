@@ -1,5 +1,8 @@
 COSE DA RIVEDERE / STUDIARE PER L'ESAME:
 1. Non mi fa pubblicare una draft domenica alle 19 nell'underground
+centra in verticale la card ticket base
+messaggi di event created
+
 2. Eliminare .git dalla cartella del prof
 3. Uso corretto param.campo vs param["campo"] in Jinja
 4. Blueprint

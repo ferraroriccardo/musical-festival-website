@@ -10,7 +10,7 @@
 
 {% if good_messages %}
   {% for msg in good_messages %}
-    <div class="alert alert-success border-success shadow-sm rounded-4 text-center fw-bold my-3" role="alert">
+    <div class="alert alert-success border-success shadow-sm rounded-4 text-center fw-bold my-3 w-25 mx-auto" role="alert">
       {{ msg|replace('_', ' ')|capitalize }}
     </div>
   {% endfor %}
@@ -18,7 +18,7 @@
 
 {% if filtered_errors %}
   {% for error in filtered_errors %}
-    <div class="alert alert-danger border-danger shadow-sm rounded-4 text-center fw-bold my-3" role="alert">
+    <div class="alert alert-danger border-danger shadow-sm rounded-4 text-center fw-bold my-3 w-25 mx-auto" role="alert">
       {{ error|replace('_', ' ')|capitalize }}
     </div>
   {% endfor %}

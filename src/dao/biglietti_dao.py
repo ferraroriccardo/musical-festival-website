@@ -2,6 +2,8 @@ import sqlite3
 from .settings_dao import DB_PATH
 
 def buy_ticket_for_user(user_id, ticket_type, start_day):
+    conn = None
+    cursor = None
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
@@ -26,31 +28,34 @@ def buy_ticket_for_user(user_id, ticket_type, start_day):
         conn.commit()
         return True, None
     except Exception as e:
-        if 'conn' in locals():
-            conn.rollback()
-        return False, "DATABASE_ERROR_BUY_TICKET_FOR_USER"
+        # Non tentare rollback se connessione già chiusa
+        try:
+            if conn is not None:
+                conn.rollback()
+        except Exception:
+            pass
+        return False, f"DATABASE_ERROR_BUY_TICKET_FOR_USER: {str(e)}"
     finally:
-        if 'cursor' in locals():
-            cursor.close()
-        if 'conn' in locals():
-            conn.close()
+        try:
+            if cursor is not None:
+                cursor.close()
+        except Exception:
+            pass
+        try:
+            if conn is not None:
+                conn.close()
+        except Exception:
+            pass
 
 def has_ticket(user_id, conn):
     try:
         cursor = conn.cursor()
         query = "SELECT * FROM BIGLIETTI WHERE id_utente = ?;"
-        cur = conn.execute(query, (user_id, ))
+        cur = cursor.execute(query, (user_id, ))
         ticket = cur.fetchone()
         return bool(ticket)
     except Exception as e:
         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
-    finally:
-        if 'cursor' in locals():
-            cursor.close()
-        if 'conn' in locals():
-            conn.close()
-
-    
 
 def get_remaining_tickets(ticket_type, conn):
     try:
@@ -60,11 +65,6 @@ def get_remaining_tickets(ticket_type, conn):
         return 200 - count
     except Exception as e:
         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
-    finally:
-        if 'cursor' in locals():
-            cursor.close()
-        if 'conn' in locals():
-            conn.close()
 
 def get_ticket_by_user_id(user_id):
     conn = sqlite3.connect(DB_PATH)

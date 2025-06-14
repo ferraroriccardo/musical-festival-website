@@ -22,18 +22,27 @@ def get_shows():
 def set_params(query, day, stage, genre, published):
     params = []
     match day:
-            case 1:
-                query += " AND giorno = ?"
-                params.append("friday 20th")
-            case 2:
-                query += " AND giorno = ?"
-                params.append("saturday 21st")
-            case 3:
-                query += " AND giorno = ?"
-                params.append("sunday 22nd")
-    if stage in [0,1,2]:
+        case 1:
+            query += " AND giorno = ?"
+            params.append("friday 20th")
+        case 2:
+            query += " AND giorno = ?"
+            params.append("saturday 21st")
+        case 3:
+            query += " AND giorno = ?"
+            params.append("sunday 22nd")
+
+    if stage != -1 and stage != "-1" and stage != "all":
+        try:
+            stage_id = int(stage)
             query += " AND id_palco = ?"
-            params.append(stage)
+            params.append(stage_id)
+        except Exception:
+            from .palchi_dao import get_palco_by_name
+            palco_id = get_palco_by_name(stage)
+            if palco_id is not None:
+                query += " AND id_palco = ?"
+                params.append(palco_id)
     if genre != "all":
         query += " AND genere = ?"
         params.append(genre)
@@ -170,8 +179,6 @@ def exist_overlapping_published_shows(day, hour_slot, duration, stage, conn, exc
         cursor.execute(query, (day, stage))
         shows = cursor.fetchall()
         for row in shows:
-            if exclude_id is not None and row["id"] == exclude_id:
-                continue
             existing_start = time_to_minutes(row["ora_inizio"])
             existing_duration = int(row["durata"])
             existing_end = existing_start + existing_duration

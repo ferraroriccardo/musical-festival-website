@@ -44,6 +44,13 @@ def has_ticket(user_id, conn):
         return bool(ticket)
     except Exception as e:
         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
+    
 
 def get_remaining_tickets(ticket_type, conn):
     try:
@@ -53,6 +60,11 @@ def get_remaining_tickets(ticket_type, conn):
         return 200 - count
     except Exception as e:
         return False, "DATABASE_ERROR_GET_REMAINING_TICKETS"
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 def get_ticket_by_user_id(user_id):
     conn = sqlite3.connect(DB_PATH)

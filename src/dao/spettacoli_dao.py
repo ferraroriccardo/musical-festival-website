@@ -16,8 +16,11 @@ def get_shows():
     except Exception as e:
         return False, "DATABASE_ERROR_GET_SHOWS"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def set_params(query, day, stage, genre, published):
     params = []
@@ -73,8 +76,11 @@ def get_shows_filtered(day, stage, genre, published):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_SHOWS_FILTERED"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def create_event(day, start_hour, duration, artist, description, playlist_link, img_path, genre, published, creator_id, stage_name, draft_id=None):
     try:
@@ -204,7 +210,9 @@ def is_already_performing(artist, conn):
     except Exception as e:
         return False
     finally:
-        cursor.close()
+        if 'cursor' in locals():
+            cursor.close()
+
 
 
 def get_drafts(user_id):
@@ -229,8 +237,10 @@ def get_drafts(user_id):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_DRAFTS"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
 
 def get_published(creator_id):
     try:
@@ -254,8 +264,11 @@ def get_published(creator_id):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_PUBLISHED"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def get_artist_by_name(artist_name):
     try:
@@ -278,8 +291,11 @@ def get_artist_by_name(artist_name):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_ARTIST_BY_NAME"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def get_genres():
     try:
@@ -297,8 +313,11 @@ def get_genres():
     except Exception as e:
         return False, "DATABASE_ERROR_GET_ARTIST_BY_NAME"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def draft_exist(draft_id):
     try:
@@ -314,5 +333,7 @@ def draft_exist(draft_id):
     except Exception as e:
         return False, "DATABASE_ERROR_DRAFT_EXIST"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()

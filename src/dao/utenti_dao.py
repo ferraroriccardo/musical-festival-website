@@ -19,8 +19,11 @@ def get_user_by_id(user_id):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_USER_BY_ID"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def get_user_by_email(email):
     try:
@@ -38,8 +41,11 @@ def get_user_by_email(email):
     except Exception as e:
         return False, "DATABASE_ERROR_GET_USER_BY_EMAIL"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def create_user(name, email, password, user_type):
     try:
@@ -60,5 +66,7 @@ def create_user(name, email, password, user_type):
     except Exception as e:
         return False, "DATABASE_ERROR_CREATE_USER"
     finally:
-        cursor.close()
-        conn.close()
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()

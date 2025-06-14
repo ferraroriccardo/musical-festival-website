@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set error_keywords = ['created'] %}
+{% include 'generic_error_popup.html' with context %}
 <div class="view-toggle mb-3 card-header rounded-5 p-2">
     <span id="togglePublished" class="active-toggle">Published</span>
     <span id="toggleDrafts">Drafts</span>

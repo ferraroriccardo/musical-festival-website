@@ -28,13 +28,12 @@ def buy_ticket_for_user(user_id, ticket_type, start_day):
         conn.commit()
         return True, None
     except Exception as e:
-        # Non tentare rollback se connessione già chiusa
         try:
             if conn is not None:
                 conn.rollback()
         except Exception:
             pass
-        return False, f"DATABASE_ERROR_BUY_TICKET_FOR_USER: {str(e)}"
+        return False, f"DATABASE_ERROR_BUY_TICKET_FOR_USER"
     finally:
         try:
             if cursor is not None:

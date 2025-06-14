@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, render_template, redirect, request, url_for, send_from_directory
+from flask import Flask, flash, render_template, redirect, request, url_for, send_from_directory, get_flashed_messages
 from flask_login import login_required, current_user
 from login_manager_setup import setup_login_manager
 from werkzeug.utils import secure_filename
@@ -68,8 +68,7 @@ def artist(artist_name):
 @app.route("/profile")
 @login_required
 def profile():
-    # Controllo per messaggi di successo da flash_messages
-    flash_messages = request.args.getlist('flash_messages')
+    flash_messages = get_flashed_messages()
     good_messages = []
     for msg in flash_messages:
         if 'event_created_successfully' in msg.lower():
@@ -82,7 +81,6 @@ def profile():
     else:
         published = spettacoli_dao.get_published(current_user.id)
         drafts = spettacoli_dao.get_drafts(current_user.id)
-
         start = (page - 1) * per_page
         end = start + per_page
         paginated_published = published[start:end]

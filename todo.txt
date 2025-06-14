@@ -1,6 +1,4 @@
-COSE DA RIVEDERE / STUDIARE PER L'ESAME:
-1. centra in verticale la card ticket base
-
+COSE DA RIVEDERE PER L'ESAME:
 2. Eliminare .git dalla cartella del prof
 3. Uso corretto param.campo vs param["campo"] in Jinja
 4. Blueprint

@@ -1,28 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Flash messages card -->
-{% set filtered_messages = [] %}
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      {% if message != 'Please log in to access this page.' %}
-        {% set _ = filtered_messages.append(message) %}
-      {% endif %}
-    {% endfor %}
-    {% if filtered_messages %}
-      <div class="card mb-4 border-danger">
-        <div class="card-body p-3">
-          <ul class="mb-0">
-            {% for message in filtered_messages %}
-              <li class="text-danger">{{ message }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    {% endif %}
-  {% endif %}
-{% endwith %}
+{% set error_keywords = ['event', 'file', 'artist', 'slot', 'field', 'database', 'allowed', 'missing'] %}
+{% include 'generic_error_popup.html' with context %}
 
 <!-- 'return beforeSubmit(event)' replaces onclick="setPublished(false)" because the submit
      was too fast, so there was no time to modify the 'published' variable  -->

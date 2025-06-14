@@ -116,8 +116,7 @@ article:not([class]) {
 .btn-custom-centered {
     position: absolute;
     top: 84%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 43%;
     color: #fff;
     border-radius: 50rem;
     font-size: 1.5rem;

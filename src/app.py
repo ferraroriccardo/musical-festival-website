@@ -20,6 +20,11 @@ setup_login_manager(app)
 app.config["SECRET_KEY"] = "g3t_YoUr_s0uNd"
 app.config["UPLOAD_FOLDER"] = UPLOAD_DIR
 
+def normalize_error(message):
+    return message.lower().replace('_', ' ')
+
+app.jinja_env.filters['normalize_error'] = normalize_error
+
 # route for homepage
 @app.route("/")
 def home():
@@ -102,21 +107,22 @@ def ticket_page():
 @login_required
 def buy_ticket():
     ticket_type = request.form.get('ticket_type')
-    
     if ticket_type == "three_days":
         start_day = "friday 20th"
     else:
         start_day = request.form.get('start_day')
-
+    errors = []
     if not ticket_type or not start_day:
-        flash("MISSING_REQUIRED_PARAMETERS")
-        return redirect(url_for('ticket_page'))
-
-    success, error = biglietti_dao.buy_ticket_for_user(current_user.id, ticket_type, start_day)
-    
-    if not success:
-        flash(error)
-        return redirect(url_for('ticket_page'))
+        errors.append("MISSING_REQUIRED_PARAMETERS")
+    success, error = (False, None)
+    if not errors:
+        success, error = biglietti_dao.buy_ticket_for_user(current_user.id, ticket_type, start_day)
+        if not success:
+            errors.append(error)
+    if errors:
+        ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
+        sells = biglietti_dao.get_sells()
+        return render_template("ticket.html", p_ticket=ticket, p_ticket_types=("one_day", "two_days", "three_days"), p_sells=sells, p_errors=errors)
     else:
         return redirect(url_for("profile"))
 
@@ -209,8 +215,9 @@ def create_event():
         required_fields["img"] = img
 
     missing_fields = [name for name, value in required_fields.items() if not value]
+    errors = []
     if missing_fields:
-        flash(f"Missing required fields: {', '.join(missing_fields)}")
+        errors.append(f"MISSING_FIELDS_ERROR: {', '.join(missing_fields)}")
         # Recupera e converte le bozze e i palchi in dict per la serializzazione JSON
         new_drafts = spettacoli_dao.get_drafts(current_user.id)
         new_stages = palchi_dao.get_stages()
@@ -220,8 +227,8 @@ def create_event():
             new_stages = [dict(row) for row in new_stages]
         return render_template(
             "create_event.html",
-            p_drafts=new_drafts,   # per JS e dropdown bozze
-            p_stages=new_stages,   # per dropdown palchi (fix: sempre p_stages)
+            p_drafts=new_drafts,
+            p_stages=new_stages,
             p_day=day,
             p_start_hour=start_hour,
             p_duration=duration,
@@ -229,30 +236,45 @@ def create_event():
             p_description=description,
             p_playlist_link=playlist_link or None,
             p_genre=genre,
-            p_stage=stage_name     # valore preselezionato nel dropdown stage
+            p_stage=stage_name,
+            p_errors=errors
         )
 
     db_img_path = None
     if img:
-        PROFILE_IMG_HEIGHT = 423
-        POST_IMG_WIDTH = 636
+        # Set a higher width for better quality in the carousel
+        POST_IMG_WIDTH = 1200  # or set to the max width of your carousel in px
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
 
         is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
         if not is_allowed_file:
-            flash(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
-            return redirect(url_for('event_page'))
-    
+            errors.append(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
+            return render_template(
+                "create_event.html",
+                p_drafts=spettacoli_dao.get_drafts(current_user.id),
+                p_stages=palchi_dao.get_stages(),
+                p_day=day,
+                p_start_hour=start_hour,
+                p_duration=duration,
+                p_artist=artist,
+                p_description=description,
+                p_playlist_link=playlist_link or None,
+                p_genre=genre,
+                p_stage=stage_name,
+                p_errors=errors
+            )
         original_filename = secure_filename(img.filename)
         new_filename = f"{int(time.time())}_{original_filename}"
         upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
 
         image = Image.open(img.stream)
-        aspect_ratio = image.height / image.width
-        new_height = int(POST_IMG_WIDTH * aspect_ratio)
-
-        resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
-        # Save with higher quality for JPEG, and default for others
+        # Only resize if the image is larger than POST_IMG_WIDTH
+        if image.width > POST_IMG_WIDTH:
+            aspect_ratio = image.height / image.width
+            new_height = int(POST_IMG_WIDTH * aspect_ratio)
+            resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
+        else:
+            resized_image = image
         ext = original_filename.rsplit('.', 1)[1].lower()
         if ext in ["jpg", "jpeg"]:
             resized_image = resized_image.convert("RGB")
@@ -272,8 +294,7 @@ def create_event():
             genre, published, current_user.id, stage_name
         )
     if not success:
-        flash(error)
-        # Recupera di nuovo le bozze e i palchi e li converte in dict per la serializzazione JSON
+        errors.append(error)
         new_drafts = spettacoli_dao.get_drafts(current_user.id)
         new_stages = palchi_dao.get_stages()
         if isinstance(new_drafts, list):
@@ -291,9 +312,9 @@ def create_event():
             p_description=description,
             p_playlist_link=playlist_link,
             p_genre=genre,
-            p_stage=stage_name
+            p_stage=stage_name,
+            p_errors=errors
         )
-    flash("EVENT_CREATED_WITH_SUCCESS")
     return redirect(url_for("home"))
 
 @app.route('/uploads/<filename>')

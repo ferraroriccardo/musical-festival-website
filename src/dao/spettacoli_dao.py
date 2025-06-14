@@ -228,7 +228,7 @@ def get_drafts(user_id):
         cursor.close()
         conn.close()
 
-def get_published():
+def get_published(creator_id):
     try:
         conn = sqlite3.connect(DB_PATH, timeout=10)
         conn.row_factory = sqlite3.Row
@@ -240,9 +240,10 @@ def get_published():
             JOIN PALCHI ON SPETTACOLI.id_palco = PALCHI.id
             JOIN UTENTI ON SPETTACOLI.id_creatore = UTENTI.id
             WHERE SPETTACOLI.pubblicato = ?
+            AND SPETTACOLI.id_creatore = ?
             ORDER BY SPETTACOLI.giorno, SPETTACOLI.ora_inizio;
         """        
-        cursor.execute(query, (1, ))
+        cursor.execute(query, (creator_id, 1))
 
         shows = cursor.fetchall()
         return shows

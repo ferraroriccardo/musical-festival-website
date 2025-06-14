@@ -73,7 +73,7 @@ def profile():
         ticket = biglietti_dao.get_ticket_by_user_id(current_user.id)
         return render_template("profile_basic.html", p_ticket = ticket)
     else:
-        published = spettacoli_dao.get_published()
+        published = spettacoli_dao.get_published(current_user.id)
         drafts = spettacoli_dao.get_drafts(current_user.id)
         # Paginazione
         start = (page - 1) * per_page

@@ -240,12 +240,25 @@ def create_event():
             p_errors=errors
         )
 
+    # Determine minimum max-dimension among all carousel images
+    carousel_dir = app.config["UPLOAD_FOLDER"]
+    min_max_dim = None
+    for fname in os.listdir(carousel_dir):
+        if fname.lower().endswith((".jpg", ".jpeg", ".png", ".gif")):
+            try:
+                img_path = os.path.join(carousel_dir, fname)
+                with Image.open(img_path) as im:
+                    w, h = im.size
+                    max_dim = max(w, h)
+                    if min_max_dim is None or max_dim < min_max_dim:
+                        min_max_dim = max_dim
+            except Exception:
+                continue
+    if min_max_dim is None:
+        min_max_dim = 800
     db_img_path = None
     if img:
-        # Set a higher width for better quality in the carousel
-        POST_IMG_WIDTH = 1200  # or set to the max width of your carousel in px
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
-
         is_allowed_file = '.' in img.filename and img.filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
         if not is_allowed_file:
             errors.append(f"FILE_TYPE_NOT_ALLOWED_ERROR - Allowed extensions: {', '.join(ALLOWED_EXTENSIONS)}")
@@ -266,22 +279,7 @@ def create_event():
         original_filename = secure_filename(img.filename)
         new_filename = f"{int(time.time())}_{original_filename}"
         upload_path = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
-
-        image = Image.open(img.stream)
-        # Only resize if the image is larger than POST_IMG_WIDTH
-        if image.width > POST_IMG_WIDTH:
-            aspect_ratio = image.height / image.width
-            new_height = int(POST_IMG_WIDTH * aspect_ratio)
-            resized_image = image.resize((POST_IMG_WIDTH, new_height), Image.LANCZOS)
-        else:
-            resized_image = image
-        ext = original_filename.rsplit('.', 1)[1].lower()
-        if ext in ["jpg", "jpeg"]:
-            resized_image = resized_image.convert("RGB")
-            resized_image.save(upload_path, quality=95, optimize=True)
-        else:
-            resized_image.save(upload_path)
-
+        img.save(upload_path)
         db_img_path = f"uploads/{new_filename}"
     if draft_id:
         success, error = spettacoli_dao.update_draft(
